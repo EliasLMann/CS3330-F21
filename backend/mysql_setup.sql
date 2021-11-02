@@ -15,4 +15,6 @@ CREATE TABLE `db`.`test_table` (
 -- insert sample entry
 INSERT INTO `db`.`test_table` (`value`) VALUES ('Sample Value');
 
+-- TestCommit
+
 
