@@ -2,17 +2,6 @@ import React, { useEffect, useState } from 'react';
 import './App.css';
 import axios from 'axios';
 
-import { 
-  BrowserRouter as Router,
-  Switch,
-  Route,
-  Link 
-} from 'react-router-dom';
-
-import { LoginPage } from './LoginPage';
-import { RegisterPage } from './RegisterPage';
-import { HomePage } from './HomePage';
-
 // React functional component
 function App () {
   // state for storage of the information on the webpage of forms and list, uses hooks
@@ -77,30 +66,11 @@ function App () {
     fetchVals();
   }, [])
 
-  return (<>
-
-    <Router>
-      <Switch>
-        {/* <Route path="/" component={App} /> */}
-        {/* <Route path=""> 
-          <HomePage/> 
-        </Route> */}
-        <Route path="/login"> 
-          <LoginPage/> 
-        </Route>
-        <Route path="/register"> 
-          <RegisterPage/> 
-        </Route>
-      </Switch>
-    </Router>
-    
-
-    {/* <div className="App">
-
-      
+  return (
+    <div className="App">
       <header className="App-header">
         <button onClick={fetchBase} style={{marginBottom: '1rem'}}> {`GET: http://${url}:8000/`} </button>
-        <button onClick={reset}> Test DB </button>
+        <button onClick={reset}> Reset DB </button>
         <form onSubmit={handleSubmit}>
           <input type="text" value={number} onChange={handleChange}/>
           <br/>
@@ -110,8 +80,8 @@ function App () {
           { values.map((value, i) => <li key={i}>{value.value}</li>) }
         </ul>
       </header>
-    </div> */}
-  </>);
+    </div>
+  );
 }
 
 export default App;
