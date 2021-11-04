@@ -3,7 +3,7 @@ import React from "react";
 export class LoginPage extends React.Component {
 
     state = {
-        name: "",
+        userName: "",
         password:"",
         isOwner:false
     }

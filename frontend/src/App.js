@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import './App.css';
 import axios from 'axios';
-import { Login } from './components/header/login';
 
 import { 
   BrowserRouter as Router,
@@ -13,6 +12,7 @@ import {
 import { LoginPage } from './LoginPage';
 import { RegisterPage } from './RegisterPage';
 import { HomePage } from './HomePage';
+import { Login } from './components/header/login';
 
 // React functional component
 function App () {
@@ -83,15 +83,13 @@ function App () {
     <Router>
       <Switch>
         {/* <Route path="/" component={App} /> */}
-        {/* <Route path=""> 
-          <HomePage/> 
-        </Route> */}
         <Route path="/login"> 
           <LoginPage/> 
         </Route>
         <Route path="/register"> 
           <RegisterPage/> 
         </Route>
+        <Route path="*" component={Login} />
       </Switch>
     </Router>
     
