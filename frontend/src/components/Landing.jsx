@@ -8,8 +8,8 @@ export class Login extends React.Component {
 
     render() {
         return <>
-            <h1 class="fixed-top">Popstop</h1>
-            <div class="d-flex flex-row">
+            <h1 class="fixed-top justif-content-center">Popstop</h1>
+            <div class="d-flex flex-row justify-content-center">
                 <Card class="p-2 mx-sm" style={{ width: '18rem' }}>
                     <Card.Body>
                         <Card.Title class="text-primary">Restaurant Login</Card.Title>

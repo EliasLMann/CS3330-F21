@@ -9,10 +9,9 @@ import {
   Link 
 } from 'react-router-dom';
 
-import { LoginPage } from './LoginPage';
-import { RegisterPage } from './RegisterPage';
-import { HomePage } from './HomePage';
-import { Login } from './components/header/login';
+import { LoginPage } from './components/LoginPage';
+import { RegisterPage } from './components/RegisterPage';
+import { Login } from './components/Landing';
 
 // React functional component
 function App () {
@@ -82,7 +81,6 @@ function App () {
 
     <Router>
       <Switch>
-        {/* <Route path="/" component={App} /> */}
         <Route path="/login"> 
           <LoginPage/> 
         </Route>
