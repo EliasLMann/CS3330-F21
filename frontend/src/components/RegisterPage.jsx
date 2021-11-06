@@ -1,8 +1,10 @@
 import React from "react";
+import { RestaurantOwnerForm } from "./RestaurantOwnerForm";
 
 export class RegisterPage extends React.Component {
 
     accountType = [
+        " ",
         "Restaurant Owner",
         "Customer"
     ]
@@ -11,7 +13,7 @@ export class RegisterPage extends React.Component {
         name: "",
         password:"",
         redoPassword: "",
-        isOwner:false
+        accountType: ""
     }
 
     onSubmitClick(){
@@ -69,8 +71,8 @@ export class RegisterPage extends React.Component {
                 <label for="accountType">I am a...</label>
                 <select 
                     name="accountType" id="accountType"
-                    // value={this.state.isOwner}
-                    // onChange={event => this.setState({ rating: event.target.value })}
+                    value={this.state.accountType}
+                    onChange={event => this.setState({ accountType: event.target.value })}
                 >
                         {
                             this.accountType.map((x, i) =>
@@ -85,6 +87,10 @@ export class RegisterPage extends React.Component {
                     type="button"
                     onClick={ () => this.onSubmitClick() }>Submit</button>
             </form>
+
+            {
+                this.state.accountType == "Restaurant Owner" && <RestaurantOwnerForm />
+            }
         
         </>;
     }
