@@ -13,11 +13,7 @@ export class RegisterPage extends React.Component {
         name: "",
         password:"",
         redoPassword: "",
-<<<<<<< Updated upstream
         accountType: ""
-=======
-        accountType: "",
->>>>>>> Stashed changes
     }
 
 
@@ -76,13 +72,8 @@ export class RegisterPage extends React.Component {
                 <label for="accountType">I am a...</label>
                 <select 
                     name="accountType" id="accountType"
-<<<<<<< Updated upstream
                     value={this.state.accountType}
                     onChange={event => this.setState({ accountType: event.target.value })}
-=======
-                    value={this.state.type}
-                    onChange={event => this.setState({accountType: event.target.value})}
->>>>>>> Stashed changes
                 >
                         {
                             this.accountType.map((x, i) =>
@@ -98,11 +89,7 @@ export class RegisterPage extends React.Component {
             </form>
 
             {
-<<<<<<< Updated upstream
                 this.state.accountType == "Restaurant Owner" && <RestaurantOwnerForm />
-=======
-                (this.state.accountType == "Customer") && <h1>USER</h1>
->>>>>>> Stashed changes
             }
         
         </>;
