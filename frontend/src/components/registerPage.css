@@ -1,0 +1,37 @@
+
+h1{
+    padding-top: 2rem;
+    text-align: center;
+}
+
+#registerForm{
+    text-align:center;
+    background-color: lightgray;
+}
+
+label{
+    padding-bottom: 1rem;
+    padding-right: .5rem;
+    display: inline-block;
+    width: 10rem;
+    text-align: right;
+}
+
+input{
+    width: 15rem;
+}
+select{
+    width: 15rem;
+}
+textarea{
+    vertical-align: middle;
+    margin-bottom: 1rem;
+    width: 15rem;
+    height:5rem;
+}
+
+button{
+    margin-top: 1rem;
+    padding: 1rem 3rem;
+    text-align: center;
+}

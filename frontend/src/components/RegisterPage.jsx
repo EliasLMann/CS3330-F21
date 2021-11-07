@@ -1,6 +1,8 @@
 import React from "react";
 import { RestaurantOwnerForm } from "./RestaurantOwnerForm";
 
+import './registerPage.css';
+
 export class RegisterPage extends React.Component {
 
     accountType = [
@@ -10,7 +12,7 @@ export class RegisterPage extends React.Component {
     ]
     state = {
         email: "",
-        name: "",
+        userName: "",
         password:"",
         redoPassword: "",
         accountType: ""
@@ -25,11 +27,12 @@ export class RegisterPage extends React.Component {
     render(){
 
         return<>
-        
-            <h1>Register</h1>
+            <div class="card">
 
-            <form>
-                <label for="email">Email</label>
+            <h1 class="card-title">Register</h1>
+
+            <form id="registerForm"class="card-body">
+                <label for="email">Enter your email: </label>
                 <input 
                     type="text" id="email" name="email"
                     value={this.state.email}
@@ -39,7 +42,7 @@ export class RegisterPage extends React.Component {
 
                 <br/>
 
-                <label for="userName">Username</label>
+                <label for="userName">Username: </label>
                 <input 
                     type="text" id="userName" name="userName"
                     value={this.state.userName}
@@ -49,7 +52,7 @@ export class RegisterPage extends React.Component {
 
                 <br/>
 
-                <label for="password">Password</label>
+                <label for="password">Password: </label>
                 <input 
                     type="text" id="password" name="password"
                     value={this.state.password}
@@ -59,7 +62,7 @@ export class RegisterPage extends React.Component {
 
                 <br/>
 
-                <label for="redoPassword">Password Again</label>
+                <label for="redoPassword">Verify password: </label>
                 <input 
                     type="text" id="redoPassword" name="redoPassword"
                     value={this.state.redoPassword}
@@ -83,14 +86,17 @@ export class RegisterPage extends React.Component {
 
                 <br/>
 
+                {
+                    this.state.accountType === "Restaurant Owner" && <RestaurantOwnerForm />
+                }
+
                 <button
                     type="button"
                     onClick={ () => this.onSubmitClick() }>Submit</button>
+
             </form>
 
-            {
-                this.state.accountType == "Restaurant Owner" && <RestaurantOwnerForm />
-            }
+            </div>
         
         </>;
     }
