@@ -12,6 +12,20 @@ CREATE TABLE `db`.`test_table` (
     UNIQUE INDEX `id_UNIQUE` (`id` ASC) VISIBLE
 );
 
+CREATE TABLE `db`.`Restaurant` (
+	`restaurantID` INT NOT NULL AUTO_INCREMENT, PRIMARY KEY(restaurantID),
+	`restaurantName` varchar(255),
+	`menuID` INT(11),
+	`ownerID` INT(11),
+	`location` varchar(255),
+	`hours` varchar(255),
+	`description` varchar(1000),
+	`cuisineType` varchar(255),
+	`website` varchar(255),
+	`sponsored` boolean,
+	`socialMediaName` varchar(255),
+	`socialMediaURL` varchar(255));
+
 -- insert sample entry
 INSERT INTO `db`.`test_table` (`value`) VALUES ('Sample Value');
 
