@@ -28,7 +28,12 @@ CREATE TABLE `db`.`Restaurant` (
 
 -- insert sample entry
 INSERT INTO `db`.`test_table` (`value`) VALUES ('Sample Value');
-
--- TestCommit
+INSERT INTO `db`.`Restaurant` (`restaurantName`, `menuID`, `ownerID`, `location`, `hours`, `description`, `cuisineType`, 
+							`website`, `sponsored`, `socialMediaName`, `socialMediaURL`)
+						VALUES
+								('testName', 1, 1, 'testLoc', 'testHours', 'testDesc', 'testCuisine', 'testWeb',
+								false , 'testSocName', 'testSocURL');
+							
+-- select * from Restaurant;
 
 
