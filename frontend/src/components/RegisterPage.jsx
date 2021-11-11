@@ -15,7 +15,10 @@ export class RegisterPage extends React.Component {
         userName: "",
         password:"",
         redoPassword: "",
-        accountType: ""
+        accountType: "",
+
+        passwordMatch:true,
+        canRegister:false,
     }
 
 
@@ -31,7 +34,8 @@ export class RegisterPage extends React.Component {
 
             <h1 class="card-title">Register</h1>
 
-            <form id="registerForm"class="card-body">
+            <form id="registerForm"class="card-body"
+                    oninput='redoPassword.setCustomValidity(redoPassword.value != password.value ? "Passwords do not match." : "")'>
                 <label for="email">Enter your email: </label>
                 <input 
                     type="text" id="email" name="email"
@@ -72,6 +76,15 @@ export class RegisterPage extends React.Component {
 
                 <br/>
 
+                {
+                    (this.state.redoPassword !== "" && (this.state.password !== this.state.redoPassword)) &&
+                    <div className="card">
+                        <span>Passwords do NOT match!</span>
+                    </div>
+                }
+
+                <br/>
+
                 <label for="accountType">I am a...</label>
                 <select 
                     name="accountType" id="accountType"
@@ -91,8 +104,9 @@ export class RegisterPage extends React.Component {
                 }
 
                 <br/>
+                
                 <button
-                    type="button"
+                    type="btn btn-primary button"
                     onClick={ () => this.onSubmitClick() }>Submit</button>
 
             </form>
