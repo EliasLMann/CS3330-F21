@@ -1,18 +1,26 @@
 import React from "react";
+import { RestaurantOwnerForm } from "./RestaurantOwnerForm";
+
+import './registerPage.css';
 
 export class RegisterPage extends React.Component {
 
     accountType = [
+        " ",
         "Restaurant Owner",
         "Customer"
     ]
     state = {
         email: "",
-        name: "",
+        userName: "",
         password:"",
         redoPassword: "",
-        isOwner:false
+        accountType: "",
+
+        passwordMatch:true,
+        canRegister:false,
     }
+
 
     onSubmitClick(){
 
@@ -22,11 +30,13 @@ export class RegisterPage extends React.Component {
     render(){
 
         return<>
-        
-            <h1>Register</h1>
+            <div class="card">
 
-            <form>
-                <label for="email">Email</label>
+            <h1 class="card-title">Register</h1>
+
+            <form id="registerForm"class="card-body"
+                    oninput='redoPassword.setCustomValidity(redoPassword.value != password.value ? "Passwords do not match." : "")'>
+                <label for="email">Enter your email: </label>
                 <input 
                     type="text" id="email" name="email"
                     value={this.state.email}
@@ -36,7 +46,7 @@ export class RegisterPage extends React.Component {
 
                 <br/>
 
-                <label for="userName">Username</label>
+                <label for="userName">Username: </label>
                 <input 
                     type="text" id="userName" name="userName"
                     value={this.state.userName}
@@ -46,7 +56,7 @@ export class RegisterPage extends React.Component {
 
                 <br/>
 
-                <label for="password">Password</label>
+                <label for="password">Password: </label>
                 <input 
                     type="text" id="password" name="password"
                     value={this.state.password}
@@ -56,7 +66,7 @@ export class RegisterPage extends React.Component {
 
                 <br/>
 
-                <label for="redoPassword">Password Again</label>
+                <label for="redoPassword">Verify password: </label>
                 <input 
                     type="text" id="redoPassword" name="redoPassword"
                     value={this.state.redoPassword}
@@ -66,11 +76,20 @@ export class RegisterPage extends React.Component {
 
                 <br/>
 
+                {
+                    (this.state.redoPassword !== "" && (this.state.password !== this.state.redoPassword)) &&
+                    <div className="card">
+                        <span>Passwords do NOT match!</span>
+                    </div>
+                }
+
+                <br/>
+
                 <label for="accountType">I am a...</label>
                 <select 
                     name="accountType" id="accountType"
-                    // value={this.state.isOwner}
-                    // onChange={event => this.setState({ rating: event.target.value })}
+                    value={this.state.accountType}
+                    onChange={event => this.setState({ accountType: event.target.value })}
                 >
                         {
                             this.accountType.map((x, i) =>
@@ -78,13 +97,22 @@ export class RegisterPage extends React.Component {
                         }
                 </select>
 
+                <br/>
+
+                {
+                    this.state.accountType === "Restaurant Owner" && <RestaurantOwnerForm />
+                }
 
                 <br/>
 
                 <button
+                    className="btn btn-primary"
                     type="button"
                     onClick={ () => this.onSubmitClick() }>Submit</button>
+
             </form>
+
+            </div>
         
         </>;
     }
