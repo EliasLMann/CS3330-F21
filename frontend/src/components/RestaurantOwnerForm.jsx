@@ -1,5 +1,7 @@
 import React from "react";
 
+import "./registerPage.css";
+
 export class RestaurantOwnerForm extends React.Component {
 
     state = {
@@ -31,7 +33,27 @@ export class RestaurantOwnerForm extends React.Component {
                 >
                 </textarea>
 
-                
+                <div class="openTimes card flex-row">
+                    <span class="card-header">When are you open?</span>
+
+                    <div class="">
+                        <label for="Sunday"> Sunday </label>
+                        <input type="checkbox" id="Sunday" name="Sunday" value="Sunday"/>
+                        <label for="Monday"> Monday </label>
+                        <input type="checkbox" id="Monday" name="Monday" value="Monday"/>
+                        <label for="Tuesday"> Tuesday </label>
+                        <input type="checkbox" id="Tuesday" name="Tuesday" value="Tuesday"/>
+                        <label for="Wednesday"> Wednesday </label>
+                        <input type="checkbox" id="Wednesday" name="Wednesday" value="Wednesday"/>
+                        <label for="Thursday"> Thursday </label>
+                        <input type="checkbox" id="Thursday" name="Thursday" value="Thursday"/>
+                        <label for="Friday"> Friday </label>
+                        <input type="checkbox" id="Friday" name="Friday" value="Friday"/>
+                        <label for="Saturday"> Saturday </label>
+                        <input type="checkbox" id="Saturday" name="Saturday" value="Saturday"/>
+                    </div>
+                </div>
+
             </form>
         </>
     }

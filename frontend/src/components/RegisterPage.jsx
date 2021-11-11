@@ -90,6 +90,7 @@ export class RegisterPage extends React.Component {
                     this.state.accountType === "Restaurant Owner" && <RestaurantOwnerForm />
                 }
 
+                <br/>
                 <button
                     type="button"
                     onClick={ () => this.onSubmitClick() }>Submit</button>
