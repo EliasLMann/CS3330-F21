@@ -104,9 +104,10 @@ export class RegisterPage extends React.Component {
                 }
 
                 <br/>
-                
+
                 <button
-                    type="btn btn-primary button"
+                    className="btn btn-primary"
+                    type="button"
                     onClick={ () => this.onSubmitClick() }>Submit</button>
 
             </form>
