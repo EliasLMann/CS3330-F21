@@ -12,6 +12,7 @@ import {
 import { LoginPage } from './components/LoginPage';
 import { RegisterPage } from './components/RegisterPage';
 import { Login } from './components/Landing';
+import { SearchPage } from './components/SearchPage';
 
 // React functional component
 function App () {
@@ -86,6 +87,9 @@ function App () {
         </Route>
         <Route path="/register"> 
           <RegisterPage/> 
+        </Route>
+        <Route path="/home"> 
+          <SearchPage/> 
         </Route>
         <Route path="*" component={Login} />
       </Switch>

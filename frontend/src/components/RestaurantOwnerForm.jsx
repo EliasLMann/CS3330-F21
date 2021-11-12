@@ -3,6 +3,21 @@ import update from 'react-addons-update';
 
 import "./registerPage.css";
 
+import {OverlayTrigger} from 'react-bootstrap';
+import {Popover} from 'react-bootstrap';
+import {Button} from 'react-bootstrap';
+
+
+const popoverRight = (
+    <Popover className="p-1"id="popover-positioned-right" title="Popover right">
+      <strong>Ex:</strong> <br/>
+      Monday: 10AM-10PM <br/>
+      Tuesday: 10AM-10PM <br/>
+      Wednesday: Closed <br/>
+      etc.
+    </Popover>
+  );
+
 export class RestaurantOwnerForm extends React.Component {
 
     hours = [
@@ -12,21 +27,17 @@ export class RestaurantOwnerForm extends React.Component {
 
     state = {
         restaurantName:"",
-        restaurantAddress:"",
+        cuisineType:"",
 
-        openDays:[false,false,false,false,false,false,false],
-        openTime:"",
-        closeTime:""
-    }
+        addressStreet:"",
+        addressCity:"",
+        addressState:"",
+        addressZip:"",
 
-    checkBox(i){
-        this.setState(update(this.state, {
-            openDays: {
-                [i]: {
-                    $set: !this.state.openDays[i]
-                }
-            }
-        }));
+        openTimes: "",
+        restaurantDescription:"",
+        websiteURL:"",
+        instagramUser:""
     }
 
     render(){
@@ -43,80 +54,91 @@ export class RestaurantOwnerForm extends React.Component {
                         onChange={event => this.setState({restaurantName: event.target.value})}
                     >
                     </input>
-                </div>
 
-                <br/>
-
-                <div className="d-flex flex-row justify-content-center">
-                    <label for="restaurantAddress">Restaurant Address: </label>
-                    <textarea 
-                        type="text" id="restaurantAddress" name="restaurantAddress"
-                        value={this.state.restaurantAddress}
-                        onChange={event => this.setState({restaurantAddress: event.target.value})}
+                    <label className="align-middle"for="cuisineType">Cuisine Type: </label>
+                    <input 
+                        type="text" id="cuisineType" name="cuisineType"
+                        value={this.state.cuisineType}
+                        onChange={event => this.setState({cuisineType: event.target.value})}
                     >
-                    </textarea>
+                    </input>
                 </div>
 
                 <br/>
 
-                <div class="openTimes card">
-                    <span class="card-header">When are you open?</span>
-
-                    <div class="col d-flex flex-row justify-content-center">
-                        <div class="row p-2">
-                            <label className="mx-auto"for="Sunday"> Sunday </label>
-                            <input type="checkbox" id="Sunday" name="Sunday" value="Sunday"
-                                    onChange={() => this.checkBox(0)}
-                            />
-                            <br/>
-                        </div>
-                        <div class="row p-2">
-                            <label for="Monday"> Monday </label>
-                            <input type="checkbox" id="Monday" name="Monday" value="Monday"
-                                    onChange={() => this.checkBox(1)}
-                            />
-                        </div>
-                        <div class="row p-2">
-                            <label for="Tuesday"> Tuesday </label>
-                            <input type="checkbox" id="Tuesday" name="Tuesday" value="Tuesday"
-                                    onChange={() => this.checkBox(2)}/>
-                        </div>
-                        <div class="row p-2">
-                            <label for="Wednesday"> Wednesday </label>
-                            <input type="checkbox" id="Wednesday" name="Wednesday" value="Wednesday"
-                                    onChange={() => this.checkBox(3)}/>
-                        </div>
-                        <div class="row p-2">
-                            <label for="Thursday"> Thursday </label>
-                            <input type="checkbox" id="Thursday" name="Thursday" value="Thursday"
-                                    onChange={() => this.checkBox(4)}/>
-                        </div>
-                        <div class="row p-2">
-                            <label for="Friday"> Friday </label>
-                            <input type="checkbox" id="Friday" name="Friday" value="Friday"
-                                    onChange={() => this.checkBox(5)}/>
-                        </div>
-                        <div class="row p-2">
-                            <label for="Saturday"> Saturday </label>
-                            <input type="checkbox" id="Saturday" name="Saturday" value="Saturday"
-                                    onChange={() => this.checkBox(6)}/>
-                        </div>
-                    </div>
-                    <div>
-                        <label>From: </label>
-                        <select className="mw-25"
-                                onChange={event => this.setState({openTime: event.target.value })}
-                        >{
-                            this.hours.map((x, i) => <option key = {i} > {x}</option>)
-                        }</select>
-                        <span>-</span>
-                        <select className="mw-25"
-                                onChange={event => this.setState({closeTime: event.target.value })}
-                        >{
-                            this.hours.map((x, i) => <option key = {i} > {x}</option>)
-                        }</select>
-                    </div>
+                <div className="mx-auto">
+                    <label for="restaurantAddress">Restaurant Address: </label>
                 </div>
+                <div className="d-flex flex-row justify-content-center p-2">
+                    <input type="text" id="addressStreet" name="addressStreet"
+                            value={this.state.addressStreet}
+                            onChange={event => this.setState({addressStreet: event.target.value})}
+                            className="form-control w-75"
+                            placeholder="Street Name"
+                    ></input>
+                    <input type="text" id="addressCity" name="addressCity"
+                            value={this.state.addressCity}
+                            onChange={event => this.setState({addressCity: event.target.value})}
+                            className="form-control w-25"
+                            placeholder="City"
+                    ></input>
+                    <input type="text" id="addressState" name="addressState"
+                            value={this.state.addressState}
+                            onChange={event => this.setState({addressState: event.target.value})}
+                            className="form-control w-25"
+                            placeholder="State"
+                    ></input>
+                    <input type="text" id="addressZip" name="addressZip"
+                            value={this.state.addressZip}
+                            onChange={event => this.setState({addressZip: event.target.value})}
+                            className="form-control w-25"
+                            placeholder="Zip Code"
+                    ></input>
+                </div>
+
+                <br/>
+
+                <span className="mb-2">Open Times:</span>
+                <div>
+                    <textarea class="mx-auto w-25 h-100"
+                                onChange={event => this.setState({openTimes: event.target.value})}></textarea>
+                    <OverlayTrigger trigger="click" placement="right" overlay={popoverRight}>
+                        <Button className="mx-auto rounded-circle" > ? </Button>
+                    </OverlayTrigger>
+                </div>
+
+                <br/>
+
+                <span className="mb-2">Restaurant Description</span>
+                <div>
+                    <textarea class="mx-auto w-50 h-100"
+                                onChange={event => this.setState({restaurantDescription: event.target.value})}></textarea>
+                </div>
+
+                <br/>
+
+                <div className="w-75 mx-auto">
+                    <div class="input-group mb-3">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text" id="basic-addon3">Website:</span>
+                        </div>
+                        <input type="text" class="form-control" id="basic-url" aria-describedby="basic-addon3"
+                                onChange={event => this.setState({websiteURL: event.target.value})}/>
+                    </div> 
+                </div>
+                <div className="w-75 mx-auto">
+                    <div class="input-group mb-3">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text" id="basic-addon3">Instagram @:</span>
+                        </div>
+                        <input type="text" class="form-control" id="basic-url" aria-describedby="basic-addon3"
+                                onChange={event => this.setState({instagramUser: event.target.value})}/>
+                    </div> 
+                </div>
+                
+                <br/>
+
+                
 
             </form>
         </>
