@@ -96,6 +96,34 @@ module.exports = function routes(app, logger) {
     });
   });
 
+    // GET /getmealtype
+    app.get('/getmealtype', (req, res) => {
+      // obtain a connection from our pool of connections
+      pool.getConnection(function (err, connection){
+        if(err){
+          // if there is an issue obtaining a connection, release the connection instance and log the error
+          logger.error('Problem obtaining MySQL connection',err)
+          res.status(400).send('Problem obtaining MySQL connection'); 
+        } else {
+          // if there is no issue obtaining a connection, execute query and release connection
+          connection.query('SELECT mealType FROM `PopStop`.`MenuItem`', function (err, rows, fields) {
+            connection.release();
+            if (err) {
+              logger.error("Error while fetching values: \n", err);
+              res.status(400).json({
+                "data": [],
+                "error": "Error obtaining values"
+              })
+            } else {
+              res.status(200).json({
+                "data": rows
+              });
+            }
+          });
+        }
+      });
+    });
+
   // GET /restaurants
   app.get('/restaurants', (req, res) => {
     // obtain a connection from our pool of connections
@@ -106,11 +134,8 @@ module.exports = function routes(app, logger) {
         res.status(400).send('Problem obtaining MySQL connection'); 
       } else {
         // if there is no issue obtaining a connection, execute query and release connection
-<<<<<<< Updated upstream
         connection.query('SELECT * FROM `db`.`Restaurant`', function (err, rows, fields) {
-=======
         connection.query('SELECT * FROM `PopStop`.`Restaurant`', function (err, rows, fields) {
->>>>>>> Stashed changes
           connection.release();
           if (err) {
             logger.error("Error while fetching values: \n", err);
@@ -127,8 +152,6 @@ module.exports = function routes(app, logger) {
       }
     });
   });
-<<<<<<< Updated upstream
-=======
 
   //GET locations of restaurants
   app.get('/restaurants/locations', (req, res) => {
@@ -158,8 +181,4 @@ module.exports = function routes(app, logger) {
     });
   });
 
-  
-
-
->>>>>>> Stashed changes
 }
