@@ -34,8 +34,7 @@ export class RegisterPage extends React.Component {
 
             <h1 class="card-title">Register</h1>
 
-            <form id="registerForm"class="card-body"
-                    oninput='redoPassword.setCustomValidity(redoPassword.value != password.value ? "Passwords do not match." : "")'>
+            <form id="registerForm"class="card-body">
                 <label for="email">Enter your email: </label>
                 <input 
                     type="text" id="email" name="email"
