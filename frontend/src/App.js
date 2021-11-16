@@ -81,18 +81,10 @@ function App () {
   return (<>
 
     <Router>
-      <Switch>
-        <Route path="/login"> 
-          <LoginPage/> 
-        </Route>
-        <Route path="/register"> 
-          <RegisterPage/> 
-        </Route>
-        <Route path="/home"> 
-          <SearchPage/> 
-        </Route>
-        <Route path="*" component={Login} />
-      </Switch>
+      <Route component = {LoginPage}  path="/login"/>
+      <Route component = {RegisterPage}  path="/register"/>
+      <Route component = {SearchPage}  path="/home"/>
+      <Route component = {Login} path="/" exact/>
     </Router>
     
 
