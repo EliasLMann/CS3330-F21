@@ -11,7 +11,7 @@ import {
 
 import { LoginPage } from './components/LoginPage';
 import { RegisterPage } from './components/RegisterPage';
-import { Login } from './components/Landing';
+import { Landing } from './components/Landing';
 import { SearchPage } from './components/SearchPage';
 
 // React functional component
@@ -84,7 +84,8 @@ function App () {
       <Route component = {LoginPage}  path="/login"/>
       <Route component = {RegisterPage}  path="/register"/>
       <Route component = {SearchPage}  path="/home"/>
-      <Route component = {Login} path="/" exact/>
+      <Route component = {Landing} path="/" exact/>
+      
     </Router>
     
 

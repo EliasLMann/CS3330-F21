@@ -7,21 +7,23 @@ import './landing.css'
 
 import { Link } from 'react-router-dom';
 
-export class Login extends React.Component {
+export class Landing extends React.Component {
 
     render() {
         return <>
-            <img id="logoPic" class="card-img-top" src={logo}/>
-            <h1 className="font-weight-bold">Welcome to PopStop!</h1>
+            <img id="background" src="https://wallpaperaccess.com/full/4895186.jpg" />
+            <img id="logoPic" className="card-img-top justify-content-left" src={logo} />
             <div class="d-flex flex-row justify-content-center">
-                <Card class="p-2 mx-l px-5" style={{ width: '30rem', large:'20rem'}}>
+                <Card id="login_box" class="p-2 mx-l" style={{ width: '30rem' }}>
                     <Card.Body>
-                        <Card.Title class="text-center text-primary mx-auto font-weight-bold">Login to PopStop</Card.Title>
-                        <br />
-                        <div className="row px-3">
-                            <Link className="btn btn-primary col mx-3" to='/login'>Login</Link>
+                        <Card.Title class="text-center login_text">Login or register to find you next meal!</Card.Title>
+                        {/* <Card.Text class="text-center text-muted">
+                            <h5>If you own/represent a restaurant, follow the links below </h5>
+                        </Card.Text> */}
+                        <div className="row">
+                            <Link className="btn btn-primary col-4 mx-auto my-auto" to='/login'>Login</Link>
                             <br />
-                            <Link className="btn btn-primary col" to='/register'>Register</Link>
+                            <Link className="btn btn-primary col-4 mx-auto my-auto" to='/register'>Register</Link>
                         </div>
                     </Card.Body>
                 </Card>
