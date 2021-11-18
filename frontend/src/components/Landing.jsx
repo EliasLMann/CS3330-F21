@@ -7,24 +7,23 @@ import './landing.css'
 
 import { Link } from 'react-router-dom';
 
-export class Login extends React.Component {
+export class Landing extends React.Component {
 
     render() {
         return <>
-<<<<<<< Updated upstream
-            <img id="logoPic" class="card-img-top" src={logo}/>
-=======
             <img id="background" src="https://wallpaperaccess.com/full/4895186.jpg" style={{filter: 'blur(2px)'}}/>
             <img id="logoPic" className="card-img-top justify-content-left" src={logo} />
->>>>>>> Stashed changes
             <div class="d-flex flex-row justify-content-center">
-                <Card class="p-2 mx-l" style={{ width: '18rem' }}>
+                <Card id="login_box" class="p-2 mx-l" style={{ width: '30rem' }}>
                     <Card.Body>
-                        <Card.Title class="text-center text-primary mx-auto">Login to PopStop</Card.Title>
+                        <Card.Title class="text-center login_text">Login or register to find you next meal!</Card.Title>
+                        {/* <Card.Text class="text-center text-muted">
+                            <h5>If you own/represent a restaurant, follow the links below </h5>
+                        </Card.Text> */}
                         <div className="row">
-                            <Link className="btn btn-primary col" to='/login'>Login</Link>
+                            <Link className="btn btn-primary col-4 mx-auto my-auto" to='/login'>Login</Link>
                             <br />
-                            <Link className="btn btn-primary col" to='/register'>Register</Link>
+                            <Link className="btn btn-primary col-4 mx-auto my-auto" to='/register'>Register</Link>
                         </div>
                     </Card.Body>
                 </Card>

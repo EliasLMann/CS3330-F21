@@ -1,14 +1,14 @@
 import React from "react";
 import {Dropdown} from "react-bootstrap";
 
-import logo from './PopStopLogo.png';
+import { Header } from "./Header";
 
 export class SearchPage extends React.Component {
 
-    render(){
-        return(<>
+    render() {
+        return (<>
 
-            <img id="logoPic" class="card-img-top mx-auto " src={logo}/>
+            <Header />
 
             <div className="card align-center w-75 mx-auto">
                 <h2 className="card-header text-center">Search PopStop:</h2>
@@ -31,7 +31,6 @@ export class SearchPage extends React.Component {
                     </Dropdown>
                 </div>
             </div>
-            
         </>)
     }
 

@@ -43,7 +43,7 @@ export class RestaurantOwnerForm extends React.Component {
     render(){
 
         return<>
-            <form className="card">
+            <form className="card form-group">
                 <h2 className="card-header">About your restaurant</h2>
                 <br/>
                 <div className="d-flex flex-row justify-content-center align-middle">
@@ -51,6 +51,7 @@ export class RestaurantOwnerForm extends React.Component {
                     <input 
                         type="text" id="restaurantName" name="restaurantName"
                         value={this.state.restaurantName}
+                        className="formControl"
                         onChange={event => this.setState({restaurantName: event.target.value})}
                     >
                     </input>
@@ -59,6 +60,7 @@ export class RestaurantOwnerForm extends React.Component {
                     <input 
                         type="text" id="cuisineType" name="cuisineType"
                         value={this.state.cuisineType}
+                        className="formControl"
                         onChange={event => this.setState({cuisineType: event.target.value})}
                     >
                     </input>
@@ -66,14 +68,14 @@ export class RestaurantOwnerForm extends React.Component {
 
                 <br/>
 
-                <div className="mx-auto">
+                <div className="mx-auto form-group">
                     <label for="restaurantAddress">Restaurant Address: </label>
                 </div>
                 <div className="d-flex flex-row justify-content-center p-2">
                     <input type="text" id="addressStreet" name="addressStreet"
                             value={this.state.addressStreet}
                             onChange={event => this.setState({addressStreet: event.target.value})}
-                            className="form-control w-75"
+                            className="form-control w-75 formControl"
                             placeholder="Street Name"
                     ></input>
                     <input type="text" id="addressCity" name="addressCity"
@@ -111,7 +113,7 @@ export class RestaurantOwnerForm extends React.Component {
 
                 <span className="mb-2">Restaurant Description</span>
                 <div>
-                    <textarea class="mx-auto w-50 h-100"
+                    <textarea class="mx-auto w-50 h-100 formControl"
                                 onChange={event => this.setState({restaurantDescription: event.target.value})}></textarea>
                 </div>
 
