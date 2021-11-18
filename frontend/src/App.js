@@ -95,6 +95,10 @@ function App () {
       <header className="App-header">
         <Login />
         {/* <button onClick={fetchBase} style={{marginBottom: '1rem'}}> {`GET: http://${url}:8000/`} </button>
+  return (
+    <div className="App">
+      <header className="App-header">
+        <button onClick={fetchBase} style={{marginBottom: '1rem'}}> {`GET: http://${url}:8000/`} </button>
         <button onClick={reset}> Reset DB </button>
         <form onSubmit={handleSubmit}>
           <input type="text" value={number} onChange={handleChange}/>
