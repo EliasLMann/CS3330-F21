@@ -1,28 +1,24 @@
 import React from "react";
 import Card from 'react-bootstrap/Card';
-
+import { Header } from "./Header";
 import { Link } from 'react-router-dom';
+import { ReviewList } from "./ReviewList";
 
 
 export class CustomerAccount extends React.Component{
+    state = {
+        reviews: [
+            { restaurantID: "Pop's Restaurant", userID: "UserName1", body: "This is a review", date: "date1" },
+            { restaurantID: "Mom's Restaurant", userID: "UserName2", body: "This is also a review", date: "date2" }
+        ]
+
+      };
 
     render() {
         return<>
-            <h1>Account Page</h1>
-            <div class="d-flex flex-row justify-content-center">
-                <Card class="p-2 mx-l" style={{ width: '25rem' }}>
-                    <Card.Body>
-                        <Card.Title class="text-rigth h2">Username</Card.Title>
-                        {/* <Card.Text class="text-center text-muted">
-                            <h5>If you own/represent a restaurant, follow the links below </h5>
-                        </Card.Text> */}
-                        <div className="row">
-                            <Link className="btn btn-primary col" to='/searchPage'>Home</Link>
-                        
-                        </div>
-                    </Card.Body>
-                </Card>
-            </div>    
+            <Header />
+            <h1>UserName</h1>
+            <ReviewList reviews={this.state.reviews}/>
         </>
     }
 }
