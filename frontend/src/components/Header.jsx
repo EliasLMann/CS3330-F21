@@ -3,11 +3,20 @@ import React from 'react';
 
 export const Header = () => {
     return (
-        <Navbar className="mr-auto p-2">
+        <Navbar className="d-flex flex-row p-2">
             <a className="navbar-brand" href="#">PopStop</a>
-            <Nav className="mr-auto">
-                <Nav.Link href="/profile">My Profile</Nav.Link>
-                <Nav.Link href="/home">Find Restaurants</Nav.Link>
+            <Nav className="">
+                <div className="d-flex flex-row">
+                <Nav.Link href="/profile" 
+                            className="p-2">My Profile</Nav.Link>
+                <Nav.Link href="/home"
+                            className="p-2">Find Restaurants</Nav.Link>
+                <Nav.Link href="/register"
+                        className="text-end">Register</Nav.Link>
+                </div>
+            </Nav>
+            <Nav>
+                
             </Nav>
         </Navbar>
     );
