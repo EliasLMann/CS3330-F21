@@ -275,4 +275,63 @@ module.exports = function routes(app, logger) {
       }
     });
   });
+
+  //================================Assign a restaurant to a user======================================
+  app.put("/assignRestaurant", (req, res) => {
+    // obtain a connection from our pool of connections
+    pool.getConnection(function (err, connection) {
+      if (err) {
+        // if there is an issue obtaining a connection, release the connection instance and log the error
+        logger.error("Problem obtaining MySQL connection", err);
+        res.status(400).send("Problem obtaining MySQL connection");
+      } else {
+        //query values
+        let userID = req.body.userID;
+        let newRestID = req.body.newRestID;
+        console.log(userID);
+        console.log(newRestID);
+        let sql1 = "SELECT * FROM User WHERE userID = '" + userID + "'";
+
+        connection.query(sql1, function (err, rows, fields) {
+          if (err) {
+            logger.error("Error while fetching values: \n", err);
+            res.status(400).json({
+              data: [],
+              error: "Error obtaining values",
+            });
+          } else {
+            console.log(rows.length);
+            //if the user exists
+            if (rows.length > 0) {
+              let sql2 =
+                "UPDATE User SET restaurantID = '" +
+                newRestID +
+                "' WHERE userID = '" +
+                userID +
+                "'";
+              connection.query(sql2, function (err, rows, fields) {
+                if (err) {
+                  logger.error("Error while updating table: \n", err);
+                  res.status(400).json({
+                    data: [],
+                    error: "Error updating table values",
+                  });
+                } else {
+                  //changed!
+                  res.status(200).json({ status: 0 });
+                }
+              });
+            }
+            //if the user doesn't exist
+            else {
+              logger.error("Error while finding user: \n", err);
+              res.status(200).json({ status: 1 });
+              res.end();
+            }
+          }
+        });
+      }
+      connection.release();
+    });
+  });
 };
