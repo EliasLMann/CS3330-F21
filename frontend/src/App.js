@@ -11,7 +11,8 @@ import {
 
 import { LoginPage } from './components/LoginPage';
 import { RegisterPage } from './components/RegisterPage';
-import { Login } from './components/Landing';
+import { Landing } from './components/Landing';
+import { SearchPage } from './components/SearchPage';
 
 // React functional component
 function App () {
@@ -80,15 +81,11 @@ function App () {
   return (<>
 
     <Router>
-      <Switch>
-        <Route path="/login"> 
-          <LoginPage/> 
-        </Route>
-        <Route path="/register"> 
-          <RegisterPage/> 
-        </Route>
-        <Route path="*" component={Login} />
-      </Switch>
+      <Route component = {LoginPage}  path="/login"/>
+      <Route component = {RegisterPage}  path="/register"/>
+      <Route component = {SearchPage}  path="/home"/>
+      <Route component = {Landing} path="/" exact/>
+      
     </Router>
     
 

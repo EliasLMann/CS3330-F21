@@ -7,7 +7,7 @@ import './landing.css'
 
 import { Link } from 'react-router-dom';
 
-export class Login extends React.Component {
+export class Landing extends React.Component {
 
     render() {
         return <>
