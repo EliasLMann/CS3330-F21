@@ -15,6 +15,7 @@ import { Landing } from './components/Landing';
 import { SearchPage } from './components/SearchPage';
 import { RestaurantProfile } from './components/RestaurantProfile';
 import { Header } from './components/Header';
+import { CustomerAccount } from './components/CustomerAccount';
 
 // React functional component
 function App () {
@@ -88,6 +89,7 @@ function App () {
       <Route component = {RegisterPage}  path="/register"/>
       <Route component = {SearchPage}  path="/home"/>
       <Route component = {RestaurantProfile}  path="/profile"/>
+      <Route component = {CustomerAccount}  path="/profile"/>
       <Route component = {Landing} path="/" exact/>
       
     </Router>
