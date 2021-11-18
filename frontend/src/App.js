@@ -14,6 +14,7 @@ import { RegisterPage } from './components/RegisterPage';
 import { Landing } from './components/Landing';
 import { SearchPage } from './components/SearchPage';
 import { RestaurantProfile } from './components/RestaurantProfile';
+import { Header } from './components/Header';
 
 // React functional component
 function App () {
@@ -81,6 +82,7 @@ function App () {
 
   return (<>
 
+    <Header />
     <Router>
       <Route component = {LoginPage}  path="/login"/>
       <Route component = {RegisterPage}  path="/register"/>

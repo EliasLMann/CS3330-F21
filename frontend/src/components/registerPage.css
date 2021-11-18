@@ -28,7 +28,7 @@ textarea{
     height:5rem;
 }
 
-button{
+form > button{
     margin-top: 1rem;
     padding: 1rem 3rem;
     text-align: center;
