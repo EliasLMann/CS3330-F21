@@ -4,8 +4,9 @@ import logo from './PopStopLogo.png';
 
 export class SearchPage extends React.Component {
 
-    render(){
-        return(<>
+    render() {
+        return (<>
+            <Header />
 
             <img id="logoPic" class="card-img-top mx-auto " src={logo}/>
 

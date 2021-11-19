@@ -7,12 +7,15 @@ import './landing.css'
 
 import { Link } from 'react-router-dom';
 
-export class Login extends React.Component {
+import { Header } from "./Header";
+
+export class Landing extends React.Component {
 
     render() {
         return <>
-            <img id="logoPic" class="card-img-top" src={logo}/>
-            <h1 className="font-weight-bold">Welcome to PopStop!</h1>
+            <Header />
+            <img id="background" src={backgroundImg} style={{filter: 'grayscale(40%)'}}/>
+            <img id="logoPic" className="card-img-top justify-content-left" src={logo} />
             <div class="d-flex flex-row justify-content-center">
                 <Card class="p-2 mx-l px-5" style={{ width: '30rem', large:'20rem'}}>
                     <Card.Body>

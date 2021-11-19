@@ -57,7 +57,7 @@ export class RegisterPage extends React.Component {
 
                 <label for="password">Password: </label>
                 <input 
-                    type="text" id="password" name="password"
+                    type="password" id="password" name="password"
                     value={this.state.password}
                     onChange={event => this.setState({password: event.target.value})}
                 >
@@ -67,7 +67,7 @@ export class RegisterPage extends React.Component {
 
                 <label for="redoPassword">Verify password: </label>
                 <input 
-                    type="text" id="redoPassword" name="redoPassword"
+                    type="password" id="redoPassword" name="redoPassword"
                     value={this.state.redoPassword}
                     onChange={event => this.setState({redoPassword: event.target.value})}
                 >
