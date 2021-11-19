@@ -3,6 +3,7 @@ const crypto = require("crypto");
 const secret = "popStopDB";
 const cookieName = "pStpFndr";
 const { json } = require("body-parser");
+const e = require("express");
 
 module.exports = function routes(app, logger) {
   // GET /
@@ -288,8 +289,6 @@ module.exports = function routes(app, logger) {
         //query values
         let userID = req.body.userID;
         let newRestID = req.body.newRestID;
-        console.log(userID);
-        console.log(newRestID);
         let sql1 = "SELECT * FROM User WHERE userID = '" + userID + "'";
 
         connection.query(sql1, function (err, rows, fields) {
@@ -332,6 +331,77 @@ module.exports = function routes(app, logger) {
         });
       }
       connection.release();
+    });
+  });
+
+  //===========================login======================================
+  //authentification route, returns 0 if successful login, 1 if user doesn't exist, and 2 if incorrect password
+  app.get("/login", async (req, res) => {
+    console.log(req.cookies);
+
+    // obtain a connection from our pool of connections
+    pool.getConnection(async function (err, connection) {
+      if (err) {
+        // if there is an issue obtaining a connection, release the connection instance and log the error
+        logger.error("Problem obtaining MySQL connection", err);
+        res.status(400).send("Problem obtaining MySQL connection");
+      } else {
+        let userName = req.body.userName;
+        let password = req.body.password;
+        let sql1 = "SELECT userID FROM User WHERE userName ='" + userName + "'";
+        connection.query(sql1, function (err, rows, fields) {
+          if (err) {
+            logger.error("Error while fetching values: \n", err);
+            res.status(400).json({
+              data: [],
+              error: "Error obtaining values",
+            });
+          } else {
+            console.log(rows.length);
+            //if the user exists
+            if (rows.length > 0) {
+              const hash = crypto
+                .createHmac("sha256", secret)
+                .update(password)
+                .digest("hex");
+              // Do not print hashes
+              // console.log(hash);
+              let sql2 =
+                "SELECT * FROM User WHERE userName ='" +
+                userName +
+                "' AND " +
+                "password = '" +
+                hash +
+                "'";
+              connection.query(sql2, function (err2, rows2, fields) {
+                connection.release();
+                if (err2) {
+                  logger.error("Cannot find matching user: \n", err2);
+                  res.status(400).json({
+                    data: [],
+                    error: "Error obtaining values",
+                  });
+                } else {
+                  //returns 2 if the password is wrong
+                  let response =
+                    rows2.length > 0
+                      ? {
+                          status: 0,
+                          userID: rows2[0].userID,
+                          restaurantID: rows2[0].restaurantID,
+                        }
+                      : { status: 2 };
+                  res.status(200).json(response);
+                }
+              });
+            }
+            //if the user doesn't exist
+            else {
+              res.status(200).json({ status: 1 });
+            }
+          }
+        });
+      }
     });
   });
 };
