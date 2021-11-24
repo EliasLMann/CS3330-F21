@@ -4,7 +4,7 @@ import React from 'react';
 export const Header = () => {
     return (
         <Navbar className="d-flex flex-row p-2">
-            <a className="navbar-brand" href="#">PopStop</a>
+            <a className="navbar-brand" href="/">PopStop</a>
             <Nav className="">
                 <div className="d-flex flex-row">
                 <Nav.Link href="/profile" 

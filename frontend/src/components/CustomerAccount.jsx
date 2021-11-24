@@ -16,7 +16,6 @@ export class CustomerAccount extends React.Component{
 
     render() {
         return<>
-            <Header />
             <h1>UserName</h1>
             <ReviewList reviews={this.state.reviews}/>
         </>

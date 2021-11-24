@@ -89,7 +89,7 @@ function App () {
       <Route component = {RegisterPage}  path="/register"/>
       <Route component = {SearchPage}  path="/home"/>
       <Route component = {RestaurantProfile}  path="/profile"/>
-      <Route component = {CustomerAccount}  path="/profile"/>
+      {/* <Route component = {CustomerAccount}  path="/profile"/> */}
       <Route component = {Landing} path="/" exact/>
       
     </Router>
