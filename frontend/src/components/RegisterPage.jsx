@@ -33,11 +33,11 @@ export class RegisterPage extends React.Component {
     render(){
 
         return<>
-            <div class="card mt-5 w-75 mx-auto justify-content-center align-items-center">
+            <div className="card mt-5 w-75 mx-auto justify-content-center align-items-center">
 
-            <h1 class="card-header w-100">Register</h1>
+            <h1 className="card-header w-100 pt-2 text-center align-center">Register</h1>
 
-            <form id="registerForm"class="card-body">
+            <form id="registerForm"className="card-body text-center">
                 <label for="email">Enter your email: </label>
                 <input 
                     type="text" id="email" name="email"
