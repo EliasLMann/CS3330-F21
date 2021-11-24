@@ -2,8 +2,11 @@ import React from "react";
 import { RestaurantOwnerForm } from "./RestaurantOwnerForm";
 
 import './registerPage.css';
+import { UserRepository } from "../api/userRespository";
 
 export class RegisterPage extends React.Component {
+
+    userRepo = new UserRepository();
 
     accountType = [
         " ",
@@ -23,7 +26,7 @@ export class RegisterPage extends React.Component {
 
 
     onSubmitClick(){
-
+        this.userRepo.addUser(this.state.userName, this.state.password)
     }
 
 
