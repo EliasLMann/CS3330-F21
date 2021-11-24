@@ -91,7 +91,6 @@ function App () {
       <Route component = {RestaurantProfile}  path="/profile"/>
       <Route component = {CustomerAccount}  path="/profile"/>
       <Route component = {Landing} path="/" exact/>
-      
     </Router>
     
 
