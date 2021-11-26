@@ -1,50 +1,71 @@
-import React from "react";
+import React, { useContext, useState, useEffect } from 'react';
+import { Link, Redirect } from "react-router-dom";
+import { Form, Button, Container } from 'react-bootstrap';
+import { UserRepository } from '../api/userRespository';
 
-export class LoginPage extends React.Component {
 
-    state = {
-        userName: "",
-        password:"",
-        isOwner:false
+const LoginPage = () => {
+    const [username, setUsername] = useState('');
+    const [password, setPassword] = useState('');
+    const [errors, setErrors] = useState({});
+    const [isLoading, setIsLoading] = useState(false);
+    const userRepository = new UserRepository();
+
+    const login = async (e) => {
+        console.log("test");
+        setIsLoading(true);
+        const res = await userRepository.login(username, password);
+        if (res) setIsLoading(false);
+        if (!res.success) {
+            setErrors(res);
+            console.log("fail");
+        } else {
+            <Redirect to="/search"/>
+        }
+    };
+
+    useEffect = () => {
+        res = userRepository.getRestaurants();
     }
 
-    onSubmitClick(){
+    return <>
 
-    }
+        <div className="card mt-5 w-75 mx-auto justify-content-center align-items-center">
 
+            <h1 className="card-header w-100 text-center mx-auto">Login</h1>
 
-    render(){
+            <div className="card-body">
+                <form id="registerForm" className="card-body text-center" onSubmit={login}>
+                    <label for="userName">Username: </label>
+                    <input
+                        type="text" id="userName" name="userName"
+                        value={username}
+                        onChange={(e) => setUsername(e.target.value)}                    >
+                    </input>
 
-        return<>
-        
-            <h1>Login</h1>
+                    <br />
 
-            <form>
-                <label for="userName">Username</label>
-                <input 
-                    type="text" id="userName" name="userName"
-                    value={this.state.userName}
-                    onChange={event => this.setState({userName: event.target.value})}
-                >
-                </input>
+                    <label for="password">Password: </label>
+                    <input
+                        type="password" id="password" name="password"
+                        value={password}
+                        onChange={(e) => setPassword(e.target.value)}
+                    >
+                    </input>
 
-                <br/>
+                    <br />
 
-                <label for="password">Password</label>
-                <input 
-                    type="text" id="password" name="password"
-                    value={this.state.password}
-                    onChange={event => this.setState({password: event.target.value})}
-                >
-                </input>
+                    <button
+                        type="button"
+                        className="btn btn-primary">Log in</button>
+                </form>
+            </div>
+            <p className="text-sm">
+                Don't have an account? <Link to="/register">Register</Link>
+            </p>
+        </div>
 
-                <br/>
-
-                <button
-                    type="button"
-                    onClick={ () => this.onSubmitClick() }>Submit</button>
-            </form>
-        
-        </>;
-    }
+    </>;
 }
+
+export default LoginPage;

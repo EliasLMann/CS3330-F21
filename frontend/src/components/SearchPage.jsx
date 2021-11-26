@@ -1,7 +1,5 @@
 import React from "react";
 
-import { Header } from "./Header";
-
 export class SearchPage extends React.Component {
 
     render() {
