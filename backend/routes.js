@@ -130,7 +130,7 @@ module.exports = function routes(app, logger) {
       } else {
         // if there is no issue obtaining a connection, execute query and release connection
         connection.query(
-          "SELECT menuItemID, mealType FROM `PopStop`.`MenuItem`",
+          "SELECT itemID, mealType FROM `PopStop`.`MenuItem`",
           function (err, rows, fields) {
             connection.release();
             if (err) {
