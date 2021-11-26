@@ -235,7 +235,7 @@ module.exports = function routes(app, logger) {
     });
 
     // for user story 4.3, 8.2, 9.3, 9.4, and 10.2
-    // GET /menuitem/{menuItemID} - NOT TESTED
+    // GET /menuitem/{menuItemID}
     app.get('/menuitem', (req, res) => {
       // obtain a connection from our pool of connections
       pool.getConnection(function (err, connection){
