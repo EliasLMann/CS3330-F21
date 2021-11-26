@@ -42,6 +42,8 @@
 
 ## PUT
 
+- [x] Change rating in Menu by ID
+
 - [x] Change all in menuItem by ID
 - [x] Change each individual in menuItem by ID
 
