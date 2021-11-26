@@ -2,8 +2,11 @@ import React from "react";
 import { RestaurantOwnerForm } from "./RestaurantOwnerForm";
 
 import './registerPage.css';
+import { UserRepository } from "../api/userRespository";
 
 export class RegisterPage extends React.Component {
+
+    userRepo = new UserRepository();
 
     accountType = [
         " ",
@@ -23,18 +26,18 @@ export class RegisterPage extends React.Component {
 
 
     onSubmitClick(){
-
+        this.userRepo.addUser(this.state.userName, this.state.password)
     }
 
 
     render(){
 
         return<>
-            <div class="card mt-5 w-75 mx-auto justify-content-center align-items-center">
+            <div className="card mt-5 w-75 mx-auto justify-content-center align-items-center">
 
-            <h1 class="card-header w-100">Register</h1>
+            <h1 className="card-header w-100 pt-2 text-center align-center">Register</h1>
 
-            <form id="registerForm"class="card-body">
+            <form id="registerForm"className="card-body text-center">
                 <label for="email">Enter your email: </label>
                 <input 
                     type="text" id="email" name="email"
@@ -57,7 +60,7 @@ export class RegisterPage extends React.Component {
 
                 <label for="password">Password: </label>
                 <input 
-                    type="text" id="password" name="password"
+                    type="password" id="password" name="password"
                     value={this.state.password}
                     onChange={event => this.setState({password: event.target.value})}
                 >
@@ -67,7 +70,7 @@ export class RegisterPage extends React.Component {
 
                 <label for="redoPassword">Verify password: </label>
                 <input 
-                    type="text" id="redoPassword" name="redoPassword"
+                    type="password" id="redoPassword" name="redoPassword"
                     value={this.state.redoPassword}
                     onChange={event => this.setState({redoPassword: event.target.value})}
                 >
