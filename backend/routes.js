@@ -130,7 +130,7 @@ module.exports = function routes(app, logger) {
       } else {
         // if there is no issue obtaining a connection, execute query and release connection
         connection.query(
-          "SELECT menuItemID, mealType FROM `PopStop`.`MenuItem`",
+          "SELECT itemID, mealType FROM `PopStop`.`MenuItem`",
           function (err, rows, fields) {
             connection.release();
             if (err) {
@@ -148,6 +148,7 @@ module.exports = function routes(app, logger) {
         );
       }
     });
+  });
 
     // GET /menu
     app.get('/menu', (req, res) => {
@@ -219,8 +220,8 @@ module.exports = function routes(app, logger) {
         } else {
           // if there is no issue obtaining a connection, execute query and release connection
           var photoNew = req.param("photoNew")
-          var photoOld = req.param("photoOld")
-          connection.query('UPDATE PopStop.MenuItem SET photo = ? WHERE photo = ?', [photoNew,photoOld], function (err, rows, fields) {
+          var itemID = req.param("itemID")
+          connection.query('UPDATE PopStop.MenuItem SET photo = ? WHERE itemID = ?', [photoNew,itemID], function (err, rows, fields) {
             connection.release();
             if (err) {
               // if there is an error with the query, log the error
@@ -233,6 +234,7 @@ module.exports = function routes(app, logger) {
         );
       }
     });
+  });
 
     // for user story 4.3, 8.2, 9.3, 9.4, and 10.2
     // GET /menuitem/{menuItemID}
@@ -245,8 +247,8 @@ module.exports = function routes(app, logger) {
           res.status(400).send('Problem obtaining MySQL connection'); 
         } else {
           // if there is no issue obtaining a connection, execute query and release connection
-	        var menuItemID = req.param("menuItemID")
-          connection.query('SELECT * FROM PopStop.MenuItem WHERE menuItemID =' + menuItemID, function (err, rows, fields) {
+	        var itemID = req.param("itemID")
+          connection.query('SELECT * FROM PopStop.MenuItem WHERE itemID =' + itemID, function (err, rows, fields) {
             connection.release();
             if (err) {
               logger.error("Error while fetching values: \n", err);
@@ -258,6 +260,37 @@ module.exports = function routes(app, logger) {
               res.status(200).json({
                 "data": rows
               });
+            }
+          });
+        }
+      });
+    });
+
+    // for user story 3.1
+    // POST /postmenu
+    // takes all params and creates an associated menu
+    app.post('/postmenu', (req, res) => {
+      console.log(req.body.product);
+      // obtain a connection from our pool of connections
+      pool.getConnection(function (err, connection){
+        if(err){
+          // if there is an issue obtaining a connection, release the connection instance and log the error
+          logger.error('Problem obtaining MySQL connection',err)
+          res.status(400).send('Problem obtaining MySQL connection'); 
+        } else {
+          // if there is no issue obtaining a connection, execute query and release connection
+          var restaurantID = req.param('restaurantID');
+          var body = req.param('body');
+          var rating = req.param('rating');
+          connection.query('INSERT INTO `PopStop`.`Menu`(restaurantID, body, rating) VALUES(?,?,?)', [restaurantID,body,rating],
+          function (err, rows, fields) {
+            connection.release();
+            if (err) {
+              // if there is an error with the query, log the error
+              logger.error("Problem inserting into Menu table: \n", err);
+              res.status(400).send('Problem inserting into table'); 
+            } else {
+              res.status(200).send(`added ${req.body.product} to the table!`);
             }
           });
         }
