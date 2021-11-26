@@ -1,8 +1,9 @@
 import axios from 'axios';
+const url = "http://localhost:8000"
 
 export class UserRepository {
 
-  url = "http://localhost:8000"
+  
 
 
   /*
@@ -24,7 +25,7 @@ export class UserRepository {
 
   async login(username, password) {
     const errors = {};
-    const { data, status } = await axios.get(URL + '/login', {
+    const { data, status } = await axios.get('http://localhost:8000' + '/login', {
       username,
       password
     });
@@ -49,14 +50,12 @@ export class UserRepository {
   }
 
   async getRestaurants() {
-    const errors = { sucess: false };
-    const { data, status } = await axios.get(URL + '/restaurants');
-
-    console.log("testingti")
+    const errors = { success: false };
+    const { data, status } = await axios.get('http://localhost:8000/restaurants');
     if (status >= 201) {
       console.log(data);
       errors.reason = 'Bad Request';
-    } else errors.sucess = true;
+    } else errors.success = true;
 
     return [data, errors];
   }

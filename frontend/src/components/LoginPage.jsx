@@ -18,15 +18,18 @@ const LoginPage = () => {
         if (res) setIsLoading(false);
         if (!res.success) {
             setErrors(res);
-            console.log("fail");
+            alert("fail");
+            <Redirect to="/login" />
         } else {
             <Redirect to="/search"/>
+            console.log("success")
         }
+
     };
 
-    useEffect = () => {
-        res = userRepository.getRestaurants();
-    }
+    useEffect(() => {
+        let res = userRepository.getRestaurants();
+      });
 
     return <>
 
@@ -56,7 +59,7 @@ const LoginPage = () => {
                     <br />
 
                     <button
-                        type="button"
+                        type="submit"
                         className="btn btn-primary">Log in</button>
                 </form>
             </div>
