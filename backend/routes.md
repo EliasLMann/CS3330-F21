@@ -2,10 +2,11 @@
 
 ## GET
 
-- [x] All restaurants
-- [x] Restaurant by location
-- [x] Restaurant by name
-- [x] Restaurant by menuID
+- ### Restaurant
+- - [x] All restaurants
+- - [x] Restaurant by location
+- - [x] Restaurant by name
+- - [x] Restaurant by menuID
 - [x] Restaurant by ownerID
 - [x] Restaurant by hoursID
 - [x] Restaurant by description
@@ -15,11 +16,17 @@
 - [x] Restaurant by socialMediaName
 - [x] Restaurant by socialMediaURL
 
-- [x] All Menu
-- [x] All MenuItem
+### Menu
 
-- [x] Menu Item IDs by cuisine type
+- [x] All Menu
+
+### MenuItem
+
+- [x] All MenuItem
+- [xx] Menu Item IDs by cuisine type
 - [x] Menu item By ID
+
+### Misc
 
 - [x] Login
 
@@ -39,6 +46,8 @@
 - [x] Change each indivual in menuItem by ID
 
 - [x] Add a restaurantID to User
+
+- [xx] Add a new photo to
 
 ## DELETE
 
