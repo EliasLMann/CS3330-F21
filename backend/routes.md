@@ -36,7 +36,7 @@
 ## PUT
 
 - [x] Change all in menuItem by ID
-- [x] Change each indivual in menuItem by ID
+- [x] Change each individual in menuItem by ID
 
 - [x] Add a restaurantID to User
 
