@@ -14,7 +14,9 @@ import { Landing } from './components/Landing';
 import { SearchPage } from './components/SearchPage';
 import { RestaurantProfile } from './components/RestaurantProfile';
 import { Header } from './components/Header';
-import LoginPage from './components/LoginPage';
+import { CustomerAccount } from './components/CustomerAccount';
+import { AddMenu } from './components/AddMenu';
+import {Landing } from './components/Landing';
 
 // React functional component
 function App () {
