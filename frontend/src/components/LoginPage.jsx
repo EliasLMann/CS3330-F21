@@ -1,56 +1,74 @@
-import React from "react";
-
-export class LoginPage extends React.Component {
-
-    state = {
-        userName: "",
-        password:"",
-        isOwner:false
-    }
-
-    onSubmitClick(){
-
-    }
+import React, { useContext, useState, useEffect } from 'react';
+import { Link, Redirect } from "react-router-dom";
+import { Form, Button, Container } from 'react-bootstrap';
+import { UserRepository } from '../api/userRespository';
 
 
-    render(){
+const LoginPage = () => {
+    const [username, setUsername] = useState('');
+    const [password, setPassword] = useState('');
+    const [errors, setErrors] = useState({});
+    const [isLoading, setIsLoading] = useState(false);
+    const userRepository = new UserRepository();
 
-        return<>
+    const login = async (e) => {
+        console.log("test");
+        setIsLoading(true);
+        const res = await userRepository.login(username, password);
+        if (res) setIsLoading(false);
+        if (!res.success) {
+            setErrors(res);
+            alert("fail");
+            <Redirect to="/login/" />
+        } else {
+            <Redirect to="/search"/>
+            console.log("success")
+        }
 
-            <div className="card mt-5 w-75 mx-auto justify-content-center align-items-center">
+    };
 
-                <h1 className="card-header w-100 text-center mx-auto">Login</h1>
+    useEffect(() => {
+        let res = userRepository.getRestaurants();
+      });
 
-                <div className="card-body">
-                    <form id="registerForm"className="card-body text-center">
-                        <label for="userName">Username: </label>
-                        <input 
-                            type="text" id="userName" name="userName"
-                            value={this.state.email}
-                            onChange={event => this.setState({userName: event.target.value})}
-                        >
-                        </input>
+    return <>
 
-                        <br/>
+        <div className="card mt-5 w-75 mx-auto justify-content-center align-items-center">
 
-                        <label for="password">Password: </label>
-                        <input 
-                            type="text" id="password" name="password"
-                            value={this.state.password}
-                            onChange={event => this.setState({password: event.target.value})}
-                        >
-                        </input>
+            <h1 className="card-header w-100 text-center mx-auto">Login</h1>
 
-                        <br/>
+            <div className="card-body">
+                <form id="registerForm" className="card-body text-center" onSubmit={login}>
+                    <label for="userName">Username: </label>
+                    <input
+                        type="text" id="userName" name="userName"
+                        value={username}
+                        onChange={(e) => setUsername(e.target.value)}                    >
+                    </input>
 
-                        <button
-                            type="button"
-                            onClick={ () => this.onSubmitClick() }
-                            className="btn btn-primary">Log in!</button>
-                    </form>
-                </div>
+                    <br />
+
+                    <label for="password">Password: </label>
+                    <input
+                        type="password" id="password" name="password"
+                        value={password}
+                        onChange={(e) => setPassword(e.target.value)}
+                    >
+                    </input>
+
+                    <br />
+
+                    <button
+                        type="submit"
+                        className="btn btn-primary">Log in</button>
+                </form>
             </div>
-        
-        </>;
-    }
+            <p className="text-sm">
+                Don't have an account? <Link to="/register">Register</Link>
+            </p>
+        </div>
+
+    </>;
 }
+
+export default LoginPage;

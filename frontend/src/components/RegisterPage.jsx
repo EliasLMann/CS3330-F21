@@ -50,7 +50,7 @@ export class RegisterPage extends React.Component {
 
                 <label for="userName">Username: </label>
                 <input 
-                    type="text" id="userName" name="userName"
+                    type="password" id="userName" name="userName"
                     value={this.state.userName}
                     onChange={event => this.setState({userName: event.target.value})}
                 >

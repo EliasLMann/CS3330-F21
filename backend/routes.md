@@ -47,6 +47,9 @@
 - [x] Change all in menuItem by ID - melanie
 - [x] Change each individual in menuItem by ID - melanie
 
+- [x] Change all in menuItem by ID
+- [x] Change each individual in menuItem by ID
+
 - [x] Add a restaurantID to User
 
 - [xx] Update photo

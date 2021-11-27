@@ -9,14 +9,14 @@ import {
   Link 
 } from 'react-router-dom';
 
-import { LoginPage } from './components/LoginPage';
+import Login, { LoginPage } from './components/LoginPage';
 import { RegisterPage } from './components/RegisterPage';
-import { Landing } from './components/Landing';
 import { SearchPage } from './components/SearchPage';
 import { RestaurantProfile } from './components/RestaurantProfile';
 import { Header } from './components/Header';
 import { CustomerAccount } from './components/CustomerAccount';
 import { AddMenu } from './components/AddMenu';
+import {Landing } from './components/Landing';
 
 // React functional component
 function App () {
@@ -27,7 +27,7 @@ function App () {
   // ENTER YOUR EC2 PUBLIC IP/URL HERE
   const ec2_url = 'group2.c1smrv7pnl1w.us-east-2.rds.amazonaws.com'
   // CHANGE THIS TO TRUE IF HOSTING ON EC2, MAKE SURE TO ADD IP/URL ABOVE
-  const ec2 = true;
+  const ec2 = false;
   // USE localhost OR ec2_url ACCORDING TO ENVIRONMENT
   const url = ec2 ? ec2_url : 'localhost'
 
@@ -86,12 +86,11 @@ function App () {
 
     <Header />
     <Router>
-      <Route component = {LoginPage}  path="/login"/>
+      <Route component = {Login}  path="/login"/>
       <Route component = {RegisterPage}  path="/register"/>
       <Route component = {SearchPage}  path="/home"/>
       <Route component = {RestaurantProfile}  path="/profile"/>
       <Route component = {AddMenu} path="/addMenu"/>
-      {/* <Route component = {CustomerAccount}  path="/profile"/> */}
       <Route component = {Landing} path="/" exact/>
     </Router>
     
