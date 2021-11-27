@@ -3,7 +3,19 @@ const url = "http://localhost:8000"
 
 export class UserRepository {
 
-  
+  url = "http://localhost:8000"
+
+  addUser(userName, password){
+    return new Promise((resolve, reject) => {
+
+      axios.post(`${this.url}/register`, {userName, password}, this.config)
+            .then(x => resolve(x.data))
+            .catch(x => {
+                alert(x);
+                reject(x);
+            })
+    })
+  }
 
 
   /*
