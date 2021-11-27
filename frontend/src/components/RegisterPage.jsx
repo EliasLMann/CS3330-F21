@@ -28,7 +28,7 @@ export class RegisterPage extends React.Component {
 
 
     onSubmitClick(){
-        if(this.accountType == "Restaurant Owner"){
+        if(this.accountType === "Restaurant Owner"){
             this.userRepo.addRestaurant(this.restaurantData);
             this.userRepo.addUser(this.state.userName, this.state.password, this.state.accountType)
 

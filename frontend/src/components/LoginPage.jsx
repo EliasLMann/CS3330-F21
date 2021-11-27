@@ -1,7 +1,8 @@
 import React, { useContext, useState, useEffect } from 'react';
-import { Link, Redirect, useHistory } from "react-router-dom";
-import { Form, Button, Container } from 'react-bootstrap';
+import { Link, useHistory } from "react-router-dom";
+import { Button, Container } from 'react-bootstrap';
 import { UserRepository } from '../api/userRespository';
+import { UserContext } from '../context';
 
 
 const LoginPage = () => {
@@ -9,6 +10,7 @@ const LoginPage = () => {
     const [password, setPassword] = useState('');
     const [errors, setErrors] = useState({});
     const [isLoading, setIsLoading] = useState(false);
+    const [userContext, setUserContext] = useContext(UserContext);
     const history = useHistory();
     const userRepository = new UserRepository();
 
@@ -25,18 +27,18 @@ const LoginPage = () => {
         if (res) setIsLoading(false);
         if (!res.success) {
             setErrors(res);
-            console.log(errors);
         } else {
+            setUserContext(userRepository.currentUser());
             history.push('/');
         }
     };
 
     useEffect(() => {
-        // const user = userContext;
-        // if (user.username) {
-        //     console.log(user);
-        //     history.push('/');
-        // }
+        const user = userContext;
+        if (user.username) {
+            console.log(user);
+            history.push('/');
+        }
     });
 
     return <>
