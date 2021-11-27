@@ -5,10 +5,14 @@ export class UserRepository {
 
   url = "http://localhost:8000"
 
-  addUser(userName, password){
+  addUser = async (userName, password, accountType) => {
     return new Promise((resolve, reject) => {
 
-      axios.post(`${this.url}/register`, {userName, password}, this.config)
+      if(accountType == "Restaurant Owner"){
+        
+      }
+
+      axios.post(`${this.url}/register`, {userName: userName, password: password})
             .then(x => resolve(x.data))
             .catch(x => {
                 alert(x);
