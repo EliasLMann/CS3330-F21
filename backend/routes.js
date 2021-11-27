@@ -130,7 +130,7 @@ module.exports = function routes(app, logger) {
       } else {
         // if there is no issue obtaining a connection, execute query and release connection
         connection.query(
-          "SELECT menuItemID, mealType FROM `PopStop`.`MenuItem`",
+          "SELECT itemID, mealType FROM `PopStop`.`MenuItem`",
           function (err, rows, fields) {
             connection.release();
             if (err) {
@@ -148,6 +148,7 @@ module.exports = function routes(app, logger) {
         );
       }
     });
+  });
 
     // GET /menu
     app.get('/menu', (req, res) => {
@@ -219,8 +220,8 @@ module.exports = function routes(app, logger) {
         } else {
           // if there is no issue obtaining a connection, execute query and release connection
           var photoNew = req.param("photoNew")
-          var photoOld = req.param("photoOld")
-          connection.query('UPDATE PopStop.MenuItem SET photo = ? WHERE photo = ?', [photoNew, photoOld], function (err, rows, fields) {
+          var itemID = req.param("itemID")
+          connection.query('UPDATE PopStop.MenuItem SET photo = ? WHERE itemID = ?', [photoNew,itemID], function (err, rows, fields) {
             connection.release();
             if (err) {
               // if there is an error with the query, log the error
@@ -230,9 +231,170 @@ module.exports = function routes(app, logger) {
               res.status(200).send(`added ${req.body.product} to the table!`);
             }
           }
-          );
+        );
+      }
+    });
+  });
+
+    // for user story 4.3, 8.2, 9.3, 9.4, and 10.2
+    // GET /menuitem/{menuItemID}
+    app.get('/menuitem', (req, res) => {
+      // obtain a connection from our pool of connections
+      pool.getConnection(function (err, connection){
+        if(err){
+          // if there is an issue obtaining a connection, release the connection instance and log the error
+          logger.error('Problem obtaining MySQL connection',err)
+          res.status(400).send('Problem obtaining MySQL connection'); 
+        } else {
+          // if there is no issue obtaining a connection, execute query and release connection
+	        var itemID = req.param("itemID")
+          connection.query('SELECT * FROM PopStop.MenuItem WHERE itemID =' + itemID, function (err, rows, fields) {
+            connection.release();
+            if (err) {
+              logger.error("Error while fetching values: \n", err);
+              res.status(400).json({
+                "data": [],
+                "error": "Error obtaining values"
+              })
+            } else {
+              res.status(200).json({
+                "data": rows
+              });
+            }
+          });
         }
       });
+    });
+
+    // for user story 3.1
+    // POST /postmenu
+    // takes all params and creates an associated menu
+    app.post('/postmenu', (req, res) => {
+      console.log(req.body.product);
+      // obtain a connection from our pool of connections
+      pool.getConnection(function (err, connection){
+        if(err){
+          // if there is an issue obtaining a connection, release the connection instance and log the error
+          logger.error('Problem obtaining MySQL connection',err)
+          res.status(400).send('Problem obtaining MySQL connection'); 
+        } else {
+          // if there is no issue obtaining a connection, execute query and release connection
+          var restaurantID = req.param('restaurantID');
+          var body = req.param('body');
+          var rating = req.param('rating');
+          connection.query('INSERT INTO `PopStop`.`Menu`(restaurantID, body, rating) VALUES(?,?,?)', [restaurantID,body,rating],
+          function (err, rows, fields) {
+            connection.release();
+            if (err) {
+              // if there is an error with the query, log the error
+              logger.error("Problem inserting into Menu table: \n", err);
+              res.status(400).send('Problem inserting into table'); 
+            } else {
+              res.status(200).send(`added ${req.body.product} to the table!`);
+            }
+          });
+        }
+      });
+    });
+
+    // for user story 6.1
+  // POST MenuItem
+  app.post('/postmenuitem', (req, res) => {
+    console.log(req.body.product);
+    // obtain a connection from our pool of connections
+    pool.getConnection(function (err, connection){
+      if(err){
+        // if there is an issue obtaining a connection, release the connection instance and log the error
+        logger.error('Problem obtaining MySQL connection',err)
+        res.status(400).send('Problem obtaining MySQL connection'); 
+      } else {
+        // if there is no issue obtaining a connection, execute query and release connection
+        var menuID = req.param('menuID');
+        var price = req.param('price');
+        var itemLink = req.param('itemLink');
+        var mealType = req.param('mealType');
+        var likes = req.param('likes');
+        var dislikes = req.param('dislikes');
+        var featured = req.param('featured');
+        var photo = req.param('photo');
+        var description = req.param('description');
+        connection.query('INSERT INTO `PopStop`.`MenuItem` (menuID, price, itemLink, mealType, likes, dislikes, featured, photo, description) VALUES(?,?,?,?,?,?,?,?,?)', 
+        [menuID, price, itemLink, mealType, likes, dislikes, featured, photo, description], 
+        function (err, rows, fields) {
+          connection.release();
+          if (err) {
+            // if there is an error with the query, log the error
+            logger.error("Problem inserting into MenuItem table: \n", err);
+            res.status(400).send('Problem inserting into table'); 
+          } else {
+            res.status(200).send(`added ${req.body.product} to the table!`);
+          }
+        });
+      }
+    });
+  });  
+  
+  // ============================================GET /restaurants===================================================
+  app.get("/restaurants", (req, res) => {
+    // obtain a connection from our pool of connections
+    pool.getConnection(function (err, connection) {
+      if (err) {
+        // if there is an issue obtaining a connection, release the connection instance and log the error
+        logger.error("Problem obtaining MySQL connection", err);
+        res.status(400).send("Problem obtaining MySQL connection");
+      } else {
+        // if there is no issue obtaining a connection, execute query and release connection
+        connection.query(
+          "SELECT * FROM `PopStop`.`Restaurant`",
+          function (err, rows, fields) {
+            connection.release();
+            if (err) {
+              logger.error("Error while fetching values: \n", err);
+              res.status(400).json({
+                data: [],
+                error: "Error obtaining values",
+              });
+            } else {
+              res.status(200).json({
+                data: rows,
+              });
+            }
+          }
+        );
+      }
+    });
+  });
+
+  //===================================GET locations of restaurants========================================
+  app.get("/restaurants/locations", (req, res) => {
+    // obtain a connection from our pool of connections
+    pool.getConnection(function (err, connection) {
+      if (err) {
+        // if there is an issue obtaining a connection, release the connection instance and log the error
+        logger.error("Problem obtaining MySQL connection", err);
+        res.status(400).send("Problem obtaining MySQL connection");
+      } else {
+        // if there is no issue obtaining a connection, execute query and release connection
+        connection.query(
+          "SELECT location FROM `PopStop`.`Restaurant`",
+          function (err, rows, fields) {
+            connection.release();
+            if (err) {
+              logger.error("Error while fetching values: \n", err);
+              res.status(400).json({
+                data: [],
+                error: "Error obtaining values",
+              });
+            } else {
+              res.status(200).json({
+                data: rows,
+              });
+            }
+          }
+        );
+      }
+    });
+  });
 
       // for user story 4.3, 8.2, 9.3, 9.4, and 10.2
       // GET /menuitem/{menuItemID}
