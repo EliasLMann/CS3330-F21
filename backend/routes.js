@@ -206,6 +206,34 @@ module.exports = function routes(app, logger) {
       });
     });
 
+    // GET /topmenuitem
+    app.get('/topmenuitem', (req, res) => {
+      // obtain a connection from our pool of connections
+      pool.getConnection(function (err, connection){
+        if(err){
+          // if there is an issue obtaining a connection, release the connection instance and log the error
+          logger.error('Problem obtaining MySQL connection',err)
+          res.status(400).send('Problem obtaining MySQL connection'); 
+        } else {
+          // if there is no issue obtaining a connection, execute query and release connection
+          connection.query('SELECT * FROM `PopStop`.`MenuItem` order by (likes - dislikes) desc limit 5', function (err, rows, fields) {
+            connection.release();
+            if (err) {
+              logger.error("Error while fetching values: \n", err);
+              res.status(400).json({
+                "data": [],
+                "error": "Error obtaining values"
+              })
+            } else {
+              res.status(200).json({
+                "data": rows
+              });
+            }
+          });
+        }
+      });
+    });
+
     // user story 4.1
     // UPDATE MenuItem to change photo
     // takes photo url and updates photo url
@@ -237,7 +265,7 @@ module.exports = function routes(app, logger) {
   });
 
     // for user story 4.3, 8.2, 9.3, 9.4, and 10.2
-    // GET /menuitem/{menuItemID}
+    // GET /menuitem/{itemID}
     app.get('/menuitem', (req, res) => {
       // obtain a connection from our pool of connections
       pool.getConnection(function (err, connection){
@@ -333,7 +361,346 @@ module.exports = function routes(app, logger) {
       }
     });
   });  
-  
+
+  // UPDATE Menu to change rating
+  // takes menuID and the new rating and updates the row
+  app.put('/updaterating', (req, res) => {
+    console.log(req.body.product);
+    // obtain a connection from our pool of connections
+    pool.getConnection(function (err, connection){
+      if(err){
+        // if there is an issue obtaining a connection, release the connection instance and log the error
+        logger.error('Problem obtaining MySQL connection',err)
+        res.status(400).send('Problem obtaining MySQL connection'); 
+      } else {
+        // if there is no issue obtaining a connection, execute query and release connection
+	      var ratingNew = req.param('ratingNew')
+	      var menuID = req.param('menuID')
+        connection.query('UPDATE `PopStop`.`Menu` SET rating = ? WHERE menuID = ?', [ratingNew,menuID], function (err, rows, fields) {
+          connection.release();
+          if (err) {
+            // if there is an error with the query, log the error
+            logger.error("Problem inserting into Menu table: \n", err);
+            res.status(400).send('Problem inserting into table'); 
+          } else {
+            res.status(200).send(`updated ${req.param('ratingNew')} in the table!`);
+          }
+        });
+      }
+    });
+  });
+
+  // PUT /updateitem/{itemID}
+  app.put('/updateitem', (req, res) => {
+    console.log(req.body.product);
+    // obtain a connection from our pool of connections
+    pool.getConnection(function (err, connection){
+      if(err){
+        // if there is an issue obtaining a connection, release the connection instance and log the error
+        logger.error('Problem obtaining MySQL connection',err)
+        res.status(400).send('Problem obtaining MySQL connection'); 
+      } else {
+        // if there is no issue obtaining a connection, execute query and release connection
+        var menuID = req.param('menuID');
+        var itemID = req.param('itemID');
+        var price = req.param('price');
+        var itemLink = req.param('itemLink');
+        var mealType = req.param('mealType');
+        var likes = req.param('likes');
+        var dislikes = req.param('dislikes');
+        var featured = req.param('featured');
+        var photo = req.param('photo');
+        var description = req.param('description');
+        connection.query('UPDATE `PopStop`.`MenuItem` SET menuID = ?, price = ?, itemLink = ?, mealType = ?, likes = ?, dislikes = ?, featured = ?, photo = ?, description = ? WHERE itemID = ?', 
+        [menuID, price, itemLink, mealType, likes, dislikes, featured, photo, description, itemID], 
+        function (err, rows, fields) {
+          connection.release();
+          if (err) {
+            // if there is an error with the query, log the error
+            logger.error("Problem inserting into MenuItem table: \n", err);
+            res.status(400).send('Problem inserting into table'); 
+          } else {
+            res.status(200).send(`changed item ${req.param("itemID")} in the table!`);
+          }
+        });
+      }
+    });
+  }); 
+
+  // for user story 6.2
+  // UPDATE /updateitemlink/{itemID} for particular menuItem
+  app.put('/updateitemlink', (req, res) => {
+    console.log(req.body.product);
+    // obtain a connection from our pool of connections
+    pool.getConnection(function (err, connection){
+      if(err){
+        // if there is an issue obtaining a connection, release the connection instance and log the error
+        logger.error('Problem obtaining MySQL connection',err)
+        res.status(400).send('Problem obtaining MySQL connection'); 
+      } else {
+        // if there is no issue obtaining a connection, execute query and release connection
+	      var itemID = req.param("itemID")
+	      var itemLink = req.param("itemLink")
+        connection.query('UPDATE `PopStop`.`MenuItem` SET itemLink = ? WHERE itemID = ?', [itemLink,itemID], function (err, rows, fields) {
+          connection.release();
+          if (err) {
+            // if there is an error with the query, log the error
+            logger.error("Problem editing MenuItem table: \n", err);
+            res.status(400).send('Problem editing table'); 
+          } else {
+            res.status(200).send(`changed ${req.body.product} in the table!`);
+          }
+        });
+      }
+    });
+  });
+
+   // for user story 6.2
+  // UPDATE /updatemealtype/{itemID} for particular menuItem
+  app.put('/updatemealtype', (req, res) => {
+    console.log(req.body.product);
+    // obtain a connection from our pool of connections
+    pool.getConnection(function (err, connection){
+      if(err){
+        // if there is an issue obtaining a connection, release the connection instance and log the error
+        logger.error('Problem obtaining MySQL connection',err)
+        res.status(400).send('Problem obtaining MySQL connection'); 
+      } else {
+        // if there is no issue obtaining a connection, execute query and release connection
+	      var itemID = req.param("itemID")
+	      var mealType = req.param("mealType")
+        connection.query('UPDATE `PopStop`.`MenuItem` SET mealType = ? WHERE itemID = ?', [mealType,itemID], function (err, rows, fields) {
+          connection.release();
+          if (err) {
+            // if there is an error with the query, log the error
+            logger.error("Problem editing MenuItem table: \n", err);
+            res.status(400).send('Problem editing table'); 
+          } else {
+            res.status(200).send(`changed item ${req.param("itemID")} in the table!`);
+          }
+        });
+      }
+    });
+  }); 
+
+  // for user story 6.2
+  // UPDATE /updatelikes/{itemID} for particular menuItem
+  app.put('/updatelikes', (req, res) => {
+    console.log(req.body.product);
+    // obtain a connection from our pool of connections
+    pool.getConnection(function (err, connection){
+      if(err){
+        // if there is an issue obtaining a connection, release the connection instance and log the error
+        logger.error('Problem obtaining MySQL connection',err)
+        res.status(400).send('Problem obtaining MySQL connection'); 
+      } else {
+        // if there is no issue obtaining a connection, execute query and release connection
+	      var itemID = req.param("itemID")
+	      var likes = req.param("likes")
+        connection.query('UPDATE `PopStop`.`MenuItem` SET likes = ? WHERE itemID = ?', [likes,itemID], function (err, rows, fields) {
+          connection.release();
+          if (err) {
+            // if there is an error with the query, log the error
+            logger.error("Problem editing MenuItem table: \n", err);
+            res.status(400).send('Problem editing table'); 
+          } else {
+            res.status(200).send(`changed item ${req.param("itemID")} in the table!`);
+          }
+        });
+      }
+    });
+  });
+
+  // for user story 6.2
+  // UPDATE /updatedislikes/{itemID} for particular menuItem
+  app.put('/updatedislikes', (req, res) => {
+    console.log(req.body.product);
+    // obtain a connection from our pool of connections
+    pool.getConnection(function (err, connection){
+      if(err){
+        // if there is an issue obtaining a connection, release the connection instance and log the error
+        logger.error('Problem obtaining MySQL connection',err)
+        res.status(400).send('Problem obtaining MySQL connection'); 
+      } else {
+        // if there is no issue obtaining a connection, execute query and release connection
+	      var itemID = req.param("itemID")
+	      var dislikes = req.param("dislikes")
+        connection.query('UPDATE `PopStop`.`MenuItem` SET dislikes = ? WHERE itemID = ?', [dislikes,itemID], function (err, rows, fields) {
+          connection.release();
+          if (err) {
+            // if there is an error with the query, log the error
+            logger.error("Problem editing MenuItem table: \n", err);
+            res.status(400).send('Problem editing table'); 
+          } else {
+            res.status(200).send(`changed item ${req.param("itemID")} in the table!`);
+          }
+        });
+      }
+    });
+  });  
+
+  // UPDATE /incrementlikes/{itemID} for particular menuItem
+  app.put('/incrementlikes', (req, res) => {
+    console.log(req.body.product);
+    // obtain a connection from our pool of connections
+    pool.getConnection(function (err, connection){
+      if(err){
+        // if there is an issue obtaining a connection, release the connection instance and log the error
+        logger.error('Problem obtaining MySQL connection',err)
+        res.status(400).send('Problem obtaining MySQL connection'); 
+      } else {
+        // if there is no issue obtaining a connection, execute query and release connection
+	      var itemID = req.param("itemID")
+        connection.query('UPDATE `PopStop`.`MenuItem` SET likes = (likes + 1) WHERE itemID = ?', itemID, function (err, rows, fields) {
+          connection.release();
+          if (err) {
+            // if there is an error with the query, log the error
+            logger.error("Problem editing MenuItem table: \n", err);
+            res.status(400).send('Problem editing table'); 
+          } else {
+            res.status(200).send(`changed item ${req.param("itemID")} in the table!`);
+          }
+        });
+      }
+    });
+  });
+
+  // UPDATE /incrementdislikes/{itemID} for particular menuItem
+  app.put('/incrementdislikes', (req, res) => {
+    console.log(req.body.product);
+    // obtain a connection from our pool of connections
+    pool.getConnection(function (err, connection){
+      if(err){
+        // if there is an issue obtaining a connection, release the connection instance and log the error
+        logger.error('Problem obtaining MySQL connection',err)
+        res.status(400).send('Problem obtaining MySQL connection'); 
+      } else {
+        // if there is no issue obtaining a connection, execute query and release connection
+	      var itemID = req.param("itemID")
+        connection.query('UPDATE `PopStop`.`MenuItem` SET dislikes = (dislikes + 1) WHERE itemID = ?', itemID, function (err, rows, fields) {
+          connection.release();
+          if (err) {
+            // if there is an error with the query, log the error
+            logger.error("Problem editing MenuItem table: \n", err);
+            res.status(400).send('Problem editing table'); 
+          } else {
+            res.status(200).send(`changed item ${req.param("itemID")} in the table!`);
+          }
+        });
+      }
+    });
+  });  
+
+  // for user story 6.2
+  // UPDATE /updatefeatured/{itemID} for particular menuItem
+  app.put('/updatefeatured', (req, res) => {
+    console.log(req.body.product);
+    // obtain a connection from our pool of connections
+    pool.getConnection(function (err, connection){
+      if(err){
+        // if there is an issue obtaining a connection, release the connection instance and log the error
+        logger.error('Problem obtaining MySQL connection',err)
+        res.status(400).send('Problem obtaining MySQL connection'); 
+      } else {
+        // if there is no issue obtaining a connection, execute query and release connection
+	      var itemID = req.param("itemID")
+	      var featured = req.param("featured")
+        connection.query('UPDATE `PopStop`.`MenuItem` SET featured = ? WHERE itemID = ?', [featured,itemID], function (err, rows, fields) {
+          connection.release();
+          if (err) {
+            // if there is an error with the query, log the error
+            logger.error("Problem editing MenuItem table: \n", err);
+            res.status(400).send('Problem editing table'); 
+          } else {
+            res.status(200).send(`changed item ${req.param("itemID")} in the table!`);
+          }
+        });
+      }
+    });
+  });
+
+  // for user story 6.2
+  // UPDATE /updatedescription/{itemID} for particular menuItem
+  app.put('/updatedescription', (req, res) => {
+    console.log(req.body.product);
+    // obtain a connection from our pool of connections
+    pool.getConnection(function (err, connection){
+      if(err){
+        // if there is an issue obtaining a connection, release the connection instance and log the error
+        logger.error('Problem obtaining MySQL connection',err)
+        res.status(400).send('Problem obtaining MySQL connection'); 
+      } else {
+        // if there is no issue obtaining a connection, execute query and release connection
+	      var itemID = req.param("itemID")
+	      var description = req.param("description")
+        connection.query('UPDATE `PopStop`.`MenuItem` SET description = ? WHERE itemID = ?', [description,itemID], function (err, rows, fields) {
+          connection.release();
+          if (err) {
+            // if there is an error with the query, log the error
+            logger.error("Problem editing MenuItem table: \n", err);
+            res.status(400).send('Problem editing table'); 
+          } else {
+            res.status(200).send(`changed item ${req.param("itemID")} in the table!`);
+          }
+        });
+      }
+    });
+  });
+
+  // for user story 6.3
+  // DELETE /deleteitem/{itemID}
+  app.delete('/deleteitem', (req, res) => {
+    console.log(req.body.product);
+    // obtain a connection from our pool of connections
+    pool.getConnection(function (err, connection){
+      if(err){
+        // if there is an issue obtaining a connection, release the connection instance and log the error
+        logger.error('Problem obtaining MySQL connection',err)
+        res.status(400).send('Problem obtaining MySQL connection'); 
+      } else {
+        // if there is no issue obtaining a connection, execute query and release connection
+	      var itemID = req.param("itemID")
+        connection.query('DELETE FROM `PopStop`.`MenuItem` WHERE itemID = ?', itemID, function (err, rows, fields) {
+          connection.release();
+          if (err) {
+            // if there is an error with the query, log the error
+            logger.error("Problem deleting from MenuItem table: \n", err);
+            res.status(400).send('Problem deleting from table'); 
+          } else {
+            res.status(200).send(`removed item ${req.param("itemID")} from the table`);
+          }
+        });
+      }
+    });
+  });
+
+  // for user story 5.3
+  // UPDATE /removeprice/{menuItemID}
+  app.put('/removeprice', (req, res) => {
+    console.log(req.body.product);
+    // obtain a connection from our pool of connections
+    pool.getConnection(function (err, connection){
+      if(err){
+        // if there is an issue obtaining a connection, release the connection instance and log the error
+        logger.error('Problem obtaining MySQL connection',err)
+        res.status(400).send('Problem obtaining MySQL connection'); 
+      } else {
+        // if there is no issue obtaining a connection, execute query and release connection
+	      var itemID = req.param("itemID")
+        connection.query('UPDATE `PopStop`.`MenuItem` SET price = NULL WHERE itemID = ?', [itemID], function (err, rows, fields) {
+          connection.release();
+          if (err) {
+            // if there is an error with the query, log the error
+            logger.error("Problem changing MenuItem table: \n", err);
+            res.status(400).send('Problem editing table'); 
+          } else {
+            res.status(200).send(`changed item ${req.param("itemID")} in the table!`);
+          }
+        });
+      }
+    });
+  });
+
   // ============================================GET /restaurants===================================================
   app.get("/restaurants", (req, res) => {
     // obtain a connection from our pool of connections
