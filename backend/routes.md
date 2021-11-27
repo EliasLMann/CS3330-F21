@@ -18,13 +18,13 @@
 
 ### Menu
 
-- [x] All Menu
+- [x] All Menu - melanie
 
 ### MenuItem
 
-- [x] All MenuItem
-- [x] Menu Item IDs by cuisine type
-- [x] Menu item By ID
+- [x] All MenuItem - melanie
+- [x] Menu Item IDs by cuisine type - melanie
+- [x] Menu item By ID - melanie
 
 ### Misc
 
@@ -34,18 +34,18 @@
 
 - [x] Creating a restaurant
 
-- [x] Create a menu
+- [x] Create a menu - melanie
 
-- [x] Create a menuItem
+- [x] Create a menuItem - melanie
 
 - [x] Create User (Register)
 
 ## PUT
 
-- [x] Change rating in Menu by ID
+- [x] Change rating in Menu by ID - melanie
 
-- [x] Change all in menuItem by ID
-- [x] Change each individual in menuItem by ID
+- [x] Change all in menuItem by ID - melanie
+- [x] Change each individual in menuItem by ID - melanie
 
 - [x] Add a restaurantID to User
 
@@ -53,8 +53,8 @@
 
 ## DELETE
 
-- [x] Delete menuItem
-- [x] Delete price from MenuItem
+- [x] Delete menuItem - melanie
+- [x] Delete price from MenuItem - melanie
 
 # Epic 1
 
@@ -89,9 +89,9 @@
 
 # Epic 5
 
-- [x] 1 POST price for menu Item
-- [x] 1 PUT price for menu Item
-- [x] 1 DELETE price for menu Item
+- [x] 1 POST price for menu Item - melanie
+- [x] 1 PUT price for menu Item - melanie
+- [x] 1 DELETE price for menu Item - melanie
 
 # Epic 6
 
@@ -105,7 +105,7 @@
 
 - [ ] 1 PUT restaurant sponsored for restaurant (user story for creating a ad with paywall - modified)
 - [ ] 1 GET sponsored restaurants
-- [x] 2 PUT menuItem featured
+- [x] 2 PUT menuItem featured - melanie
 - [ ] 2 GET featured dishes for a given restaurant
 - [ ] 3 PUT isSponsored for a review by restaurantID and reviewID
 - [ ] 3 GET isSponsored reviews pertaining to a given restaurant
@@ -125,14 +125,14 @@
 
 # Epic 10
 
-- [x] 1 PUT increment likes for a given dish
-- [x] 1 PUT increment dislikes for a given dish
-- [x] 2 & 3 GET dishes with greatest amount of likes, up to 5 (should we do diffence between likes and dislikes?)
+- [x] 1 PUT increment likes for a given dish - melanie
+- [x] 1 PUT increment dislikes for a given dish - melanie
+- [x] 2 & 3 GET dishes with greatest amount of likes, up to 5 (should we do diffence between likes and dislikes?) - melanie (done with difference between likes and dislikes)
 - [ ] 4 sort popular dishes by this day, week, moth, all time (Scratched, not logically consitent with db)
 
 # Epic 11
 
 - [x] 1 user register for an account
-- [x] 2 user siign into account
-- [x] 3 owner regiser for account
+- [x] 2 user sign into account
+- [x] 3 owner register for account
 - [x] 4 owner sign into account
