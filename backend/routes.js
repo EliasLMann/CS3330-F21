@@ -362,6 +362,43 @@ module.exports = function routes(app, logger) {
     });
   });
 
+  // PUT /updateitem/{itemID}
+  app.put('/updateitem', (req, res) => {
+    console.log(req.body.product);
+    // obtain a connection from our pool of connections
+    pool.getConnection(function (err, connection){
+      if(err){
+        // if there is an issue obtaining a connection, release the connection instance and log the error
+        logger.error('Problem obtaining MySQL connection',err)
+        res.status(400).send('Problem obtaining MySQL connection'); 
+      } else {
+        // if there is no issue obtaining a connection, execute query and release connection
+        var menuID = req.param('menuID');
+        var itemID = req.param('itemID');
+        var price = req.param('price');
+        var itemLink = req.param('itemLink');
+        var mealType = req.param('mealType');
+        var likes = req.param('likes');
+        var dislikes = req.param('dislikes');
+        var featured = req.param('featured');
+        var photo = req.param('photo');
+        var description = req.param('description');
+        connection.query('UPDATE `PopStop`.`MenuItem` SET menuID = ?, price = ?, itemLink = ?, mealType = ?, likes = ?, dislikes = ?, featured = ?, photo = ?, description = ? WHERE itemID = ?', 
+        [menuID, price, itemLink, mealType, likes, dislikes, featured, photo, description, itemID], 
+        function (err, rows, fields) {
+          connection.release();
+          if (err) {
+            // if there is an error with the query, log the error
+            logger.error("Problem inserting into MenuItem table: \n", err);
+            res.status(400).send('Problem inserting into table'); 
+          } else {
+            res.status(200).send(`changed item ${req.param("itemID")} in the table!`);
+          }
+        });
+      }
+    });
+  }); 
+
   // for user story 6.2
   // UPDATE /updateitemlink/{itemID} for particular menuItem
   app.put('/updateitemlink', (req, res) => {
@@ -515,8 +552,8 @@ module.exports = function routes(app, logger) {
       } else {
         // if there is no issue obtaining a connection, execute query and release connection
 	      var itemID = req.param("itemID")
-	      var descrip = req.param("descrip")
-        connection.query('UPDATE `PopStop`.`MenuItem` SET descrip = ? WHERE itemID = ?', [descrip,itemID], function (err, rows, fields) {
+	      var description = req.param("description")
+        connection.query('UPDATE `PopStop`.`MenuItem` SET description = ? WHERE itemID = ?', [description,itemID], function (err, rows, fields) {
           connection.release();
           if (err) {
             // if there is an error with the query, log the error
@@ -556,6 +593,8 @@ module.exports = function routes(app, logger) {
       }
     });
   });
+
+
 
   // ============================================GET /restaurants===================================================
   app.get("/restaurants", (req, res) => {
