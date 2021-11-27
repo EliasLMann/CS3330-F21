@@ -206,6 +206,34 @@ module.exports = function routes(app, logger) {
       });
     });
 
+    // GET /topmenuitem
+    app.get('/topmenuitem', (req, res) => {
+      // obtain a connection from our pool of connections
+      pool.getConnection(function (err, connection){
+        if(err){
+          // if there is an issue obtaining a connection, release the connection instance and log the error
+          logger.error('Problem obtaining MySQL connection',err)
+          res.status(400).send('Problem obtaining MySQL connection'); 
+        } else {
+          // if there is no issue obtaining a connection, execute query and release connection
+          connection.query('SELECT * FROM `PopStop`.`MenuItem` order by (likes - dislikes) desc limit 5', function (err, rows, fields) {
+            connection.release();
+            if (err) {
+              logger.error("Error while fetching values: \n", err);
+              res.status(400).json({
+                "data": [],
+                "error": "Error obtaining values"
+              })
+            } else {
+              res.status(200).json({
+                "data": rows
+              });
+            }
+          });
+        }
+      });
+    });
+
     // user story 4.1
     // UPDATE MenuItem to change photo
     // takes photo url and updates photo url
@@ -498,6 +526,58 @@ module.exports = function routes(app, logger) {
 	      var itemID = req.param("itemID")
 	      var dislikes = req.param("dislikes")
         connection.query('UPDATE `PopStop`.`MenuItem` SET dislikes = ? WHERE itemID = ?', [dislikes,itemID], function (err, rows, fields) {
+          connection.release();
+          if (err) {
+            // if there is an error with the query, log the error
+            logger.error("Problem editing MenuItem table: \n", err);
+            res.status(400).send('Problem editing table'); 
+          } else {
+            res.status(200).send(`changed item ${req.param("itemID")} in the table!`);
+          }
+        });
+      }
+    });
+  });  
+
+  // UPDATE /incrementlikes/{itemID} for particular menuItem
+  app.put('/incrementlikes', (req, res) => {
+    console.log(req.body.product);
+    // obtain a connection from our pool of connections
+    pool.getConnection(function (err, connection){
+      if(err){
+        // if there is an issue obtaining a connection, release the connection instance and log the error
+        logger.error('Problem obtaining MySQL connection',err)
+        res.status(400).send('Problem obtaining MySQL connection'); 
+      } else {
+        // if there is no issue obtaining a connection, execute query and release connection
+	      var itemID = req.param("itemID")
+        connection.query('UPDATE `PopStop`.`MenuItem` SET likes = (likes + 1) WHERE itemID = ?', itemID, function (err, rows, fields) {
+          connection.release();
+          if (err) {
+            // if there is an error with the query, log the error
+            logger.error("Problem editing MenuItem table: \n", err);
+            res.status(400).send('Problem editing table'); 
+          } else {
+            res.status(200).send(`changed item ${req.param("itemID")} in the table!`);
+          }
+        });
+      }
+    });
+  });
+
+  // UPDATE /incrementdislikes/{itemID} for particular menuItem
+  app.put('/incrementdislikes', (req, res) => {
+    console.log(req.body.product);
+    // obtain a connection from our pool of connections
+    pool.getConnection(function (err, connection){
+      if(err){
+        // if there is an issue obtaining a connection, release the connection instance and log the error
+        logger.error('Problem obtaining MySQL connection',err)
+        res.status(400).send('Problem obtaining MySQL connection'); 
+      } else {
+        // if there is no issue obtaining a connection, execute query and release connection
+	      var itemID = req.param("itemID")
+        connection.query('UPDATE `PopStop`.`MenuItem` SET dislikes = (dislikes + 1) WHERE itemID = ?', itemID, function (err, rows, fields) {
           connection.release();
           if (err) {
             // if there is an error with the query, log the error

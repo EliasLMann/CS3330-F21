@@ -54,7 +54,7 @@
 ## DELETE
 
 - [x] Delete menuItem
-- [ ] Delete price from MenuItem
+- [x] Delete price from MenuItem
 
 # Epic 1
 
@@ -91,7 +91,7 @@
 
 - [x] 1 POST price for menu Item
 - [x] 1 PUT price for menu Item
-- [ ] 1 DELETE price for menu Item
+- [x] 1 DELETE price for menu Item
 
 # Epic 6
 
@@ -125,9 +125,9 @@
 
 # Epic 10
 
-- [ ] 1 PUT increment likes for a given dish
-- [ ] 1 PUT increment dislikes for a given dish
-- [ ] 2 & 3 GET dishes with greatest amount of likes, up to 5 (should we do diffence between likes and dislikes?)
+- [x] 1 PUT increment likes for a given dish
+- [x] 1 PUT increment dislikes for a given dish
+- [x] 2 & 3 GET dishes with greatest amount of likes, up to 5 (should we do diffence between likes and dislikes?)
 - [ ] 4 sort popular dishes by this day, week, moth, all time (Scratched, not logically consitent with db)
 
 # Epic 11
