@@ -445,7 +445,35 @@ module.exports = function routes(app, logger) {
       }
     });
   });
-  
+
+  // for user story 6.2
+  // UPDATE /updatedislikes/{itemID} for particular menuItem
+  app.put('/updatedislikes', (req, res) => {
+    console.log(req.body.product);
+    // obtain a connection from our pool of connections
+    pool.getConnection(function (err, connection){
+      if(err){
+        // if there is an issue obtaining a connection, release the connection instance and log the error
+        logger.error('Problem obtaining MySQL connection',err)
+        res.status(400).send('Problem obtaining MySQL connection'); 
+      } else {
+        // if there is no issue obtaining a connection, execute query and release connection
+	      var itemID = req.param("itemID")
+	      var dislikes = req.param("dislikes")
+        connection.query('UPDATE `PopStop`.`MenuItem` SET dislikes = ? WHERE itemID = ?', [dislikes,itemID], function (err, rows, fields) {
+          connection.release();
+          if (err) {
+            // if there is an error with the query, log the error
+            logger.error("Problem editing MenuItem table: \n", err);
+            res.status(400).send('Problem editing table'); 
+          } else {
+            res.status(200).send(`changed item ${req.param("itemID")} in the table!`);
+          }
+        });
+      }
+    });
+  });  
+
   // ============================================GET /restaurants===================================================
   app.get("/restaurants", (req, res) => {
     // obtain a connection from our pool of connections
