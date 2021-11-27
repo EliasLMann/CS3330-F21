@@ -237,7 +237,7 @@ module.exports = function routes(app, logger) {
   });
 
     // for user story 4.3, 8.2, 9.3, 9.4, and 10.2
-    // GET /menuitem/{menuItemID}
+    // GET /menuitem/{itemID}
     app.get('/menuitem', (req, res) => {
       // obtain a connection from our pool of connections
       pool.getConnection(function (err, connection){
@@ -363,7 +363,7 @@ module.exports = function routes(app, logger) {
   });
 
   // for user story 6.2
-  // UPDATE /updateitemlink/{menuItemID} for particular menuItem
+  // UPDATE /updateitemlink/{itemID} for particular menuItem
   app.put('/updateitemlink', (req, res) => {
     console.log(req.body.product);
     // obtain a connection from our pool of connections
@@ -390,8 +390,8 @@ module.exports = function routes(app, logger) {
     });
   });
 
-   // for user story 6.2 - NOT TESTED
-  // UPDATE /updatemealtype/{menuItemID} for particular menuItem
+   // for user story 6.2
+  // UPDATE /updatemealtype/{itemID} for particular menuItem
   app.put('/updatemealtype', (req, res) => {
     console.log(req.body.product);
     // obtain a connection from our pool of connections
@@ -417,6 +417,34 @@ module.exports = function routes(app, logger) {
       }
     });
   }); 
+
+  // for user story 6.2
+  // UPDATE /updatelikes/{itemID} for particular menuItem
+  app.put('/updatelikes', (req, res) => {
+    console.log(req.body.product);
+    // obtain a connection from our pool of connections
+    pool.getConnection(function (err, connection){
+      if(err){
+        // if there is an issue obtaining a connection, release the connection instance and log the error
+        logger.error('Problem obtaining MySQL connection',err)
+        res.status(400).send('Problem obtaining MySQL connection'); 
+      } else {
+        // if there is no issue obtaining a connection, execute query and release connection
+	      var itemID = req.param("itemID")
+	      var likes = req.param("likes")
+        connection.query('UPDATE `PopStop`.`MenuItem` SET likes = ? WHERE itemID = ?', [likes,itemID], function (err, rows, fields) {
+          connection.release();
+          if (err) {
+            // if there is an error with the query, log the error
+            logger.error("Problem editing MenuItem table: \n", err);
+            res.status(400).send('Problem editing table'); 
+          } else {
+            res.status(200).send(`changed item ${req.param("itemID")} in the table!`);
+          }
+        });
+      }
+    });
+  });
   
   // ============================================GET /restaurants===================================================
   app.get("/restaurants", (req, res) => {
