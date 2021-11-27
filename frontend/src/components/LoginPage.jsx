@@ -1,7 +1,8 @@
 import React, { useContext, useState, useEffect } from 'react';
-import { Link, Redirect } from "react-router-dom";
-import { Form, Button, Container } from 'react-bootstrap';
+import { Link, useHistory } from "react-router-dom";
+import { Button, Container } from 'react-bootstrap';
 import { UserRepository } from '../api/userRespository';
+import { UserContext } from '../context';
 
 
 const LoginPage = () => {
@@ -9,27 +10,36 @@ const LoginPage = () => {
     const [password, setPassword] = useState('');
     const [errors, setErrors] = useState({});
     const [isLoading, setIsLoading] = useState(false);
+    const [userContext, setUserContext] = useContext(UserContext);
+    const history = useHistory();
     const userRepository = new UserRepository();
 
+    function validate() {
+        return username.length > 3 && password.length > 0 && !isLoading;
+    }
+
+
     const login = async (e) => {
+        e.preventDefault();
         console.log("test");
         setIsLoading(true);
         const res = await userRepository.login(username, password);
         if (res) setIsLoading(false);
         if (!res.success) {
             setErrors(res);
-            alert("fail");
-            <Redirect to="/login/" />
         } else {
-            <Redirect to="/search"/>
-            console.log("success")
+            setUserContext(userRepository.currentUser());
+            history.push('/');
         }
-
     };
 
     useEffect(() => {
-        let res = userRepository.getRestaurants();
-      });
+        const user = userContext;
+        if (user.username) {
+            console.log(user);
+            history.push('/');
+        }
+    });
 
     return <>
 
@@ -58,9 +68,9 @@ const LoginPage = () => {
 
                     <br />
 
-                    <button
+                    <Button
                         type="submit"
-                        className="btn btn-primary">Log in</button>
+                        className="btn btn-primary" disabled={!validate()}>Log in</Button>
                 </form>
             </div>
             <p className="text-sm">
