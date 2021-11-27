@@ -7,7 +7,6 @@ export class UserRepository {
 
   addUser(userName, password){
     return new Promise((resolve, reject) => {
-
       axios.post(`${this.url}/register`, {userName: userName, password: password})
             .then(x => resolve(x.data))
             .catch(x => {
