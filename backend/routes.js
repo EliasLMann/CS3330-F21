@@ -562,8 +562,8 @@ module.exports = function routes(app, logger) {
         logger.error("Problem obtaining MySQL connection", err);
         res.status(400).send("Problem obtaining MySQL connection");
       } else {
-        let userName = req.body.userName;
-        let password = req.body.password;
+        let userName = req.query['userName'];
+        let password = req.query['password'];
         let sql1 = "SELECT userID FROM User WHERE userName ='" + userName + "'";
         connection.query(sql1, function (err, rows, fields) {
           if (err) {

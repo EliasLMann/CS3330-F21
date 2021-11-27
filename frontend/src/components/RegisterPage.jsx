@@ -22,11 +22,24 @@ export class RegisterPage extends React.Component {
 
         passwordMatch:true,
         canRegister:false,
+
+        restaurantData:[]
     }
 
 
     onSubmitClick(){
-        this.userRepo.addUser(this.state.userName, this.state.password)
+        if(this.accountType == "Restaurant Owner"){
+            this.userRepo.addRestaurant(this.restaurantData);
+            this.userRepo.addUser(this.state.userName, this.state.password, this.state.accountType)
+
+        } else {
+            this.userRepo.addUser(this.state.userName, this.state.password, this.state.accountType)
+
+        }
+    }
+
+    getRestaurantData = (newRestaurantData) => {
+        this.setState({restaurantData: newRestaurantData})
     }
 
 
@@ -50,7 +63,7 @@ export class RegisterPage extends React.Component {
 
                 <label for="userName">Username: </label>
                 <input 
-                    type="password" id="userName" name="userName"
+                    type="text" id="userName" name="userName"
                     value={this.state.userName}
                     onChange={event => this.setState({userName: event.target.value})}
                 >
@@ -102,7 +115,7 @@ export class RegisterPage extends React.Component {
                 <br/>
 
                 {
-                    this.state.accountType === "Restaurant Owner" && <RestaurantOwnerForm />
+                    this.state.accountType === "Restaurant Owner" && <RestaurantOwnerForm getRestaurantData={this.getRestaurantData}/>
                 }
 
                 <br/>

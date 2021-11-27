@@ -3,7 +3,30 @@ const url = "http://localhost:8000"
 
 export class UserRepository {
 
-  
+  url = "http://localhost:8000"
+
+  addUser(userName, password) {
+    return new Promise((resolve, reject) => {
+
+      axios.post(`${this.url}/register`, { userName: userName, password: password })
+        .then(x => resolve(x.data))
+        .catch(x => {
+          alert(x);
+          reject(x);
+        })
+    })
+  }
+
+  addRestaurant(restaurantData) {
+    return new Promise((resolve, reject) => {
+      axios.post(`${this.url}/addRestaurant`, { insert: restaurantData })
+        .then(x => resolve(x.data))
+        .catch(x => {
+          alert(x);
+          reject(x);
+        })
+    })
+  }
 
 
   /*
@@ -23,11 +46,10 @@ export class UserRepository {
   }
 
 
-  async login(username, password) {
+  async login(user, pass) {
     const errors = {};
-    const { data, status } = await axios.get('http://localhost:8000' + '/login', {
-      username,
-      password
+    const { data, status } = await axios.get(url + '/login', {
+      params: { userName: user, password: pass }
     });
 
     if (status > 204) errors.request = 'Bad Request';
@@ -49,15 +71,5 @@ export class UserRepository {
     return errors;
   }
 
-  async getRestaurants() {
-    const errors = { success: false };
-    const { data, status } = await axios.get('http://localhost:8000/restaurants');
-    if (status >= 201) {
-      console.log(data);
-      errors.reason = 'Bad Request';
-    } else errors.success = true;
-
-    return [data, errors];
-  }
 
 }
