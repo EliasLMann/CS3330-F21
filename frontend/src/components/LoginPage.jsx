@@ -19,7 +19,7 @@ const LoginPage = () => {
         if (!res.success) {
             setErrors(res);
             alert("fail");
-            <Redirect to="/login" />
+            <Redirect to="/login/" />
         } else {
             <Redirect to="/search"/>
             console.log("success")

@@ -16,7 +16,7 @@ import { RestaurantProfile } from './components/RestaurantProfile';
 import { Header } from './components/Header';
 import { CustomerAccount } from './components/CustomerAccount';
 import { AddMenu } from './components/AddMenu';
-import Landing from './components/Landing';
+import {Landing } from './components/Landing';
 
 // React functional component
 function App () {
