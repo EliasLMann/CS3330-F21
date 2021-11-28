@@ -1,8 +1,12 @@
-import React from "react";
+import React, {useContext, useState, setState, useEffect} from "react";
+import { Header } from "./Header";
 
 
 export const RestaurantProfile = () => {
+    
+
     return <>
+        <Header/>
         <div id="info">
             <h1 className="text-start fw-bolder mx-4">
                 Insert Resturant Name

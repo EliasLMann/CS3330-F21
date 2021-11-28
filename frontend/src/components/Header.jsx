@@ -6,25 +6,17 @@ import { UserContext } from '../context';
 
 
 const LoggedInHeader = () => {
-    const userRepository = new UserRepository();
-    const [userContext, setUserContext] = useContext(UserContext);
-
-    const logout = () => {
-        return setUserContext('')
-    }
-
     return (
         <Navbar className="d-flex flex-row p-2">
             <a className="navbar-brand" href="/">PopStop</a>
             <Nav className="">
                 <div className="d-flex flex-row">
+                    <Nav.Link href="/"
+                        className="p-2">Find Restaurants</Nav.Link>
                     <Nav.Link href="/profile"
                         className="p-2">My Profile</Nav.Link>
                     <Nav.Link href="/"
-                        className="p-2">Find Restaurants</Nav.Link>
-                    <Nav.Link href="/"
-                        className="text-end"
-                        onClick={logout()}>Logout</Nav.Link>
+                        className="text-end">Logout</Nav.Link>
                 </div>
             </Nav>
         </Navbar>
@@ -53,7 +45,7 @@ export const Header = () => {
     const [loggedIn, setLoggedIn] = useState(false);
     const [userContext, setUserContext] = useContext(UserContext);
 
-    useEffect( () => {
+    useEffect(() => {
         const user = userContext;
         console.log(user);
         if (user.username) {
