@@ -14,14 +14,9 @@ const LoginPage = () => {
     const history = useHistory();
     const userRepository = new UserRepository();
 
-    function validate() {
-        return username.length > 3 && password.length > 0 && !isLoading;
-    }
-
 
     const login = async (e) => {
         e.preventDefault();
-        console.log("test");
         setIsLoading(true);
         const res = await userRepository.login(username, password);
         if (res) setIsLoading(false);
@@ -49,7 +44,7 @@ const LoginPage = () => {
 
             <div className="card-body">
                 <form id="registerForm" className="card-body text-center" onSubmit={login}>
-                    <label for="userName">Username: </label>
+                    <label htmlFor="userName">Username: </label>
                     <input
                         type="text" id="userName" name="userName"
                         value={username}
@@ -58,7 +53,7 @@ const LoginPage = () => {
 
                     <br />
 
-                    <label for="password">Password: </label>
+                    <label htmlFor="password">Password: </label>
                     <input
                         type="password" id="password" name="password"
                         value={password}
@@ -70,7 +65,7 @@ const LoginPage = () => {
 
                     <Button
                         type="submit"
-                        className="btn btn-primary" disabled={!validate()}>Log in</Button>
+                        className="btn btn-primary">Log in</Button>
                 </form>
             </div>
             <p className="text-sm">
