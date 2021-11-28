@@ -30,6 +30,7 @@ export class RegisterPage extends React.Component {
 
     onSubmitClick(){
         if(this.accountType === "Restaurant Owner"){
+            console.log("New Rest");
             this.userRepo.addRestaurant(this.restaurantData);
             this.userRepo.addUser(this.state.userName, this.state.password, this.state.accountType)
 
@@ -53,7 +54,7 @@ export class RegisterPage extends React.Component {
             <h1 className="card-header w-100 pt-2 text-center align-center">Register</h1>
 
             <form id="registerForm"className="card-body text-center">
-                <label for="email">Enter your email: </label>
+                <label hmtlFor="email">Enter your email: </label>
                 <input 
                     type="text" id="email" name="email"
                     value={this.state.email}
@@ -63,7 +64,7 @@ export class RegisterPage extends React.Component {
 
                 <br/>
 
-                <label for="userName">Username: </label>
+                <label htmlFor="userName">Username: </label>
                 <input 
                     type="text" id="userName" name="userName"
                     value={this.state.userName}
@@ -73,7 +74,7 @@ export class RegisterPage extends React.Component {
 
                 <br/>
 
-                <label for="password">Password: </label>
+                <label htmlFor="password">Password: </label>
                 <input 
                     type="password" id="password" name="password"
                     value={this.state.password}
@@ -102,7 +103,7 @@ export class RegisterPage extends React.Component {
 
                 <br/>
 
-                <label for="accountType">I am a...</label>
+                <label htmlFor="accountType">I am a...</label>
                 <select 
                     name="accountType" id="accountType"
                     value={this.state.accountType}
