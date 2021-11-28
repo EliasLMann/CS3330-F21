@@ -1,6 +1,7 @@
 import axios from 'axios';
-const url = "http://localhost:8000"
+import { UserContext } from '../context';
 
+const url = "http://localhost:8000"
 export class UserRepository {
 
   url = "http://localhost:8000"
@@ -33,7 +34,8 @@ export class UserRepository {
   return an object of the user that is currently logged
   */
   currentUser() {
-    const user = sessionStorage.getItem('user');
+    let userContext = sessionStorage.getItem('user');
+    const user = userContext;
     if (!user) return {};
     return JSON.parse(user);
   }
@@ -80,7 +82,6 @@ export class UserRepository {
             status: data.status ?? 0
           })
         );
-        console.log("SS" + sessionStorage.getItem('user'));
         errors.success = true;
         break;
     }

@@ -1,6 +1,7 @@
 import { Navbar, Nav } from 'react-bootstrap';
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { UserRepository } from '../api/userRespository';
+import { UserContext } from '../context';
 
 
 const LoggedInHeader = () => {
@@ -40,9 +41,6 @@ const LoggedOutHeader = () => {
                         className="p-2">Login</Nav.Link>
                     <Nav.Link href="/register"
                         className="text-end">Register</Nav.Link>
-                    <Nav.Link href="/"
-                        className="text-end"
-                        onClick={userRepository.logout()}>Logout</Nav.Link>
                 </div>
 
             </Nav>
@@ -53,11 +51,16 @@ const LoggedOutHeader = () => {
 export const Header = () => {
 
     const [loggedIn, setLoggedIn] = useState(false);
+    const [userContext, setUserContext] = useContext(UserContext);
 
     useEffect( () => {
-        const userRepository = new UserRepository();
-        setLoggedIn(userRepository.loggedIn());
-    }, [loggedIn, setLoggedIn]);
+        const user = userContext;
+        console.log(user);
+        if (user.username) {
+            console.log(user);
+            setLoggedIn(true);
+        }
+    }, []);
 
     return loggedIn ? <LoggedInHeader /> : <LoggedOutHeader />;
 

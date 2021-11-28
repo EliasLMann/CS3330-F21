@@ -24,7 +24,6 @@ const LoginPage = () => {
             setErrors(res);
         } else {
             setUserContext(userRepository.currentUser());
-            console.log(userContext);
             history.push('/');
         }
     };
@@ -32,7 +31,7 @@ const LoginPage = () => {
     useEffect(() => {
         const user = userContext;
         if (user.username) {
-            console.log(sessionStorage.getItem('user'));
+            console.log(user);
             history.push('/');
         }
     });
@@ -45,7 +44,7 @@ const LoginPage = () => {
 
             <div className="card-body">
                 <form id="registerForm" className="card-body text-center" onSubmit={login}>
-                    <label for="userName">Username: </label>
+                    <label htmlFor="userName">Username: </label>
                     <input
                         type="text" id="userName" name="userName"
                         value={username}
@@ -54,7 +53,7 @@ const LoginPage = () => {
 
                     <br />
 
-                    <label for="password">Password: </label>
+                    <label htmlFor="password">Password: </label>
                     <input
                         type="password" id="password" name="password"
                         value={password}
