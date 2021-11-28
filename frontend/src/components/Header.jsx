@@ -4,8 +4,14 @@ import { UserRepository } from '../api/userRespository';
 import { UserContext } from '../context';
 
 
+
 const LoggedInHeader = () => {
     const userRepository = new UserRepository();
+    const [userContext, setUserContext] = useContext(UserContext);
+
+    const logout = () => {
+        return setUserContext('')
+    }
 
     return (
         <Navbar className="d-flex flex-row p-2">
@@ -14,23 +20,18 @@ const LoggedInHeader = () => {
                 <div className="d-flex flex-row">
                     <Nav.Link href="/profile"
                         className="p-2">My Profile</Nav.Link>
-                    <Nav.Link href="/home"
+                    <Nav.Link href="/"
                         className="p-2">Find Restaurants</Nav.Link>
                     <Nav.Link href="/"
                         className="text-end"
-                        onClick={userRepository.logout()}>Logout</Nav.Link>
+                        onClick={logout()}>Logout</Nav.Link>
                 </div>
-            </Nav>
-            <Nav>
-
             </Nav>
         </Navbar>
     );
 }
 
 const LoggedOutHeader = () => {
-    const userRepository = new UserRepository();
-
 
     return (
         <Navbar className="d-flex flex-row p-2">
@@ -42,7 +43,6 @@ const LoggedOutHeader = () => {
                     <Nav.Link href="/register"
                         className="text-end">Register</Nav.Link>
                 </div>
-
             </Nav>
         </Navbar>
     );

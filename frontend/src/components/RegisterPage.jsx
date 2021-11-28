@@ -3,6 +3,7 @@ import { RestaurantOwnerForm } from "./RestaurantOwnerForm";
 
 import './registerPage.css';
 import { UserRepository } from "../api/userRespository";
+import { Header } from "./Header";
 
 export class RegisterPage extends React.Component {
 
@@ -46,6 +47,7 @@ export class RegisterPage extends React.Component {
     render(){
 
         return<>
+        <Header/>
             <div className="card mt-5 w-75 mx-auto justify-content-center align-items-center">
 
             <h1 className="card-header w-100 pt-2 text-center align-center">Register</h1>
