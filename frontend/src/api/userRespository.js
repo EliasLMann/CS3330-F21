@@ -55,12 +55,17 @@ export class UserRepository {
     return Object.keys(this.currentUser()).length !== 0;
   }
 
+  /*
+  Function removes user sessionStorage items
+  */
+  logout() {
+    sessionStorage.removeItem('user');
+  }
 
-  async login(username, password) {
+  async login(user, pass) {
     const errors = {};
-    const { data, status } = await axios.get('http://localhost:8000' + '/login', {
-      username,
-      password
+    const { data, status } = await axios.get(url + '/login', {
+      params: { userName: user, password: pass }
     });
 
     if (status > 204) errors.request = 'Bad Request';
@@ -74,23 +79,21 @@ export class UserRepository {
         errors.password = 'Incorrect password';
         errors.success = false;
         break;
-
       default:
+        sessionStorage.setItem(
+          'user',
+          JSON.stringify({
+            username: user,
+            userId: data.userId,
+            password: pass,
+            status: data.status ?? 0
+          })
+        );
         errors.success = true;
         break;
     }
     return errors;
   }
 
-  async getRestaurants() {
-    const errors = { success: false };
-    const { data, status } = await axios.get('http://localhost:8000/restaurants');
-    if (status >= 201) {
-      console.log(data);
-      errors.reason = 'Bad Request';
-    } else errors.success = true;
-
-    return [data, errors];
-  }
 
 }
