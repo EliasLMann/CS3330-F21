@@ -175,9 +175,6 @@ module.exports = function routes(app, logger) {
         }
       });
     });
-<<<<<<< Updated upstream
-  
-=======
 
     //GET /restaurants/{location}
     //gets restaurants by location
@@ -677,7 +674,6 @@ module.exports = function routes(app, logger) {
     });
   });
 
->>>>>>> Stashed changes
   // ============================================GET /restaurants===================================================
   app.get("/restaurants", (req, res) => {
     // obtain a connection from our pool of connections
@@ -1384,7 +1380,6 @@ module.exports = function routes(app, logger) {
       }
       connection.release();
     });
-<<<<<<< Updated upstream
   };
 
   //PUT update all in MenuItem by itemID
@@ -1425,96 +1420,5 @@ module.exports = function routes(app, logger) {
           }
           connection.release();
     });
-  });
-}
-=======
-   });
-
-    // GET /getmealtype
-    app.get("/getmealtype", (req, res) => {
-      // obtain a connection from our pool of connections
-      pool.getConnection(function (err, connection) {
-        if (err) {
-          // if there is an issue obtaining a connection, release the connection instance and log the error
-          logger.error("Problem obtaining MySQL connection", err);
-          res.status(400).send("Problem obtaining MySQL connection");
-        } else {
-          // if there is no issue obtaining a connection, execute query and release connection
-          connection.query(
-            "SELECT mealType FROM `PopStop`.`MenuItem`",
-            function (err, rows, fields) {
-              connection.release();
-              if (err) {
-                logger.error("Error while fetching values: \n", err);
-                res.status(400).json({
-                  data: [],
-                  error: "Error obtaining values",
-                });
-              } else {
-                res.status(200).json({
-                  data: rows,
-                });
-              }
-            }
-          );
-        }
-      });
-    });
-
-    // POST Add restaurant
-    app.post("/addRestaurant", (req, res) => {
-      console.log(req.body.product);
-      // obtain a connection from our pool of connections
-      pool.getConnection(function (err, connection) {
-        if (err) {
-          // if there is an issue obtaining a connection, release the connection instance and log the error
-          logger.error("Problem obtaining MySQL connection", err);
-          res.status(400).send("Problem obtaining MySQL connection");
-        } else {
-          let restaurantName = req.body["restaurantName"];
-          let menuID = req.body["menuID"];
-          let location = req.body["location"];
-          let hours = req.body["hours"];
-          let description = req.body["description"];
-          let cuisineType = req.body["cuisineType"];
-          let website = req.body["website"];
-          let sponsored = req.body["sponsored"];
-          let socialMediaName = req.body["socialMediaName"];
-          let socialMediaURL = req.body["socialMediaURL"];
-          let insert = [
-            [
-              restaurantName,
-              menuID,
-              location,
-              hours,
-              description,
-              cuisineType,
-              website,
-              sponsored,
-              socialMediaName,
-              socialMediaURL,
-            ],
-          ];
-          let sql =
-            "INSERT INTO Restaurant(restaurantName, menuID, location, hours, description, cuisineType, website, sponsored, socialMediaName, socialMediaURL) VALUES ?";
-          // if there is no issue obtaining a connection, execute query and release connection
-          connection.query(sql, [insert], function (err, rows, fields) {
-            connection.release();
-            if (err) {
-              // if there is an error with the query, log the error
-              logger.error("Problem inserting into Restaurant table: \n", err);
-              res.status(400).send("Problem inserting into table");
-            } else {
-              res
-                .status(200)
-                .send(`added ${req.body.product.restaurantName} to the table!`);
-            }
-          });
-        }
-      });
-    });
-
-
-
-  };
->>>>>>> Stashed changes
+  })
+};
