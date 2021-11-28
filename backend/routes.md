@@ -68,7 +68,7 @@
 - [ ] 4 GET restaurants with average menu price in a given range
 - [ ] 5 GET restaurants with average rating in a given range
 - [ ] 6 view location in the app
-- [ ] 7 GET restaurants by meal type served
+- [x] 7 GET restaurants by meal type served (needs to be tested)
 
 # Epic 2 - SCRATCHED
 
