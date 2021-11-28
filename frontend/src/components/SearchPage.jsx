@@ -1,5 +1,7 @@
 import React from "react";
-import {Dropdown} from "react-bootstrap";
+import { Dropdown } from "react-bootstrap";
+import { Header } from "./Header";
+import RestaurantList from "./RestaurantList";
 
 import { useState, useEffect } from "react";
 

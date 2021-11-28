@@ -45,12 +45,11 @@ function App() {
   }
 
   const userRepository = new UserRepository();
-  const [context, setContext] = useState(userRepository.currentUser());
+  const [context, setContext] = useState('');
 
   return (<>
 
     <UserContext.Provider value={[context, setContext]}>
-      <Header />
       <Router>
         <Route component={Login} path="/login" />
         <Route component={RegisterPage} path="/register" />

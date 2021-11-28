@@ -3,18 +3,18 @@ import { useState } from "react";
 
 import "./registerPage.css";
 
-import {OverlayTrigger} from 'react-bootstrap';
-import {Popover} from 'react-bootstrap';
-import {Button} from 'react-bootstrap';
+import { OverlayTrigger } from 'react-bootstrap';
+import { Popover } from 'react-bootstrap';
+import { Button } from 'react-bootstrap';
 
 
 const popoverRight = (
-    <Popover className="p-1"id="popover-positioned-right" title="Popover right">
-      <strong>Ex:</strong> <br/>
-      Monday: 10AM-10PM <br/>
-      Tuesday: 10AM-10PM <br/>
-      Wednesday: Closed <br/>
-      etc.
+    <Popover className="p-1" id="popover-positioned-right" title="Popover right">
+        <strong>Ex:</strong> <br />
+        Monday: 10AM-10PM <br />
+        Tuesday: 10AM-10PM <br />
+        Wednesday: Closed <br />
+        etc.
     </Popover>
 );
 
