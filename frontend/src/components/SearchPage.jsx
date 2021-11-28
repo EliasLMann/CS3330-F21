@@ -1,8 +1,6 @@
 import React from "react";
 import {Dropdown} from "react-bootstrap";
 
-import { Header } from "./Header";
-
 export class SearchPage extends React.Component {
 
     render() {

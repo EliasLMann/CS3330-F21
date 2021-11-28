@@ -118,9 +118,40 @@ module.exports = function routes(app, logger) {
     });
   });
 
-    // for user story 1.7
-    // GET meal types and the associated IDs
-    app.get('/getmealtypes', (req, res) => {
+  // for user story 1.7
+  // GET meal types and the associated IDs
+  app.get("/getmealtypes", (req, res) => {
+    // obtain a connection from our pool of connections
+    pool.getConnection(function (err, connection) {
+      if (err) {
+        // if there is an issue obtaining a connection, release the connection instance and log the error
+        logger.error("Problem obtaining MySQL connection", err);
+        res.status(400).send("Problem obtaining MySQL connection");
+      } else {
+        // if there is no issue obtaining a connection, execute query and release connection
+        connection.query(
+          "SELECT itemID, mealType FROM `PopStop`.`MenuItem`",
+          function (err, rows, fields) {
+            connection.release();
+            if (err) {
+              logger.error("Error while fetching values: \n", err);
+              res.status(400).json({
+                data: [],
+                error: "Error obtaining values",
+              });
+            } else {
+              res.status(200).json({
+                data: rows,
+              });
+            }
+          }
+        );
+      }
+    });
+  });
+
+    // GET /menu
+    app.get('/menu', (req, res) => {
       // obtain a connection from our pool of connections
       pool.getConnection(function (err, connection){
         if(err){
@@ -129,7 +160,35 @@ module.exports = function routes(app, logger) {
           res.status(400).send('Problem obtaining MySQL connection'); 
         } else {
           // if there is no issue obtaining a connection, execute query and release connection
-          connection.query('SELECT menuItemID, mealType FROM `PopStop`.`MenuItem`', function (err, rows, fields) {
+          connection.query('SELECT * FROM `PopStop`.`Menu`', function (err, rows, fields) {
+            connection.release();
+            if (err) {
+              logger.error("Error while fetching values: \n", err);
+              res.status(400).json({
+                "data": [],
+                "error": "Error obtaining values"
+              })
+            } else {
+              res.status(200).json({
+                "data": rows
+              });
+            }
+          });
+        }
+      });
+    });  
+
+    // GET /menuitem
+    app.get('/menuitem', (req, res) => {
+      // obtain a connection from our pool of connections
+      pool.getConnection(function (err, connection){
+        if(err){
+          // if there is an issue obtaining a connection, release the connection instance and log the error
+          logger.error('Problem obtaining MySQL connection',err)
+          res.status(400).send('Problem obtaining MySQL connection'); 
+        } else {
+          // if there is no issue obtaining a connection, execute query and release connection
+          connection.query('SELECT * FROM `PopStop`.`MenuItem`', function (err, rows, fields) {
             connection.release();
             if (err) {
               logger.error("Error while fetching values: \n", err);
@@ -146,7 +205,35 @@ module.exports = function routes(app, logger) {
         }
       });
     });
-    
+
+    // GET /topmenuitem
+    app.get('/topmenuitem', (req, res) => {
+      // obtain a connection from our pool of connections
+      pool.getConnection(function (err, connection){
+        if(err){
+          // if there is an issue obtaining a connection, release the connection instance and log the error
+          logger.error('Problem obtaining MySQL connection',err)
+          res.status(400).send('Problem obtaining MySQL connection'); 
+        } else {
+          // if there is no issue obtaining a connection, execute query and release connection
+          connection.query('SELECT * FROM `PopStop`.`MenuItem` order by (likes - dislikes) desc limit 5', function (err, rows, fields) {
+            connection.release();
+            if (err) {
+              logger.error("Error while fetching values: \n", err);
+              res.status(400).json({
+                "data": [],
+                "error": "Error obtaining values"
+              })
+            } else {
+              res.status(200).json({
+                "data": rows
+              });
+            }
+          });
+        }
+      });
+    });
+
     // user story 4.1
     // UPDATE MenuItem to change photo
     // takes photo url and updates photo url
@@ -161,21 +248,52 @@ module.exports = function routes(app, logger) {
         } else {
           // if there is no issue obtaining a connection, execute query and release connection
           var photoNew = req.param("photoNew")
-          var photoOld = req.param("photoOld")
-          connection.query('UPDATE PopStop.MenuItem SET photo = ? WHERE photo = ?', [photoNew,photoOld], function (err, rows, fields) {
+          var itemID = req.param("itemID")
+          connection.query('UPDATE PopStop.MenuItem SET photo = ? WHERE itemID = ?', [photoNew,itemID], function (err, rows, fields) {
             connection.release();
             if (err) {
               // if there is an error with the query, log the error
               logger.error("Problem updating MenuItem table: \n", err);
-              res.status(400).send('Problem updating table'); 
+              res.status(400).send("Problem updating table");
             } else {
               res.status(200).send(`added ${req.body.product} to the table!`);
+            }
+          }
+        );
+      }
+    });
+  });
+
+    // for user story 4.3, 8.2, 9.3, 9.4, and 10.2
+    // GET /menuitem/{itemID}
+    app.get('/menuitem', (req, res) => {
+      // obtain a connection from our pool of connections
+      pool.getConnection(function (err, connection){
+        if(err){
+          // if there is an issue obtaining a connection, release the connection instance and log the error
+          logger.error('Problem obtaining MySQL connection',err)
+          res.status(400).send('Problem obtaining MySQL connection'); 
+        } else {
+          // if there is no issue obtaining a connection, execute query and release connection
+	        var itemID = req.param("itemID")
+          connection.query('SELECT * FROM PopStop.MenuItem WHERE itemID =' + itemID, function (err, rows, fields) {
+            connection.release();
+            if (err) {
+              logger.error("Error while fetching values: \n", err);
+              res.status(400).json({
+                "data": [],
+                "error": "Error obtaining values"
+              })
+            } else {
+              res.status(200).json({
+                "data": rows
+              });
             }
           });
         }
       });
     });
-
+  
     //GET /restaurants/{location}
     //gets restaurants by location
     app.get('/restaurants', (req, res) => {
@@ -266,7 +384,6 @@ module.exports = function routes(app, logger) {
         }
       });
     });
-
     // for user story 3.1
     // POST /postmenu
     // takes all params and creates an associated menu
@@ -829,7 +946,7 @@ module.exports = function routes(app, logger) {
             }
           }
         });
-      };
+      }
     });
   });
 
@@ -902,8 +1019,8 @@ module.exports = function routes(app, logger) {
         logger.error("Problem obtaining MySQL connection", err);
         res.status(400).send("Problem obtaining MySQL connection");
       } else {
-        let userName = req.body.userName;
-        let password = req.body.password;
+        let userName = req.query['userName'];
+        let password = req.query['password'];
         let sql1 = "SELECT userID FROM User WHERE userName ='" + userName + "'";
         connection.query(sql1, function (err, rows, fields) {
           if (err) {
@@ -960,259 +1077,9 @@ module.exports = function routes(app, logger) {
       }
     });
   });
-  
-  
+
   // GET restaurantName
-  app.get('/restaurants/restaurantName', (req, res) => {
-    // obtain a connection from our pool of connections
-    pool.getConnection(function (err, connection){
-      if(err){
-        // if there is an issue obtaining a connection, release the connection instance and log the error
-        logger.error('Problem obtaining MySQL connection',err)
-        res.status(400).send('Problem obtaining MySQL connection'); 
-      } else {
-        // if there is no issue obtaining a connection, execute query and release connection
-        connection.query('SELECT restaurantName FROM `PopStop`.`Restaurant`', function (err, rows, fields) {
-          connection.release();
-          if (err) {
-            logger.error("Error while fetching values: \n", err);
-            res.status(400).json({
-              "data": [],
-              "error": "Error obtaining values"
-            })
-          } else {
-            res.status(200).json({
-              "data": rows
-            });
-          }
-        });
-      }
-    });
-  });
-
-  //GET restaurant/menuID
-  app.get('/restaurants/menuID', (req, res) => {
-    // obtain a connection from our pool of connections
-    pool.getConnection(function (err, connection){
-      if(err){
-        // if there is an issue obtaining a connection, release the connection instance and log the error
-        logger.error('Problem obtaining MySQL connection',err)
-        res.status(400).send('Problem obtaining MySQL connection'); 
-      } else {
-        // if there is no issue obtaining a connection, execute query and release connection
-        connection.query('SELECT menuID FROM `PopStop`.`Restaurant`', function (err, rows, fields) {
-          connection.release();
-          if (err) {
-            logger.error("Error while fetching values: \n", err);
-            res.status(400).json({
-              "data": [],
-              "error": "Error obtaining values"
-            })
-          } else {
-            res.status(200).json({
-              "data": rows
-            });
-          }
-        });
-      }
-    });
-  });
-
-  //GET restaurant hours
-  app.get('/restaurants/hours', (req, res) => {
-    // obtain a connection from our pool of connections
-    pool.getConnection(function (err, connection){
-      if(err){
-        // if there is an issue obtaining a connection, release the connection instance and log the error
-        logger.error('Problem obtaining MySQL connection',err)
-        res.status(400).send('Problem obtaining MySQL connection'); 
-      } else {
-        // if there is no issue obtaining a connection, execute query and release connection
-        connection.query('SELECT hours FROM `PopStop`.`Restaurant`', function (err, rows, fields) {
-          connection.release();
-          if (err) {
-            logger.error("Error while fetching values: \n", err);
-            res.status(400).json({
-              "data": [],
-              "error": "Error obtaining values"
-            })
-          } else {
-            res.status(200).json({
-              "data": rows
-            });
-          }
-        });
-      }
-    });
-  });
-
-  //GET restaurant description
-  app.get('/restaurants/description', (req, res) => {
-    // obtain a connection from our pool of connections
-    pool.getConnection(function (err, connection){
-      if(err){
-        // if there is an issue obtaining a connection, release the connection instance and log the error
-        logger.error('Problem obtaining MySQL connection',err)
-        res.status(400).send('Problem obtaining MySQL connection'); 
-      } else {
-        // if there is no issue obtaining a connection, execute query and release connection
-        connection.query('SELECT description FROM `PopStop`.`Restaurant`', function (err, rows, fields) {
-          connection.release();
-          if (err) {
-            logger.error("Error while fetching values: \n", err);
-            res.status(400).json({
-              "data": [],
-              "error": "Error obtaining values"
-            })
-          } else {
-            res.status(200).json({
-              "data": rows
-            });
-          }
-        });
-      }
-    });
-  });
-
-  //GET restaurant cuisineType
-  app.get('/restaurants/cuisineType', (req, res) => {
-    // obtain a connection from our pool of connections
-    pool.getConnection(function (err, connection){
-      if(err){
-        // if there is an issue obtaining a connection, release the connection instance and log the error
-        logger.error('Problem obtaining MySQL connection',err)
-        res.status(400).send('Problem obtaining MySQL connection'); 
-      } else {
-        // if there is no issue obtaining a connection, execute query and release connection
-        connection.query('SELECT cuisineType FROM `PopStop`.`Restaurant`', function (err, rows, fields) {
-          connection.release();
-          if (err) {
-            logger.error("Error while fetching values: \n", err);
-            res.status(400).json({
-              "data": [],
-              "error": "Error obtaining values"
-            })
-          } else {
-            res.status(200).json({
-              "data": rows
-            });
-          }
-        });
-      }
-    });
-  });
-
-  //GET restaurant website
-  app.get('/restaurants/website', (req, res) => {
-    // obtain a connection from our pool of connections
-    pool.getConnection(function (err, connection){
-      if(err){
-        // if there is an issue obtaining a connection, release the connection instance and log the error
-        logger.error('Problem obtaining MySQL connection',err)
-        res.status(400).send('Problem obtaining MySQL connection'); 
-      } else {
-        // if there is no issue obtaining a connection, execute query and release connection
-        connection.query('SELECT website FROM `PopStop`.`Restaurant`', function (err, rows, fields) {
-          connection.release();
-          if (err) {
-            logger.error("Error while fetching values: \n", err);
-            res.status(400).json({
-              "data": [],
-              "error": "Error obtaining values"
-            })
-          } else {
-            res.status(200).json({
-              "data": rows
-            });
-          }
-        });
-      }
-    });
-  });
-
-  //GET restaurant sponsored
-  app.get('/restaurants/sponsored', (req, res) => {
-    // obtain a connection from our pool of connections
-    pool.getConnection(function (err, connection){
-      if(err){
-        // if there is an issue obtaining a connection, release the connection instance and log the error
-        logger.error('Problem obtaining MySQL connection',err)
-        res.status(400).send('Problem obtaining MySQL connection'); 
-      } else {
-        // if there is no issue obtaining a connection, execute query and release connection
-        connection.query('SELECT sponsored FROM `PopStop`.`Restaurant`', function (err, rows, fields) {
-          connection.release();
-          if (err) {
-            logger.error("Error while fetching values: \n", err);
-            res.status(400).json({
-              "data": [],
-              "error": "Error obtaining values"
-            })
-          } else {
-            res.status(200).json({
-              "data": rows
-            });
-          }
-        });
-      }
-    });
-  });
-
-  //GET restaurant socialMediaName
-  app.get('/restaurants/socialMediaName', (req, res) => {
-    // obtain a connection from our pool of connections
-    pool.getConnection(function (err, connection){
-      if(err){
-        // if there is an issue obtaining a connection, release the connection instance and log the error
-        logger.error('Problem obtaining MySQL connection',err)
-        res.status(400).send('Problem obtaining MySQL connection'); 
-      } else {
-        // if there is no issue obtaining a connection, execute query and release connection
-        connection.query('SELECT socialMediaName FROM `PopStop`.`Restaurant`', function (err, rows, fields) {
-          connection.release();
-          if (err) {
-            logger.error("Error while fetching values: \n", err);
-            res.status(400).json({
-              "data": [],
-              "error": "Error obtaining values"
-            })
-          } else {
-            res.status(200).json({
-              "data": rows
-            });
-          }
-        });
-      }
-    });
-  });
-
-  //GET restaurant socialMediaURL
-  app.get('/restaurants/socialMediaURL', (req, res) => {
-    // obtain a connection from our pool of connections
-    pool.getConnection(function (err, connection){
-      if(err){
-        // if there is an issue obtaining a connection, release the connection instance and log the error
-        logger.error('Problem obtaining MySQL connection',err)
-        res.status(400).send('Problem obtaining MySQL connection'); 
-      } else {
-        // if there is no issue obtaining a connection, execute query and release connection
-        connection.query('SELECT socialMediaURL FROM `PopStop`.`Restaurant`', function (err, rows, fields) {
-          connection.release();
-          if (err) {
-            logger.error("Error while fetching values: \n", err);
-            res.status(400).json({
-              "data": [],
-              "error": "Error obtaining values"
-            })
-          } else {
-            res.status(200).json({
-              "data": rows
-            });
-          }
-        });
-        
-  // GET /getmealtype
-  app.get("/getmealtype", (req, res) => {
+  app.get("/restaurants/restaurantName", (req, res) => {
     // obtain a connection from our pool of connections
     pool.getConnection(function (err, connection) {
       if (err) {
@@ -1222,7 +1089,7 @@ module.exports = function routes(app, logger) {
       } else {
         // if there is no issue obtaining a connection, execute query and release connection
         connection.query(
-          "SELECT mealType FROM `PopStop`.`MenuItem`",
+          "SELECT restaurantName FROM `PopStop`.`Restaurant`",
           function (err, rows, fields) {
             connection.release();
             if (err) {
@@ -1241,46 +1108,9 @@ module.exports = function routes(app, logger) {
       }
     });
   });
-        
-        
-  // POST Add restaurant
-  app.post('/addRestaurant', (req, res) => {
-    console.log(req.body.product);
-    // obtain a connection from our pool of connections
-    pool.getConnection(function (err, connection){
-      if(err){
-        // if there is an issue obtaining a connection, release the connection instance and log the error
-        logger.error('Problem obtaining MySQL connection',err)
-        res.status(400).send('Problem obtaining MySQL connection'); 
-      } else {
-        let restaurantName = req.body['restaurantName'];
-        let menuID = req.body['menuID'];
-        let location = req.body['location'];
-        let hours = req.body['hours'];
-        let description = req.body['description'];
-        let cuisineType = req.body['cuisineType'];
-        let website = req.body['website'];
-        let sponsored = req.body['sponsored'];
-        let socialMediaName = req.body['socialMediaName'];
-        let socialMediaURL = req.body['socialMediaURL'];
-        let insert = [[restaurantName, menuID, location, hours, description, cuisineType, website, sponsored,
-        socialMediaName, socialMediaURL]];
-        let sql = 'INSERT INTO Restaurant(restaurantName, menuID, location, hours, description, cuisineType, website, sponsored, socialMediaName, socialMediaURL) VALUES ?';
-        // if there is no issue obtaining a connection, execute query and release connection
-        connection.query(sql, [insert], function (err, rows, fields) {
-          connection.release();
-          if (err) {
-            // if there is an error with the query, log the error
-            logger.error("Problem inserting into Restaurant table: \n", err);
-            res.status(400).send('Problem inserting into table'); 
-          } else {
-            res.status(200).send(`added ${req.body.restaurantName} to the table!`);
-          }
-        });
-        
-        
-  // GET /restaurants
-  app.get("/restaurants", (req, res) => {
+
+  //GET restaurant/menuID
+  app.get("/restaurants/menuID", (req, res) => {
     // obtain a connection from our pool of connections
     pool.getConnection(function (err, connection) {
       if (err) {
@@ -1290,7 +1120,193 @@ module.exports = function routes(app, logger) {
       } else {
         // if there is no issue obtaining a connection, execute query and release connection
         connection.query(
-          "SELECT * FROM `PopStop`.`Restaurant`",
+          "SELECT menuID FROM `PopStop`.`Restaurant`",
+          function (err, rows, fields) {
+            connection.release();
+            if (err) {
+              logger.error("Error while fetching values: \n", err);
+              res.status(400).json({
+                data: [],
+                error: "Error obtaining values",
+              });
+            } else {
+              res.status(200).json({
+                data: rows,
+              });
+            }
+          }
+        );
+      }
+    });
+  });
+
+  //GET restaurant hours
+  app.get("/restaurants/hours", (req, res) => {
+    // obtain a connection from our pool of connections
+    pool.getConnection(function (err, connection) {
+      if (err) {
+        // if there is an issue obtaining a connection, release the connection instance and log the error
+        logger.error("Problem obtaining MySQL connection", err);
+        res.status(400).send("Problem obtaining MySQL connection");
+      } else {
+        // if there is no issue obtaining a connection, execute query and release connection
+        connection.query(
+          "SELECT hours FROM `PopStop`.`Restaurant`",
+          function (err, rows, fields) {
+            connection.release();
+            if (err) {
+              logger.error("Error while fetching values: \n", err);
+              res.status(400).json({
+                data: [],
+                error: "Error obtaining values",
+              });
+            } else {
+              res.status(200).json({
+                data: rows,
+              });
+            }
+          }
+        );
+      }
+    });
+  });
+
+  //GET restaurant description
+  app.get("/restaurants/description", (req, res) => {
+    // obtain a connection from our pool of connections
+    pool.getConnection(function (err, connection) {
+      if (err) {
+        // if there is an issue obtaining a connection, release the connection instance and log the error
+        logger.error("Problem obtaining MySQL connection", err);
+        res.status(400).send("Problem obtaining MySQL connection");
+      } else {
+        // if there is no issue obtaining a connection, execute query and release connection
+        connection.query(
+          "SELECT description FROM `PopStop`.`Restaurant`",
+          function (err, rows, fields) {
+            connection.release();
+            if (err) {
+              logger.error("Error while fetching values: \n", err);
+              res.status(400).json({
+                data: [],
+                error: "Error obtaining values",
+              });
+            } else {
+              res.status(200).json({
+                data: rows,
+              });
+            }
+          }
+        );
+      }
+    });
+  });
+
+  //GET restaurant cuisineType
+  app.get("/restaurants/cuisineType", (req, res) => {
+    // obtain a connection from our pool of connections
+    pool.getConnection(function (err, connection) {
+      if (err) {
+        // if there is an issue obtaining a connection, release the connection instance and log the error
+        logger.error("Problem obtaining MySQL connection", err);
+        res.status(400).send("Problem obtaining MySQL connection");
+      } else {
+        // if there is no issue obtaining a connection, execute query and release connection
+        connection.query(
+          "SELECT cuisineType FROM `PopStop`.`Restaurant`",
+          function (err, rows, fields) {
+            connection.release();
+            if (err) {
+              logger.error("Error while fetching values: \n", err);
+              res.status(400).json({
+                data: [],
+                error: "Error obtaining values",
+              });
+            } else {
+              res.status(200).json({
+                data: rows,
+              });
+            }
+          }
+        );
+      }
+    });
+  });
+
+  //GET restaurant website
+  app.get("/restaurants/website", (req, res) => {
+    // obtain a connection from our pool of connections
+    pool.getConnection(function (err, connection) {
+      if (err) {
+        // if there is an issue obtaining a connection, release the connection instance and log the error
+        logger.error("Problem obtaining MySQL connection", err);
+        res.status(400).send("Problem obtaining MySQL connection");
+      } else {
+        // if there is no issue obtaining a connection, execute query and release connection
+        connection.query(
+          "SELECT website FROM `PopStop`.`Restaurant`",
+          function (err, rows, fields) {
+            connection.release();
+            if (err) {
+              logger.error("Error while fetching values: \n", err);
+              res.status(400).json({
+                data: [],
+                error: "Error obtaining values",
+              });
+            } else {
+              res.status(200).json({
+                data: rows,
+              });
+            }
+          }
+        );
+      }
+    });
+  });
+
+  //GET restaurant sponsored
+  app.get("/restaurants/sponsored", (req, res) => {
+    // obtain a connection from our pool of connections
+    pool.getConnection(function (err, connection) {
+      if (err) {
+        // if there is an issue obtaining a connection, release the connection instance and log the error
+        logger.error("Problem obtaining MySQL connection", err);
+        res.status(400).send("Problem obtaining MySQL connection");
+      } else {
+        // if there is no issue obtaining a connection, execute query and release connection
+        connection.query(
+          "SELECT sponsored FROM `PopStop`.`Restaurant`",
+          function (err, rows, fields) {
+            connection.release();
+            if (err) {
+              logger.error("Error while fetching values: \n", err);
+              res.status(400).json({
+                data: [],
+                error: "Error obtaining values",
+              });
+            } else {
+              res.status(200).json({
+                data: rows,
+              });
+            }
+          }
+        );
+      }
+    });
+  });
+
+  //GET restaurant socialMediaName
+  app.get("/restaurants/socialMediaName", (req, res) => {
+    // obtain a connection from our pool of connections
+    pool.getConnection(function (err, connection) {
+      if (err) {
+        // if there is an issue obtaining a connection, release the connection instance and log the error
+        logger.error("Problem obtaining MySQL connection", err);
+        res.status(400).send("Problem obtaining MySQL connection");
+      } else {
+        // if there is no issue obtaining a connection, execute query and release connection
+        connection.query(
+          "SELECT socialMediaName FROM `PopStop`.`Restaurant`",
           function (err, rows, fields) {
             connection.release();
             if (err) {
@@ -1361,7 +1377,7 @@ module.exports = function routes(app, logger) {
               logger.error("Error while deleting menuItem\n", err);
         // if there is no issue obtaining a connection, execute query and release connection
         connection.query(
-          "SELECT location FROM `PopStop`.`Restaurant`",
+          "SELECT socialMediaURL FROM `PopStop`.`Restaurant`",
           function (err, rows, fields) {
             connection.release();
             if (err) {

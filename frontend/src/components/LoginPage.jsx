@@ -1,56 +1,84 @@
-import React from "react";
+import React, { useContext, useState, useEffect } from 'react';
+import { Link, useHistory } from "react-router-dom";
+import { Button, Container } from 'react-bootstrap';
+import { UserRepository } from '../api/userRespository';
+import { UserContext } from '../context';
 
-export class LoginPage extends React.Component {
 
-    state = {
-        userName: "",
-        password:"",
-        isOwner:false
+const LoginPage = () => {
+    const [username, setUsername] = useState('');
+    const [password, setPassword] = useState('');
+    const [errors, setErrors] = useState({});
+    const [isLoading, setIsLoading] = useState(false);
+    const [userContext, setUserContext] = useContext(UserContext);
+    const history = useHistory();
+    const userRepository = new UserRepository();
+
+    function validate() {
+        return username.length > 3 && password.length > 0 && !isLoading;
     }
 
-    onSubmitClick(){
 
-    }
+    const login = async (e) => {
+        e.preventDefault();
+        console.log("test");
+        setIsLoading(true);
+        const res = await userRepository.login(username, password);
+        if (res) setIsLoading(false);
+        if (!res.success) {
+            setErrors(res);
+        } else {
+            setUserContext(userRepository.currentUser());
+            history.push('/');
+        }
+    };
 
+    useEffect(() => {
+        const user = userContext;
+        if (user.username) {
+            console.log(user);
+            history.push('/');
+        }
+    });
 
-    render(){
+    return <>
 
-        return<>
+        <div className="card mt-5 w-75 mx-auto justify-content-center align-items-center">
 
-            <div className="card mt-5 w-75 mx-auto justify-content-center align-items-center">
+            <h1 className="card-header w-100 text-center mx-auto">Login</h1>
 
-                <h1 className="card-header w-100 text-center mx-auto">Login</h1>
+            <div className="card-body">
+                <form id="registerForm" className="card-body text-center" onSubmit={login}>
+                    <label for="userName">Username: </label>
+                    <input
+                        type="text" id="userName" name="userName"
+                        value={username}
+                        onChange={(e) => setUsername(e.target.value)}                    >
+                    </input>
 
-                <div className="card-body">
-                    <form id="registerForm"className="card-body text-center">
-                        <label for="userName">Username: </label>
-                        <input 
-                            type="text" id="userName" name="userName"
-                            value={this.state.email}
-                            onChange={event => this.setState({userName: event.target.value})}
-                        >
-                        </input>
+                    <br />
 
-                        <br/>
+                    <label for="password">Password: </label>
+                    <input
+                        type="password" id="password" name="password"
+                        value={password}
+                        onChange={(e) => setPassword(e.target.value)}
+                    >
+                    </input>
 
-                        <label for="password">Password: </label>
-                        <input 
-                            type="text" id="password" name="password"
-                            value={this.state.password}
-                            onChange={event => this.setState({password: event.target.value})}
-                        >
-                        </input>
+                    <br />
 
-                        <br/>
-
-                        <button
-                            type="button"
-                            onClick={ () => this.onSubmitClick() }
-                            className="btn btn-primary">Log in!</button>
-                    </form>
-                </div>
+                    <Button
+                        type="submit"
+                        className="btn btn-primary" disabled={!validate()}>Log in</Button>
+                </form>
             </div>
-        
-        </>;
-    }
+            <p className="text-sm">
+                Don't have an account? <Link to="/register">Register</Link>
+            </p>
+        </div>
+
+    </>;
 }
+
+export default LoginPage;
