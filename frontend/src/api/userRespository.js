@@ -1,9 +1,20 @@
 import axios from 'axios';
-const url = "http://localhost:8000"
+const url = "http://group2.c1smrv7pnl1w.us-east-2.rds.amazonaws.com"
 
 export class UserRepository {
 
   url = "http://localhost:8000"
+
+  linkUserRestaurant(userID, restID){
+    return new Promise((resolve, reject) => {
+      axios.put(`${this.url}/assignRestaurant`, {userID: userID, restID: restID})
+            .then(x => resolve(x.data))
+            .catch(x => {
+                alert(x);
+                reject(x);
+            })
+    })
+  }
 
   addUser(userName, password){
     return new Promise((resolve, reject) => {
