@@ -14,14 +14,9 @@ const LoginPage = () => {
     const history = useHistory();
     const userRepository = new UserRepository();
 
-    function validate() {
-        return username.length > 3 && password.length > 0 && !isLoading;
-    }
-
 
     const login = async (e) => {
         e.preventDefault();
-        console.log("test");
         setIsLoading(true);
         const res = await userRepository.login(username, password);
         if (res) setIsLoading(false);
@@ -29,6 +24,7 @@ const LoginPage = () => {
             setErrors(res);
         } else {
             setUserContext(userRepository.currentUser());
+            console.log(userContext);
             history.push('/');
         }
     };
@@ -36,7 +32,7 @@ const LoginPage = () => {
     useEffect(() => {
         const user = userContext;
         if (user.username) {
-            console.log(user);
+            console.log(sessionStorage.getItem('user'));
             history.push('/');
         }
     });
@@ -70,7 +66,7 @@ const LoginPage = () => {
 
                     <Button
                         type="submit"
-                        className="btn btn-primary" disabled={!validate()}>Log in</Button>
+                        className="btn btn-primary">Log in</Button>
                 </form>
             </div>
             <p className="text-sm">

@@ -37,12 +37,13 @@ export const Landing = () => {
 
 
     useEffect( () => {
+        console.log("SSL: " + sessionStorage.getItem('user'));
         const userRepository = new UserRepository();
         setLoggedIn(userRepository.loggedIn());
         console.log(userRepository.currentUser());
     }, [loggedIn, setLoggedIn]);
 
-    console.log(loggedIn);
+    console.log("Logged in? " + loggedIn);
     return loggedIn ? <SearchPage /> : <Welcome />;
    
 };

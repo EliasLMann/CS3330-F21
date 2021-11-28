@@ -70,15 +70,17 @@ export class UserRepository {
         errors.success = false;
         break;
       default:
+        console.log("setting session storage");
         sessionStorage.setItem(
           'user',
           JSON.stringify({
             username: user,
-            userId: data.userId,
+            userId: data.userID,
             password: pass,
             status: data.status ?? 0
           })
         );
+        console.log("SS" + sessionStorage.getItem('user'));
         errors.success = true;
         break;
     }
