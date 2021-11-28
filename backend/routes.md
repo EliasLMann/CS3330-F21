@@ -87,8 +87,8 @@
 
 # Epic 4
 
-- [ ] 1 POST photo(s) for restaurant page
-- [ ] 2 POST a title for photo
+- [x] 1 POST photo(s) for restaurant page
+- [x] 2 POST a title for photo
 
 # Epic 5
 
