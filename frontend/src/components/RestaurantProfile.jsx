@@ -1,7 +1,7 @@
 import React from "react";
 
 
-export const RestaurantProfile = props => {
+export const RestaurantProfile = () => {
     return <>
         <div id="info">
             <h1 className="text-start fw-bolder mx-4">

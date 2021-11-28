@@ -20,15 +20,12 @@ const LoggedInHeader = () => {
                 <div className="d-flex flex-row">
                     <Nav.Link href="/profile"
                         className="p-2">My Profile</Nav.Link>
-                    <Nav.Link href="/home"
+                    <Nav.Link href="/"
                         className="p-2">Find Restaurants</Nav.Link>
                     <Nav.Link href="/"
                         className="text-end"
                         onClick={logout()}>Logout</Nav.Link>
                 </div>
-            </Nav>
-            <Nav>
-
             </Nav>
         </Navbar>
     );
