@@ -63,7 +63,7 @@
 
 - [x] 1 GET restaurants by location
 - [ ] 2 GET restaurants by distance from location
-- [ ] 3 GET restaurants by cuisine type
+- [x] 3 GET restaurants by cuisine type (needs to be tested)
 - [x] 3 GET all restaurant cuisine types
 - [ ] 4 GET restaurants with average menu price in a given range
 - [ ] 5 GET restaurants with average rating in a given range
