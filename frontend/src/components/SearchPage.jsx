@@ -1,12 +1,11 @@
 import React from "react";
 import { Dropdown } from "react-bootstrap";
 import { Header } from "./Header";
-import {RestaurantsList} from "./RestaurantsList";
 
 import { useState, useEffect } from "react";
 
 import { UserRepository } from "../api/userRespository";
-import { RestaurantList } from "./RestaurantsList";
+import { RestaurantList } from "./RestaurantList";
 
 export const SearchPage = props => {
 
@@ -47,7 +46,7 @@ export const SearchPage = props => {
                 <button className="btn btn-secondary h-25">Search</button>
             </div>
         </div>
-        <RestaurantsList restaurants = {restaurants} />
+        <RestaurantList restaurants = {restaurants} />
     </>
     
 
