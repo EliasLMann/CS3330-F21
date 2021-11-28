@@ -1,9 +1,31 @@
 import axios from 'axios';
-const url = "http://group2.c1smrv7pnl1w.us-east-2.rds.amazonaws.com"
+const url = "http://localhost:8000"
 
 export class UserRepository {
 
   url = "http://localhost:8000"
+
+  getRestaurants(){
+    return new Promise((resolve, reject) => {
+      axios.get(`${this.url}/restaurants`, this.config)
+          .then(x => resolve(x.data))
+          .catch(x => {
+              alert(x);
+              reject(x);
+          })
+    });
+  }
+
+  getRestaurant(id) {
+    return new Promise((resolve, reject) => {
+        axios.get(`${this.url}/${id}`, this.config)
+            .then(x => resolve(x.data))
+            .catch(x => {
+                alert(x);
+                reject(x);
+            })
+    });
+  }
 
   linkUserRestaurant(userID, restID){
     return new Promise((resolve, reject) => {
