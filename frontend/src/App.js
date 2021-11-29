@@ -19,6 +19,7 @@ import { AddMenu } from './components/AddMenu';
 import { Landing } from './components/Landing'
 import { UserContext } from './context';
 import { UserRepository } from './api/userRespository';
+import { RestaurantDetails } from './components/RestaurantDetails';
 
 // React functional component
 function App() {
@@ -54,6 +55,7 @@ function App() {
         <Route component={Login} path="/login" />
         <Route component={RegisterPage} path="/register" />
         <Route component={RestaurantProfile} path="/profile" />
+        <Route component={RestaurantDetails} path="/restaurants/:restaurantID" />
         <Route component={AddMenu} path="/addMenu" />
         <Route component={SearchPage} path="/search" exact />
         <Route component={Landing} path="/" exact />

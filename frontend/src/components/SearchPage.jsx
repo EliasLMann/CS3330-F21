@@ -8,6 +8,7 @@ export class SearchPage extends React.Component {
     render() {
         return (<>
             <Header />
+
             <div className="searchbar">
                 <div className="card align-center w-75 mx-auto">
                     <h2 className="card-header text-center">Search PopStop:</h2>
@@ -31,7 +32,9 @@ export class SearchPage extends React.Component {
                     </div>
                 </div>
             </div>
-            <RestaurantList/>
+            <div className="container">
+                <RestaurantList />
+            </div>
         </>)
     }
 

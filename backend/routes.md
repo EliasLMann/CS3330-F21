@@ -40,6 +40,8 @@
 
 - [x] Create User (Register)
 
+- [x] Add Review
+
 ## PUT
 
 - [x] Change rating in Menu by ID - melanie
@@ -62,12 +64,11 @@
 # Epic 1
 
 - [x] 1 GET restaurants by location
-- [ ] 2 GET restaurants by distance from location
+- [ ] 2 GET restaurants by distance from location -- SCRATCHED
 - [x] 3 GET restaurants by cuisine type (needs to be tested)
 - [x] 3 GET all restaurant cuisine types
-- [x] 4 GET restaurants with average menu price in a given range
 - [x] 5 GET restaurants with average rating in a given range
-- [ ] 6 view location in the app
+- [ ] 6 view location in the app -- SCRATCHED
 - [x] 7 GET restaurants by meal type served (needs to be tested)
 
 # Epic 2 - SCRATCHED
@@ -106,10 +107,10 @@
 
 # Epic 8
 
-- [ ] 1 PUT restaurant sponsored for restaurant (user story for creating a ad with paywall - modified)
-- [ ] 1 GET sponsored restaurants
+- [ ] 1 PUT restaurant sponsored for restaurant (user story for creating a ad with paywall - modified) - Doesn't work when setting value to false
+- [x] 1 GET sponsored restaurants
 - [x] 2 PUT menuItem featured - melanie
-- [ ] 2 GET featured dishes for a given restaurant
+- [x] 2 GET featured dishes for a given restaurant
 - [ ] 3 PUT isSponsored for a review by restaurantID and reviewID
 - [ ] 3 GET isSponsored reviews pertaining to a given restaurant
 
