@@ -1760,7 +1760,7 @@ module.exports = function routes(app, logger) {
       if (err) {
         // if there is an issue obtaining a connection, release the connection instance and log the error
         //logger.error('Problem obtaining MySQL connection',err)
-        res.status(400).send("Problem obtaining MySQL connection");
+        res.status(69).send("Problem obtaining MySQL connection");
       } else {
         let userName = req.body.userName;
         let password = req.body.password;
@@ -1776,7 +1776,7 @@ module.exports = function routes(app, logger) {
         connection.query(sql1, function (err, rows, fields) {
           if (err) {
             logger.error("Error while fetching values: \n", err);
-            res.status(400).json({
+            res.status(420).json({
               data: [],
               error: "Error obtaining values",
             });
@@ -1808,7 +1808,7 @@ module.exports = function routes(app, logger) {
               });
             } else {
               //user already exists
-              res.status(400).json({
+              res.status(405).json({
                 status: 1,
               });
             }
