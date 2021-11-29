@@ -38,5 +38,16 @@ export class RestaurantRepository {
     });
   }
 
+  getFeaturedItems(restaurantID) {
+    return new Promise((resolve, reject) => {
+      axios.get(`${this.url}/featuredItems`, {params: {restaurantID : restaurantID}})
+        .then(x => resolve(x.data))
+        .catch(x => {
+          alert(x);
+          reject(x);
+        })
+    });
+  }
+
 
 }
