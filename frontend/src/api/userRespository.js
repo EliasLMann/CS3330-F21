@@ -5,14 +5,58 @@ export class UserRepository {
 
   url = "http://localhost:8000"
 
-  addRestaurant(restaurantData) {
+  getRestaurants(){
     return new Promise((resolve, reject) => {
-      axios.post(`${this.url}/addRestaurant`, { insert: restaurantData })
-        .then(x => resolve(x.data))
-        .catch(x => {
-          alert(x);
-          reject(x);
-        })
+      axios.get(`${this.url}/restaurants`, this.config)
+          .then(x => resolve(x.data))
+          .catch(x => {
+              alert(x);
+              reject(x);
+          })
+    });
+  }
+
+  getRestaurant(id) {
+    return new Promise((resolve, reject) => {
+        axios.get(`${this.url}/${id}`, this.config)
+            .then(x => resolve(x.data))
+            .catch(x => {
+                alert(x);
+                reject(x);
+            })
+    });
+  }
+
+  linkUserRestaurant(userID, restID){
+    return new Promise((resolve, reject) => {
+      axios.put(`${this.url}/assignRestaurant`, {userID: userID, restID: restID})
+            .then(x => resolve(x.data))
+            .catch(x => {
+                alert(x);
+                reject(x);
+            })
+    })
+  }
+
+  addUser(userName, password){
+    return new Promise((resolve, reject) => {
+      axios.post(`${this.url}/register`, {userName: userName, password: password})
+            .then(x => resolve(x.data))
+            .catch(x => {
+                alert(x);
+                reject(x);
+            })
+    })
+  }
+
+  addRestaurant(restaurantData){
+    return new Promise((resolve, reject) => {
+      axios.post(`${this.url}/addRestaurant`, {insert: restaurantData})
+            .then(x => resolve(x.data))
+            .catch(x => {
+                alert(x);
+                reject(x);
+            })
     })
   }
 
