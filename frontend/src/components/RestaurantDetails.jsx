@@ -39,6 +39,8 @@ export const RestaurantDetails = () => {
                         <p>Cuisine Type {restaurant.cuisineType}</p>
                     </div>
                     <hr />
+                    <h4>Featured Items</h4>
+                    <hr/>
                     <h4>Menu</h4>
                     <div>
                         <table className="table table-striped">
@@ -47,6 +49,8 @@ export const RestaurantDetails = () => {
                                     <th>Item</th>
                                     <th>Price</th>
                                     <th>Meal Type</th>
+                                    <th>Likes</th>
+                                    <th>Dislikes</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -56,6 +60,8 @@ export const RestaurantDetails = () => {
                                             <th className="fw-normal">{x.itemName}</th>
                                             <th className="fw-normal">${x.price}</th>
                                             <th className="fw-normal">{x.mealType}</th>
+                                            <th className="fw-normal">{x.likes}</th>
+                                            <th className="fw-normal">{x.dislikes}</th>
                                         </tr>)
                                 }
                             </tbody>
