@@ -55,6 +55,7 @@ function App() {
         <Route component={RegisterPage} path="/register" />
         <Route component={RestaurantProfile} path="/profile" />
         <Route component={AddMenu} path="/addMenu" />
+        <Route component={SearchPage} path="/search" exact />
         <Route component={Landing} path="/" exact />
       </Router>
     </UserContext.Provider>
