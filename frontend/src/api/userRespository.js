@@ -5,18 +5,6 @@ export class UserRepository {
 
   url = "http://localhost:8000"
 
-  addUser(userName, password) {
-    return new Promise((resolve, reject) => {
-
-      axios.post(`${this.url}/register`, { userName: userName, password: password })
-        .then(x => resolve(x.data))
-        .catch(x => {
-          alert(x);
-          reject(x);
-        })
-    })
-  }
-
   addRestaurant(restaurantData) {
     return new Promise((resolve, reject) => {
       axios.post(`${this.url}/addRestaurant`, { insert: restaurantData })
@@ -78,7 +66,8 @@ export class UserRepository {
             username: user,
             userId: data.userID,
             password: pass,
-            status: data.status ?? 0
+            restaurantID: data.restaurantID,
+            status: 0
           })
         );
         errors.success = true;
@@ -87,5 +76,41 @@ export class UserRepository {
     return errors;
   }
 
+  addUser(userName, password) {
+    return new Promise((resolve, reject) => {
+
+      axios.post(`${this.url}/register`, { userName: userName, password: password })
+        .then(x => resolve(x.data))
+        .catch(x => {
+          alert(x);
+          reject(x);
+        })
+    })
+  }
+
+  async register(userName, password) {
+    const errors = {success : false};
+
+    const {data, status} = await axios.post(url + '/register', {userName, password});
+
+    if (data.status && data.status === 1) errors.email = 'Email already used';
+
+    if (status <= 201) {
+      errors.success = true;
+      sessionStorage.setItem(
+        'user',
+        JSON.stringify({
+          username: userName,
+          password: password,
+          userID: data.userID,
+          restaurantID: data.restaurantID,
+          status: 0
+        })
+      );
+    }
+
+    return errors
+
+  }
 
 }

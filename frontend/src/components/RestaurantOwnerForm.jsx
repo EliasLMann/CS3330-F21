@@ -43,11 +43,11 @@ export class RestaurantOwnerForm extends React.Component {
     render() {
 
         return <>
-            <form className="card form-group">
+            <div className="card form-group">
                 <h2 className="card-header">About your restaurant</h2>
                 <br />
                 <div className="d-flex flex-row justify-content-center align-middle">
-                    <label className="align-middle" for="restaurantName">Restaurant Name: </label>
+                    <label className="align-middle" htmlFor="restaurantName">Restaurant Name: </label>
                     <input
                         type="text" id="restaurantName" name="restaurantName"
                         value={this.state.restaurantName}
@@ -56,7 +56,7 @@ export class RestaurantOwnerForm extends React.Component {
                     >
                     </input>
 
-                    <label className="align-middle" for="cuisineType">Cuisine Type: </label>
+                    <label className="align-middle" htmlFor="cuisineType">Cuisine Type: </label>
                     <input
                         type="text" id="cuisineType" name="cuisineType"
                         value={this.state.cuisineType}
@@ -69,7 +69,7 @@ export class RestaurantOwnerForm extends React.Component {
                 <br />
 
                 <div className="mx-auto form-group">
-                    <label for="restaurantAddress">Restaurant Address: </label>
+                    <label htmlFor="restaurantAddress">Restaurant Address: </label>
                 </div>
                 <div className="d-flex flex-row justify-content-center p-2">
                     <input type="text" id="addressStreet" name="addressStreet"
@@ -102,7 +102,7 @@ export class RestaurantOwnerForm extends React.Component {
 
                 <span className="mb-2">Open Times:</span>
                 <div>
-                    <textarea class="mx-auto w-25 h-100"
+                    <textarea className="mx-auto w-25 h-100"
                         onChange={event => this.setState({ openTimes: event.target.value })}></textarea>
                     <OverlayTrigger trigger="click" placement="right" overlay={popoverRight}>
                         <Button className="mx-auto rounded-circle" > ? </Button>
@@ -113,31 +113,31 @@ export class RestaurantOwnerForm extends React.Component {
 
                 <span className="mb-2">Restaurant Description</span>
                 <div>
-                    <textarea class="mx-auto w-50 h-100 formControl"
+                    <textarea className="mx-auto w-50 h-100 formControl"
                         onChange={event => this.setState({ restaurantDescription: event.target.value })}></textarea>
                 </div>
 
                 <br />
                 <div className="w-75 mx-auto">
-                    <div class="input-group mb-3">
-                        <div class="input-group-prepend">
-                            <span class="input-group-text" id="basic-addon3">Website:</span>
+                    <div className="input-group mb-3">
+                        <div className="input-group-prepend">
+                            <span className="input-group-text" id="basic-addon3">Website:</span>
                         </div>
-                        <input type="text" class="form-control" id="basic-url" aria-describedby="basic-addon3"
+                        <input type="text" className="form-control" aria-describedby="basic-addon3"
                             onChange={event => this.setState({ websiteURL: event.target.value })} />
                     </div>
                 </div>
                 <div className="w-75 mx-auto">
-                    <div class="input-group mb-3">
-                        <div class="input-group-prepend">
-                            <span class="input-group-text" id="basic-addon3">Instagram @:</span>
+                    <div className="input-group mb-3">
+                        <div className="input-group-prepend">
+                            <span className="input-group-text" id="basic-addon3">Instagram @:</span>
                         </div>
-                        <input type="text" class="form-control" id="basic-url" aria-describedby="basic-addon3"
+                        <input type="text" className="form-control" aria-describedby="basic-addon3"
                             onChange={event => this.setState({ instagramUser: event.target.value })} />
                     </div>
                 </div>
                 <br />
-            </form>
+            </div>
         </>
     }
 }

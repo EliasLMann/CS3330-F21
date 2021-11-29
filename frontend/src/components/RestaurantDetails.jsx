@@ -74,7 +74,7 @@ export const RestaurantDetails = () => {
                                 </tr>
                             </thead>
                             <tbody>
-                                {
+                                {/* {
                                     menu.map((x, i) =>
                                         <tr key={i}>
                                             <th className="fw-normal">{x.itemName}</th>
@@ -87,10 +87,12 @@ export const RestaurantDetails = () => {
                                                 <button className="mx-auto" onClick={() => itemRepo.incrementDislikes(x.itemID)}> {x.dislikes} </button>
                                             </th>
                                         </tr>)
-                                }
+                                } */}
                             </tbody>
                         </table>
                     </div>
+                    <hr/>
+                    <h4>Reviews</h4>
                 </div>
 
             </>

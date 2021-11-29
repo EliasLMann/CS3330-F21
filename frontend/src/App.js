@@ -20,6 +20,8 @@ import { Landing } from './components/Landing'
 import { UserContext } from './context';
 import { UserRepository } from './api/userRespository';
 import { RestaurantDetails } from './components/RestaurantDetails';
+import Register from './components/Register';
+import OwnerInfo from './components/OwnerInfo';
 
 // React functional component
 function App() {
@@ -46,19 +48,20 @@ function App() {
   }
 
   const userRepository = new UserRepository();
-  const [context, setContext] = useState('');
+  const [context, setContext] = useState(userRepository.currentUser());
 
   return (<>
 
     <UserContext.Provider value={[context, setContext]}>
       <Router>
         <Route component={Login} path="/login" />
-        <Route component={RegisterPage} path="/register" />
+        <Route component={Register} path="/register" />
         <Route component={RestaurantProfile} path="/profile" />
         <Route component={RestaurantDetails} path="/restaurants/:restaurantID" />
         <Route component={AddMenu} path="/addMenu" />
-        <Route component={SearchPage} path="/search" exact />
+        <Route component={OwnerInfo} path="/ownerInput" />
         <Route component={Landing} path="/" exact />
+        <Route component={Register} path="/reg" />
       </Router>
     </UserContext.Provider>
 

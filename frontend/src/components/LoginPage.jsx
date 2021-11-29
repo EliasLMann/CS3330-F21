@@ -3,6 +3,7 @@ import { Link, useHistory } from "react-router-dom";
 import { Button, Container } from 'react-bootstrap';
 import { UserRepository } from '../api/userRespository';
 import { UserContext } from '../context';
+import { Header } from './Header';
 
 
 const LoginPage = () => {
@@ -37,7 +38,7 @@ const LoginPage = () => {
     });
 
     return <>
-
+        <Header/>
         <div className="card mt-5 w-75 mx-auto justify-content-center align-items-center">
 
             <h1 className="card-header w-100 text-center mx-auto">Login</h1>
