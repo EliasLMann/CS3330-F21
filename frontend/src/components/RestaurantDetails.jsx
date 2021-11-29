@@ -1,19 +1,23 @@
 import React, { useContext, useState, useEffect } from 'react';
+import { useParams } from 'react-router';
 import { RestaurantRepository } from '../api/restaurantRepository';
 import { UserContext } from '../context';
 import { Header } from "./Header";
 
 
-export const RestaurantDetails = (restID) => {
+export const RestaurantDetails = () => {
 
     const [userContext, setUserContext] = useContext(UserContext);
     const [restaurant, setRestaurant] = useState(undefined);
     const [menu, setMenu] = useState(undefined);
     const restRepo = new RestaurantRepository();
+    const { restaurantID } = useParams();
+    //let restID = params.restaurantID
 
     useEffect(() => {
-        restRepo.getRestaurant(2).then(x => setRestaurant(x.data[0]));
-        restRepo.getMenuItems(2).then(x => setMenu(x.data));
+        console.log("ID: " + restaurantID);
+        restRepo.getRestaurant(restaurantID).then(x => setRestaurant(x.data[0]));
+        restRepo.getMenuItems(restaurantID).then(x => setMenu(x.data));
     }, []);
 
     if (!restaurant || !menu) {
