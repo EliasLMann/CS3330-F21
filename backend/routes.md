@@ -65,8 +65,8 @@
 - [ ] 2 GET restaurants by distance from location
 - [x] 3 GET restaurants by cuisine type (needs to be tested)
 - [x] 3 GET all restaurant cuisine types
-- [ ] 4 GET restaurants with average menu price in a given range
-- [ ] 5 GET restaurants with average rating in a given range
+- [x] 4 GET restaurants with average menu price in a given range
+- [x] 5 GET restaurants with average rating in a given range
 - [ ] 6 view location in the app
 - [x] 7 GET restaurants by meal type served (needs to be tested)
 
@@ -87,8 +87,8 @@
 
 # Epic 4
 
-- [ ] 1 POST photo(s) for restaurant page
-- [ ] 2 POST a title for photo
+- [x] 1 POST photo(s) for restaurant page
+- [x] 2 POST a title for photo
 
 # Epic 5
 
