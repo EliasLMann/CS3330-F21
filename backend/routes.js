@@ -70,8 +70,8 @@ module.exports = function routes(app, logger) {
         // if there is no issue obtaining a connection, execute query and release connection
         connection.query(
           "INSERT INTO `PopStop`.`test_table` (`value`) VALUES('" +
-            req.body.product +
-            "')",
+          req.body.product +
+          "')",
           function (err, rows, fields) {
             connection.release();
             if (err) {
@@ -1477,22 +1477,17 @@ module.exports = function routes(app, logger) {
         res.status(400).send("Problem obtaining MySQL connection");
       } else {
         // if there is no issue obtaining a connection, execute query and release connection
-        var itemID = req.param("itemID");
-        connection.query(
-          "UPDATE `PopStop`.`MenuItem` SET likes = (likes + 1) WHERE itemID = ?",
-          itemID,
-          function (err, rows, fields) {
-            connection.release();
-            if (err) {
-              // if there is an error with the query, log the error
-              logger.error("Problem editing MenuItem table: \n", err);
-              res.status(400).send("Problem editing table");
-            } else {
-              res
-                .status(200)
-                .send(`changed item ${req.param("itemID")} in the table!`);
-            }
+        var itemID = req.query["itemID"];
+        connection.query('UPDATE `PopStop`.`MenuItem` SET likes = (likes + 1) WHERE itemID = (?)', itemID, function (err, rows, fields) {
+          connection.release();
+          if (err) {
+            // if there is an error with the query, log the error
+            logger.error("Problem editing MenuItem table: \n", err);
+            res.status(400).send('Problem editing table');
+          } else {
+            res.status(200).send(`changed item in the table!`);
           }
+        }
         );
       }
     });
@@ -1509,22 +1504,17 @@ module.exports = function routes(app, logger) {
         res.status(400).send("Problem obtaining MySQL connection");
       } else {
         // if there is no issue obtaining a connection, execute query and release connection
-        var itemID = req.param("itemID");
-        connection.query(
-          "UPDATE `PopStop`.`MenuItem` SET dislikes = (dislikes + 1) WHERE itemID = ?",
-          itemID,
-          function (err, rows, fields) {
-            connection.release();
-            if (err) {
-              // if there is an error with the query, log the error
-              logger.error("Problem editing MenuItem table: \n", err);
-              res.status(400).send("Problem editing table");
-            } else {
-              res
-                .status(200)
-                .send(`changed item ${req.param("itemID")} in the table!`);
-            }
+        var itemID = req.query["itemID"]
+        connection.query('UPDATE `PopStop`.`MenuItem` SET dislikes = (dislikes + 1) WHERE itemID = (?)', itemID, function (err, rows, fields) {
+          connection.release();
+          if (err) {
+            // if there is an error with the query, log the error
+            logger.error("Problem editing MenuItem table: \n", err);
+            res.status(400).send('Problem editing table');
+          } else {
+            res.status(200).send(`changed item in the table!`);
           }
+        }
         );
       }
     });
@@ -1932,10 +1922,10 @@ module.exports = function routes(app, logger) {
                   let response =
                     rows2.length > 0
                       ? {
-                          status: 0,
-                          userID: rows2[0].userID,
-                          restaurantID: rows2[0].restaurantID,
-                        }
+                        status: 0,
+                        userID: rows2[0].userID,
+                        restaurantID: rows2[0].restaurantID,
+                      }
                       : { status: 2 };
                   res.status(200).json(response);
                 }
@@ -2303,4 +2293,5 @@ module.exports = function routes(app, logger) {
       }
     });
   });
+
 };
