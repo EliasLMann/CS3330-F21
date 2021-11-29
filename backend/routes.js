@@ -117,6 +117,7 @@ module.exports = function routes(app, logger) {
       }
     });
   });
+<<<<<<< Updated upstream
 
   // POST Add restaurant
   app.post("/addRestaurant", (req, res) => {
@@ -170,6 +171,8 @@ module.exports = function routes(app, logger) {
       }
     });
   });
+=======
+>>>>>>> Stashed changes
   
   // GET /restaurant/{restaurantID}
   app.get('/restaurant', (req, res) => {
@@ -854,8 +857,8 @@ module.exports = function routes(app, logger) {
     });
   });
 
-  //PUT sponsored of restaurant
-    //Updates sponsored status of given restaurant
+  //PUT sponsored of given restaurant
+    //PUT /updateSponsored/{sponsored, restaurantID}
     app.put('/updateSponsored', (req, res) => {
       console.log(req.body.product);
       // obtain a connection from our pool of connections
@@ -866,7 +869,7 @@ module.exports = function routes(app, logger) {
           res.status(400).send('Problem obtaining MySQL connection'); 
         } else {
           // if there is no issue obtaining a connection, execute query and release connection
-          let sponsored = req.param("sponsored")
+          let sponsored = req.param("sponsored") == 'true'
           let restaurantID = req.param("restaurantID")
           connection.query('UPDATE Restaurant SET sponsored = ? WHERE restaurantID = ?;', 
           [sponsored,restaurantID], function (err, rows, fields) {
@@ -877,6 +880,66 @@ module.exports = function routes(app, logger) {
               res.status(400).send("Problem updating table");
             } else {
               res.status(200).send(`Updated ${req.param('restaurantID')} value!`);
+            }
+          }
+        );
+      }
+    });
+  });
+
+  //PUT isSponsored for a review given reviewID
+    //PUT /updateSponsoredReview/{reviewID}
+    app.put('/updateSponsoredReview', (req, res) => {
+      console.log(req.body.product);
+      // obtain a connection from our pool of connections
+      pool.getConnection(function (err, connection){
+        if(err){
+          // if there is an issue obtaining a connection, release the connection instance and log the error
+          logger.error('Problem obtaining MySQL connection',err)
+          res.status(400).send('Problem obtaining MySQL connection'); 
+        } else {
+          // if there is no issue obtaining a connection, execute query and release connection
+          let isSponsored = req.param("isSponsored") == 'true'
+          let reviewID = req.param("reviewID")
+          connection.query('UPDATE Review SET isSponsored = ? WHERE reviewID = ?;', 
+          [isSponsored,reviewID], function (err, rows, fields) {
+            connection.release();
+            if (err) {
+              // if there is an error with the query, log the error
+              logger.error("Problem updating Restaurant table: \n", err);
+              res.status(400).send("Problem updating table");
+            } else {
+              res.status(200).send(`Updated ${req.param('reviewID')} value!`);
+            }
+          }
+        );
+      }
+    });
+  });
+  
+  //PUT isSponsored for a review given restaurantID
+    //PUT /updateSponsoredReview/{restaurantID}
+    app.put('/updateSponsoredReview', (req, res) => {
+      console.log(req.body.product);
+      // obtain a connection from our pool of connections
+      pool.getConnection(function (err, connection){
+        if(err){
+          // if there is an issue obtaining a connection, release the connection instance and log the error
+          logger.error('Problem obtaining MySQL connection',err)
+          res.status(400).send('Problem obtaining MySQL connection'); 
+        } else {
+          // if there is no issue obtaining a connection, execute query and release connection
+          let isSponsored = req.param("isSponsored") == 'true'
+          let restaurantID = req.param("restaurantID")
+          connection.query('UPDATE Review SET isSponsored = ? WHERE restaurantID = ?;', 
+          [isSponsored,restaurantID], function (err, rows, fields) {
+            connection.release();
+            if (err) {
+              // if there is an error with the query, log the error
+              logger.error("Problem updating table: \n", err);
+              res.status(400).send("Problem updating table");
+            } else {
+              res.status(200).send(`Updated ${restaurantID} value!`);
             }
           }
         );
@@ -1963,6 +2026,70 @@ module.exports = function routes(app, logger) {
     });
   });
 
+  //GET restaurants that are sponsored
+  app.get("/sponsored", (req, res) => {
+    // obtain a connection from our pool of connections
+    pool.getConnection(function (err, connection) {
+      if (err) {
+        // if there is an issue obtaining a connection, release the connection instance and log the error
+        logger.error("Problem obtaining MySQL connection", err);
+        res.status(400).send("Problem obtaining MySQL connection");
+      } else {
+        // if there is no issue obtaining a connection, execute query and release connection
+        connection.query(
+          "SELECT * FROM Restaurant WHERE sponsored = true",
+          function (err, rows, fields) {
+            connection.release();
+            if (err) {
+              logger.error("Error while fetching values: \n", err);
+              res.status(400).json({
+                data: [],
+                error: "Error obtaining values",
+              });
+            } else {
+              res.status(200).json({
+                data: rows,
+              });
+            }
+          }
+        );
+      }
+    });
+  });
+
+  //GET /featured/{restaurantID}
+  //gets featured dishes of given restaurant
+  app.get('/featured', (req, res) => {
+    // obtain a connection from our pool of connections
+    pool.getConnection(function (err, connection) {
+      if (err) {
+        // if there is an issue obtaining a connection, release the connection instance and log the error
+        logger.error('Problem obtaining MySQL connection', err)
+        res.status(400).send('Problem obtaining MySQL connection');
+      } else {
+        // if there is no issue obtaining a connection, execute query and release connection
+        let restaurantID = req.param("restaurantID")
+        connection.query("SELECT mi.* FROM MenuItem mi JOIN Menu m ON mi.menuID = m.menuID JOIN Restaurant r ON m.menuID = r.menuID WHERE r.restaurantID = ? AND mi.featured = 1;", 
+        restaurantID, function (err, rows, fields) {
+          connection.release();
+          if (err) {
+            logger.error("Error while fetching values: \n", err);
+            res.status(400).json({
+              "data": [],
+              "error": "Error obtaining values"
+            })
+          } else {
+            res.status(200).json({
+              "data": rows
+            });
+          }
+        });
+      }
+    });
+  });
+
+
+
   //GET restaurant socialMediaName
   app.get("/restaurants/socialMediaName", (req, res) => {
     // obtain a connection from our pool of connections
@@ -2032,6 +2159,38 @@ module.exports = function routes(app, logger) {
       connection.release();
     });
   };
+
+  //POST Add a review
+  app.post('/addReview', (req, res) => {
+    console.log(req.body.product);
+    // obtain a connection from our pool of connections
+    pool.getConnection(function (err, connection) {
+      if (err) {
+        // if there is an issue obtaining a connection, release the connection instance and log the error
+        logger.error('Problem obtaining MySQL connection', err)
+        res.status(400).send('Problem obtaining MySQL connection');
+      } else {
+        let restaurantID = req.body['restaurantID'];
+        let userID = req.body['userID'];
+        let body = req.body['body'];
+        let date = req.body['date'];
+        let isSponsored = req.body['isSponsored'] == 'true';
+        let rating = req.body['rating'];
+        // if there is no issue obtaining a connection, execute query and release connection
+        connection.query("INSERT INTO Review (restaurantID, userID, body, date, isSponsored, rating) VALUES (?,?,?,?,?,?);", 
+        [restaurantID,userID,body,date,isSponsored, rating], function (err, rows, fields) {
+          connection.release();
+          if (err) {
+            // if there is an error with the query, log the error
+            logger.error("Problem inserting into menuItem table: \n", err);
+            res.status(400).send('Problem inserting into table');
+          } else {
+            res.status(200).send(`added ${req.body.restaurantID} to the table!`);
+          }
+        });
+      }
+    });
+  });
 
   //PUT update all in MenuItem by itemID
   app.put('/updateMenuItem', (req,res) => {
