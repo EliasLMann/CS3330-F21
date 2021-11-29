@@ -5,7 +5,7 @@ import { Header } from "./Header";
 import { useState, useEffect } from "react";
 
 import { UserRepository } from "../api/userRespository";
-import { RestaurantList } from "./RestaurantList";
+import RestaurantList from "./RestaurantList";
 
 export const SearchPage = props => {
 

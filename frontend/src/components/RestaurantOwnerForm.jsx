@@ -1,5 +1,5 @@
 import React from "react";
-import { useState } from "react";
+//import update from 'react-addons-update';
 
 import "./registerPage.css";
 
@@ -18,36 +18,11 @@ const popoverRight = (
     </Popover>
 );
 
+export class RestaurantOwnerForm extends React.Component {
 
-export const RestaurantOwnerForm = props =>{
-
-    const [restaurantName, setrestaurantName] = useState("");
-    const [cuisineType, setcuisineType] = useState("");
-
-    const [addressStreet, setaddressStreet] = useState("");
-    const [addressCity, setaddressCity] = useState("");
-    const [addressState, setaddressState] = useState("");
-    const [addressZip, setaddressZip] = useState("");
-
-    const [openTimes, setopenTimes] = useState("");
-    const [restaurantDescription, setrestaurantDescription] = useState("");
-    const [website, setWebsite] = useState("");
-    const [instagramUser, setinstagramUser] = useState("");
-
-    const [restaurantData, setRestaurantData] = useState([]);
-
-    const onTrigger = () => {
-        setRestaurantData([restaurantName, cuisineType, 
-            addressStreet, addressCity, addressState, addressZip, 
-            openTimes, restaurantDescription, website, instagramUser]);
-
-        props.getRestaurantData(restaurantData);
-    };
-
-
-    const hours = [
-        "12AM", "1AM","2AM","3AM","4AM","5AM","6AM","7AM","8AM","9AM","10AM","11AM",
-        "12PM","1PM","2PM",'3PM',"4PM",'5PM','6PM','7PM','8PM','9PM',"10PM","11PM"
+    hours = [
+        "12AM", "1AM", "2AM", "3AM", "4AM", "5AM", "6AM", "7AM", "8AM", "9AM", "10AM", "11AM",
+        "12PM", "1PM", "2PM", '3PM', "4PM", '5PM', '6PM', '7PM', '8PM', '9PM', "10PM", "11PM"
     ]
 
     state = {
@@ -102,22 +77,22 @@ export const RestaurantOwnerForm = props =>{
                         onChange={event => this.setState({ addressStreet: event.target.value })}
                         className="form-control w-75 formControl"
                         placeholder="Street Name"
-                ></input>
-                <input type="text" id="addressCity" name="addressCity"
-                        value={addressCity}
-                        onChange={event => setaddressCity(event.target.value)}
+                    ></input>
+                    <input type="text" id="addressCity" name="addressCity"
+                        value={this.state.addressCity}
+                        onChange={event => this.setState({ addressCity: event.target.value })}
                         className="form-control w-25"
                         placeholder="City"
-                ></input>
-                <input type="text" id="addressState" name="addressState"
-                        value={addressState}
-                        onChange={event => setaddressState(event.target.value)}
+                    ></input>
+                    <input type="text" id="addressState" name="addressState"
+                        value={this.state.addressState}
+                        onChange={event => this.setState({ addressState: event.target.value })}
                         className="form-control w-25"
                         placeholder="State"
-                ></input>
-                <input type="text" id="addressZip" name="addressZip"
-                        value={addressZip}
-                        onChange={event => setaddressZip(event.target.value)}
+                    ></input>
+                    <input type="text" id="addressZip" name="addressZip"
+                        value={this.state.addressZip}
+                        onChange={event => this.setState({ addressZip: event.target.value })}
                         className="form-control w-25"
                         placeholder="Zip Code"
                     ></input>
