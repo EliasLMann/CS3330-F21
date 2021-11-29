@@ -40,6 +40,8 @@
 
 - [x] Create User (Register)
 
+- [x] Add Review
+
 ## PUT
 
 - [x] Change rating in Menu by ID - melanie
