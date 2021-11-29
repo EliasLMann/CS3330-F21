@@ -4,12 +4,14 @@ import { UserContext } from '../context';
 import { Header } from "./Header";
 
 
-export const RestaurantDetails = (restID) => {
+export const RestaurantDetails = () => {
 
     const [userContext, setUserContext] = useContext(UserContext);
     const [restaurant, setRestaurant] = useState(undefined);
     const [menu, setMenu] = useState(undefined);
     const restRepo = new RestaurantRepository();
+
+    //let restID = params.restaurantID
 
     useEffect(() => {
         restRepo.getRestaurant(2).then(x => setRestaurant(x.data[0]));
