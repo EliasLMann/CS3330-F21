@@ -57,6 +57,7 @@ function App() {
         <Route component={RestaurantProfile} path="/profile" />
         <Route component={RestaurantDetails} path="/restaurants/:restaurantID" />
         <Route component={AddMenu} path="/addMenu" />
+        <Route component={SearchPage} path="/search" exact />
         <Route component={Landing} path="/" exact />
       </Router>
     </UserContext.Provider>
