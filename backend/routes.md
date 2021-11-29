@@ -106,8 +106,8 @@
 
 # Epic 8
 
-- [ ] 1 PUT restaurant sponsored for restaurant (user story for creating a ad with paywall - modified)
-- [ ] 1 GET sponsored restaurants
+- [ ] 1 PUT restaurant sponsored for restaurant (user story for creating a ad with paywall - modified) - Doesn't work when setting value to false
+- [x] 1 GET sponsored restaurants
 - [x] 2 PUT menuItem featured - melanie
 - [ ] 2 GET featured dishes for a given restaurant
 - [ ] 3 PUT isSponsored for a review by restaurantID and reviewID
