@@ -22,7 +22,8 @@ export const RestaurantDetails = () => {
         console.log("ID: " + restaurantID);
         restRepo.getRestaurant(restaurantID).then(x => setRestaurant(x.data[0]));
         restRepo.getMenuItems(restaurantID).then(x => setMenu(x.data));
-        restRepo.getFeaturedItems(restaurantID).then(x => setFeaturedItems(x.data));
+        // restRepo.getFeaturedItems(restaurantID).then(x => setFeaturedItems(x.data));
+        console.log(featuredItems);
     }, []);
 
     if (!restaurant || !menu) {
@@ -45,7 +46,8 @@ export const RestaurantDetails = () => {
                     </div>
                     <hr />
                     <h4>Featured Items</h4>
-                    {
+                    <div>
+                    {/* {
                         featuredItems.map((x, i) =>
                             <div className="row justify-content-center" key={i}>
                                 <div className="card col-5">
@@ -56,7 +58,8 @@ export const RestaurantDetails = () => {
                                     </div>
                                 </div>
                             </div>)
-                    }
+                    } */}
+                    </div>
                     <hr />
                     <h4>Menu</h4>
                     <div>
