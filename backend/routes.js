@@ -2064,8 +2064,8 @@ module.exports = function routes(app, logger) {
         res.status(400).send("Problem obtaining MySQL connection");
       } else {
         //query values
-        let userID = req.body.userID;
-        let newRestID = req.body.newRestID;
+        let userID = req.query["userID"];
+        let newRestID = req.query["newRestID"];
         let sql1 = "SELECT * FROM User WHERE userID = '" + userID + "'";
 
         connection.query(sql1, function (err, rows, fields) {
@@ -2532,6 +2532,60 @@ module.exports = function routes(app, logger) {
             res.status(200).json({
               "data": rows
             });
+          }
+        });
+      }
+    });
+  });
+
+  
+  // POST Add restaurant
+  app.post("/addRestaurant", (req, res) => {
+    console.log(req.body.product);
+    // obtain a connection from our pool of connections
+    pool.getConnection(function (err, connection) {
+      if (err) {
+        // if there is an issue obtaining a connection, release the connection instance and log the error
+        logger.error("Problem obtaining MySQL connection", err);
+        res.status(400).send("Problem obtaining MySQL connection");
+      } else {
+        let restaurantName = req.query["restaurantName"];
+        let menuID = req.query["menuID"];
+        let location = req.query["location"];
+        let hours = req.query["hours"];
+        let description = req.query["description"];
+        let cuisineType = req.query["cuisineType"];
+        let website = req.query["website"];
+        let sponsored = req.query["sponsored"];
+        let socialMediaName = req.query["socialMediaName"];
+        let socialMediaURL = req.query["socialMediaURL"];
+        let insert = [
+          [
+            restaurantName,
+            menuID,
+            location,
+            hours,
+            description,
+            cuisineType,
+            website,
+            sponsored,
+            socialMediaName,
+            socialMediaURL,
+          ],
+        ];
+        let sql =
+          "INSERT INTO Restaurant(restaurantName, menuID, location, hours, description, cuisineType, website, sponsored, socialMediaName, socialMediaURL) VALUES ?";
+        // if there is no issue obtaining a connection, execute query and release connection
+        connection.query(sql, [insert], function (err, rows, fields) {
+          connection.release();
+          if (err) {
+            // if there is an error with the query, log the error
+            logger.error("Problem inserting into Restaurant table: \n", err);
+            res.status(400).send("Problem inserting into table");
+          } else {
+            res
+              .status(200)
+              .send(`added to the table!`);
           }
         });
       }

@@ -46,7 +46,7 @@ export const Header = () => {
 
     useEffect(() => {
         const user = userContext;
-        console.log(user);
+        console.log(user.reastaurantID);
         if (user.username) {
             console.log(user);
             setLoggedIn(true);
