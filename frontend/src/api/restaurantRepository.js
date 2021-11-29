@@ -51,7 +51,7 @@ export class RestaurantRepository {
             website : website,
             sponsored : 0,
             socialMediaName : socialMediaName,
-            socialMediaURL : socialMediaURL
+            socialMediaURL : "socialMediaURL"
           }
         })
         .then(x => resolve(x.data))

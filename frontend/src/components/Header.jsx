@@ -1,10 +1,12 @@
 import { Navbar, Nav } from 'react-bootstrap';
 import React, { useContext, useEffect, useState } from 'react';
 import { UserContext } from '../context';
+import { UserRepository } from '../api/userRespository';
 
 
 
 const LoggedInHeader = () => {
+    const userRepo = new UserRepository(); 
     return (
         <Navbar className="d-flex flex-row p-2">
             <a className="navbar-brand" href="/">PopStop</a>
@@ -15,7 +17,7 @@ const LoggedInHeader = () => {
                     <Nav.Link href="/profile"
                         className="p-2">My Profile</Nav.Link>
                     <Nav.Link href="/"
-                        className="text-end">Logout</Nav.Link>
+                        className="text-end" onClick={() => userRepo.logout()}>Logout</Nav.Link>
                 </div>
             </Nav>
         </Navbar>

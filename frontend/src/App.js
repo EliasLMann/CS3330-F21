@@ -48,7 +48,7 @@ function App() {
   }
 
   const userRepository = new UserRepository();
-  const [context, setContext] = useState('');
+  const [context, setContext] = useState(userRepository.currentUser());
 
   return (<>
 

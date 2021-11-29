@@ -8,7 +8,6 @@ const RestaurantList = () => {
 
     useEffect(() => {
         restRepo.getRestaurants().then(x => setRestaurants(x));
-        console.log(restaurants);
     }, [])
 
     if (!restaurants) {
@@ -22,7 +21,6 @@ const RestaurantList = () => {
         return <>
             <div className="container">
                 <div className="ul row justify-content-center">
-                    {console.log(restaurants.restaurantID)}
                     {
                         restaurants.data.map((x, i) => <div className="card prod col-4" key={i}>
                             <div className="card-body row">
