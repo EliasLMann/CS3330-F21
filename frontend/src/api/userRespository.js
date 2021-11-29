@@ -1,5 +1,4 @@
 import axios from 'axios';
-import { UserContext } from '../context';
 
 const url = "http://localhost:8000"
 export class UserRepository {

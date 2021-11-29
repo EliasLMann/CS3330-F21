@@ -118,6 +118,38 @@ module.exports = function routes(app, logger) {
     });
   });
 
+  // ============================================GET /restaurants===================================================
+  app.get("/restaurants", (req, res) => {
+    // obtain a connection from our pool of connections
+    pool.getConnection(function (err, connection) {
+      if (err) {
+        // if there is an issue obtaining a connection, release the connection instance and log the error
+        logger.error("Problem obtaining MySQL connection", err);
+        res.status(400).send("Problem obtaining MySQL connection");
+      } else {
+        // if there is no issue obtaining a connection, execute query and release connection
+        connection.query(
+          "SELECT * FROM `PopStop`.`Restaurant`",
+          function (err, rows, fields) {
+            connection.release();
+            if (err) {
+              logger.error("Error while fetching values: \n", err);
+              res.status(400).json({
+                data: [],
+                error: "Error obtaining values",
+              });
+            } else {
+              res.status(200).json({
+                data: rows,
+              });
+            }
+          }
+        );
+      }
+    });
+  });
+
+
   // for user story 1.7
   // GET meal types and the associated IDs
   app.get("/getmealtypes", (req, res) => {
@@ -1507,6 +1539,7 @@ module.exports = function routes(app, logger) {
       }
     });
   });
+
 
   // GET restaurantName
   app.get("/restaurants/restaurantName", (req, res) => {
