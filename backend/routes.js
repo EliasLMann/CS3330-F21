@@ -118,6 +118,38 @@ module.exports = function routes(app, logger) {
     });
   });
 
+  // ============================================GET /restaurants===================================================
+  app.get("/restaurants", (req, res) => {
+    // obtain a connection from our pool of connections
+    pool.getConnection(function (err, connection) {
+      if (err) {
+        // if there is an issue obtaining a connection, release the connection instance and log the error
+        logger.error("Problem obtaining MySQL connection", err);
+        res.status(400).send("Problem obtaining MySQL connection");
+      } else {
+        // if there is no issue obtaining a connection, execute query and release connection
+        connection.query(
+          "SELECT * FROM `PopStop`.`Restaurant`",
+          function (err, rows, fields) {
+            connection.release();
+            if (err) {
+              logger.error("Error while fetching values: \n", err);
+              res.status(400).json({
+                data: [],
+                error: "Error obtaining values",
+              });
+            } else {
+              res.status(200).json({
+                data: rows,
+              });
+            }
+          }
+        );
+      }
+    });
+  });
+
+
   // for user story 1.7
   // GET meal types and the associated IDs
   app.get("/getmealtypes", (req, res) => {
@@ -1078,6 +1110,7 @@ module.exports = function routes(app, logger) {
     });
   });
 
+
   // GET restaurantName
   app.get("/restaurants/restaurantName", (req, res) => {
     // obtain a connection from our pool of connections
@@ -1364,76 +1397,4 @@ module.exports = function routes(app, logger) {
     });
   });
 
-  //DELETE Remove a menuItem
-  app.delete("/deleteMenuItem", (req, res) => {
-    pool.getConnection((err, connection) => {
-      if (err) {
-        console.log(connection);
-        let itemID = req.query["itemID"];
-        // if there is no issue obtaining a connection, execute query
-        connection.query("DELETE FROM MenuItem where itemID = (?)", itemID,
-          (err, rows, fields) => {
-            if (err) {
-              logger.error("Error while deleting menuItem\n", err);
-              // if there is no issue obtaining a connection, execute query and release connection
-              connection.query(
-                "SELECT socialMediaURL FROM `PopStop`.`Restaurant`",
-                function (err, rows, fields) {
-                  connection.release();
-                  if (err) {
-                    logger.error("Error while fetching values: \n", err);
-                    res.status(400).json({
-                      data: [],
-                      error: "Error obtaining values",
-                    });
-                  } else {
-                    res.status(200).json({
-                      data: rows,
-                    });
-                  }
-                }
-              );
-            }
-            connection.release();
-          });
-      };
-
-      //PUT update all in MenuItem by itemID
-      app.put('/updateMenuItem', (req, res) => {
-        pool.getConnection((err, connection) => {
-          if (err) {
-            console.log(connection);
-            // if there is an issue obtaining a connection, release the connection instance and log the error
-            logger.error('Problem obtaining MySQL connection', err)
-            res.status(400).send('Problem obtaining MySQL connection');
-          } else {
-            let itemID = req.query['itemID'];
-            let itemName = req.query['itemName'];
-            let price = req.query['price'];
-            let itemLink = req.query['itemLink'];
-            let mealType = req.query['mealType'];
-            let likes = req.query['likes'];
-            let dislikes = req.query['dislikes'];
-            let featured = req.query['featured'];
-            let photo = req.query['photo'];
-            let description = req.query['description'];
-            // if there is no issue obtaining a connection, execute query
-            connection.query('UPDATE MenuItem SET itemName = (?), price = (?), itemLink = (?), mealType = (?), likes = (?), dislikes = (?), featured = (?), photo = (?), description = (?) WHERE itemID = (?)',
-              [itemName, price, itemLink, mealType, likes, dislikes, featured, photo, description, itemID], (err, rows, fields) => {
-                if (err) {
-                  logger.error("Error while updating MenuItem\n", err);
-                  res.status(400).json({
-                    "data": [],
-                    "error": "Error obtaining values"
-                  })
-                } else {
-                  res.status(200).json({
-                    "data": rows
-                  });
-                }
-              });
-          }
-          connection.release();
-        });
-      })
-    };
+};
