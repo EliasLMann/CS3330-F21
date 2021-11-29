@@ -118,6 +118,8 @@ module.exports = function routes(app, logger) {
     });
   });
 
+
+
   // ============================================GET /restaurants===================================================
   app.get("/restaurants", (req, res) => {
     // obtain a connection from our pool of connections
@@ -145,6 +147,37 @@ module.exports = function routes(app, logger) {
             }
           }
         );
+      }
+    });
+  });
+
+  // for user story 4.3, 8.2, 9.3, 9.4, and 10.2
+  // GET /restaurant/{restaurantID}
+  app.get('/restaurant', (req, res) => {
+    // obtain a connection from our pool of connections
+    pool.getConnection(function (err, connection) {
+      if (err) {
+        // if there is an issue obtaining a connection, release the connection instance and log the error
+        logger.error('Problem obtaining MySQL connection', err)
+        res.status(400).send('Problem obtaining MySQL connection');
+      } else {
+        // if there is no issue obtaining a connection, execute query and release connection
+        let restaurantID = req.query['restaurantID'];
+        let sql1 = "SELECT * FROM Restaurant WHERE restaurantID ='" + restaurantID + "'";
+        connection.query(sql1, function (err, rows, fields) {
+          connection.release();
+          if (err) {
+            logger.error("Error while fetching values: \n", err);
+            res.status(400).json({
+              "data": [],
+              "error": "Error obtaining values"
+            })
+          } else {
+            res.status(200).json({
+              "data": rows
+            });
+          }
+        });
       }
     });
   });
