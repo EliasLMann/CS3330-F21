@@ -155,7 +155,7 @@ router.post("/postmenuitem", (req, res) => {
   });
 });
 
-// PUT /updateitem/{itemID}
+// PUT /updateitem{itemID}
 router.put("/updateitem", (req, res) => {
   console.log(req.body.product);
   // obtain a connection from our pool of connections
@@ -208,7 +208,7 @@ router.put("/updateitem", (req, res) => {
 });
 
 // for user story 6.2
-// UPDATE /updateitemlink/{itemID} for particular menuItem
+// UPDATE /updateitemlink{itemID} for particular menuItem
 router.put("/updateitemlink", (req, res) => {
   console.log(req.body.product);
   // obtain a connection from our pool of connections
@@ -273,7 +273,7 @@ router.get("/menuitem", (req, res) => {
 });
 
 // for user story 6.2
-// UPDATE /updatemealtype/{itemID} for particular menuItem
+// UPDATE /updatemealtype{itemID} for particular menuItem
 router.put("/updatemealtype", (req, res) => {
   console.log(req.body.product);
   // obtain a connection from our pool of connections
@@ -307,7 +307,7 @@ router.put("/updatemealtype", (req, res) => {
 });
 
 // for user story 6.2
-// UPDATE /updatelikes/{itemID} for particular menuItem
+// UPDATE /updatelikes{itemID} for particular menuItem
 router.put("/updatelikes", (req, res) => {
   console.log(req.body.product);
   // obtain a connection from our pool of connections
@@ -341,7 +341,7 @@ router.put("/updatelikes", (req, res) => {
 });
 
 // for user story 6.2
-// UPDATE /updatedislikes/{itemID} for particular menuItem
+// UPDATE /updatedislikes{itemID} for particular menuItem
 router.put("/updatedislikes", (req, res) => {
   console.log(req.body.product);
   // obtain a connection from our pool of connections
@@ -374,7 +374,7 @@ router.put("/updatedislikes", (req, res) => {
   });
 });
 
-// UPDATE /incrementlikes/{itemID} for particular menuItem
+// UPDATE /incrementlikes{itemID} for particular menuItem
 router.put("/incrementlikes", (req, res) => {
   console.log(req.body.product);
   // obtain a connection from our pool of connections
@@ -406,7 +406,7 @@ router.put("/incrementlikes", (req, res) => {
   });
 });
 
-// UPDATE /incrementdislikes/{itemID} for particular menuItem
+// UPDATE /incrementdislikes{itemID} for particular menuItem
 router.put("/incrementdislikes", (req, res) => {
   console.log(req.body.product);
   // obtain a connection from our pool of connections
@@ -439,7 +439,7 @@ router.put("/incrementdislikes", (req, res) => {
 });
 
 // for user story 6.2
-// UPDATE /updatedescription/{itemID} for particular menuItem
+// UPDATE /updatedescription{itemID} for particular menuItem
 router.put("/updatedescription", (req, res) => {
   console.log(req.body.product);
   // obtain a connection from our pool of connections
@@ -473,7 +473,7 @@ router.put("/updatedescription", (req, res) => {
 });
 
 // for user story 6.3
-// DELETE /deleteitem/{itemID}
+// DELETE /deleteitem{itemID}
 router.delete("/deleteitem", (req, res) => {
   console.log(req.body.product);
   // obtain a connection from our pool of connections
@@ -506,7 +506,7 @@ router.delete("/deleteitem", (req, res) => {
 });
 
 // for user story 5.3
-// UPDATE /removeprice/{menuItemID}
+// UPDATE /removeprice{menuItemID}
 router.put("/removeprice", (req, res) => {
   console.log(req.body.product);
   // obtain a connection from our pool of connections
@@ -539,7 +539,7 @@ router.put("/removeprice", (req, res) => {
 });
 
 // for user story 6.2
-// UPDATE /updatefeatured/{itemID} for particular menuItem
+// UPDATE /updatefeatured{itemID} for particular menuItem
 router.put("/updatefeatured", (req, res) => {
   console.log(req.body.product);
   // obtain a connection from our pool of connections

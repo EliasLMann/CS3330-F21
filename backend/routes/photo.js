@@ -36,6 +36,8 @@ router.post("/photo", (req, res) => {
   });
 });
 
+//DELETE /deletePhoto{photoID}
+// deletes a photo by its given ID
 router.delete("/deletePhoto", (req, res) => {
   console.log(req.body.product);
   // obtain a connection from our pool of connections

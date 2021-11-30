@@ -610,7 +610,7 @@ router.post("/addRestaurant", (req, res) => {
 
 //================================================= PUT =============================================
 
-//PUT sponsored of restaurant
+//PUT /updateSponsored{sponsored, restaurantID}
 //Updates sponsored status of given restaurant
 router.put("/updateSponsored", (req, res) => {
   console.log(req.body.product);
@@ -648,6 +648,7 @@ router.put("/updateSponsored", (req, res) => {
 });
 
 //PUT social MediaURL of restaurant
+// /restaurant/changeSocialURL{newURL, restaurantID}
 //Changes socialMediaURL of given restaurant
 router.put("/restaurant/changeSocialURL", (req, res) => {
   console.log(req.body.product);
@@ -688,6 +689,7 @@ router.put("/restaurant/changeSocialURL", (req, res) => {
 });
 
 //PUT social MediaURL of restaurant
+// /restaurant/changeSocialName{newName, restaurantID}
 //Changes socialMediaURL of given restaurant
 router.put("/restaurant/changeSocialName", (req, res) => {
   console.log(req.body.product);
@@ -728,6 +730,7 @@ router.put("/restaurant/changeSocialName", (req, res) => {
 });
 
 //PUT socialMediaURL and socialMediaName to null
+// /removeSocial{restaurantID}
 //Changes removes the social media from a restaurant's database
 router.put("/restaurant/removeSocial", (req, res) => {
   console.log(req.body.product);
@@ -793,7 +796,7 @@ router.delete("/restaurant/delete", (req, res) => {
   });
 });
 
-// GET /restaurantId/{restaurantName}
+// GET //
 router.get("/restaurantId", (req, res) => {
   // obtain a connection from our pool of connections
   pool.getConnection(function (err, connection) {

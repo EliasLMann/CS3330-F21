@@ -140,4 +140,35 @@ router.get("/userReviews", (req, res) => {
   });
 });
 
+// DELETE /review/delete{reviewID}
+// deleting a review from the database by reviewID
+router.delete("/review/delete", (req, res) => {
+  console.log(req.body.product);
+  // obtain a connection from our pool of connections
+  pool.getConnection(function (err, connection) {
+    if (err) {
+      // if there is an issue obtaining a connection, release the connection instance and log the error
+      logger.error("Problem obtaining MySQL connection", err);
+      res.status(400).send("Problem obtaining MySQL connection");
+    } else {
+      // if there is no issue obtaining a connection, execute query and release connection
+      var reviewID = req.param("reviewID");
+      connection.query(
+        "DELETE FROM `PopStop`.`Review` WHERE reviewID = ?",
+        reviewID,
+        function (err, rows, fields) {
+          connection.release();
+          if (err) {
+            // if there is an error with the query, log the error
+            logger.error("Problem deleting from MenuItem table: \n", err);
+            res.status(400).send("Problem deleting from table");
+          } else {
+            res.status(200).send(`removed review from the table`);
+          }
+        }
+      );
+    }
+  });
+});
+
 module.exports = router;
