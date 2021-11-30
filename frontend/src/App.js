@@ -12,7 +12,7 @@ import {
 import Login, { LoginPage } from './components/LoginPage';
 import { RegisterPage } from './components/RegisterPage';
 import { SearchPage } from './components/SearchPage';
-import { RestaurantProfile } from './components/RestaurantProfile';
+import { Profile } from './components/RestaurantProfile';
 import { Header } from './components/Header';
 import { CustomerAccount } from './components/CustomerAccount';
 import { AddMenu } from './components/AddMenu';
@@ -56,7 +56,7 @@ function App() {
       <Router>
         <Route component={Login} path="/login" />
         <Route component={Register} path="/register" />
-        <Route component={RestaurantProfile} path="/profile" />
+        <Route component={Profile} path="/profile" />
         <Route component={RestaurantDetails} path="/restaurants/:restaurantID" />
         <Route component={AddMenu} path="/addMenu" />
         <Route component={OwnerInfo} path="/ownerInput" />

@@ -7,7 +7,7 @@ export class MenuItemRepository {
 
   incrementLikes(ID) {
     return new Promise((resolve, reject) => {
-      axios.put(`${this.url}/incrementlikes`, {}, {params:{itemID : ID}})
+      axios.put(`${this.url}/incrementlikes`, {}, { params: { itemID: ID } })
         .then(x => resolve(x.data))
         .catch(x => {
           alert(x);
@@ -18,7 +18,7 @@ export class MenuItemRepository {
 
   incrementDislikes(ID) {
     return new Promise((resolve, reject) => {
-      axios.put(`${this.url}/incrementdislikes`, {}, {params:{itemID : ID}})
+      axios.put(`${this.url}/incrementdislikes`, {}, { params: { itemID: ID } })
         .then(x => resolve(x.data))
         .catch(x => {
           alert(x);
@@ -26,5 +26,30 @@ export class MenuItemRepository {
         })
     });
   }
+
+  addMenuItem(itemInfo){
+    return new Promise((resolve, reject) => {
+      axios.post(`${this.url}/addMenuItem`, 
+      {
+        restaurantID: itemInfo[0],
+        itemName: itemInfo[1],
+        price: itemInfo[2],
+        itemLink: itemInfo[3],
+        mealType: itemInfo[4],
+        likes: itemInfo[5],
+        dislikes: itemInfo[6],
+        featured: itemInfo[7],
+        photo: itemInfo[8],
+        description: itemInfo[9]
+      })
+            .then(x => resolve(x.data))
+            .catch(x => {
+                alert(x);
+                reject(x);
+            })
+    })
+  }
+
+  
 
 }

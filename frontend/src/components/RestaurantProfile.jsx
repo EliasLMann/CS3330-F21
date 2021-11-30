@@ -1,26 +1,68 @@
-import React, {useContext, useState, setState, useEffect} from "react";
-import { Header } from "./Header";
+import React, { useContext, useEffect, useState } from 'react';
+import { UserContext } from '../context';
+import { UserRepository } from '../api/userRespository';
+import { Header } from './Header';
+import { RestaurantRepository } from '../api/restaurantRepository';
 
-
-export const RestaurantProfile = () => {
-    
-
-    return <>
-        <Header/>
-        <div id="info">
-            <h1 className="text-start fw-bolder mx-4">
-                Insert Resturant Name
-            </h1>
-            <div className="card">
-                <div className="card-title fs-3 text-start mx-4">
-                    Insert Address
-                </div>
-                <div className="card-body">
-                    <div>
-                    
-                    </div>
-                </div>
+const CustomerView = () => {
+    return (
+        <>
+            <Header />
+            <div className="container d-flex justify-content-center">
+                <h1>My Reviews</h1>
             </div>
-        </div>
-    </>
+        </>
+    )
+}
+
+const RestaurantView = () => {
+    const restRepo = new RestaurantRepository();
+    const userRepo = new UserRepository();
+    const [restaurant, setRestaurant] = useState(undefined);
+
+    useEffect(() => {
+        let restID = userRepo.currentUser().restaurantID;
+        restRepo.getRestaurant(restID).then(x => setRestaurant(x.data[0]));
+        console.log(restaurant)
+    }, []);
+
+    if (!restaurant) {
+        return (
+            <div>Loading...</div>
+        )
+    }
+    else {
+        return (
+            <>
+                <Header />
+                <div className="container d-flex justify-content-center">
+                    <h1>{restaurant.restaurantName}</h1>
+                </div>
+                <div className="card">
+                        <p>Location: {restaurant.location}</p>
+                        <p>Hours: {restaurant.hours}</p>
+                        <p>Cuisine Type: {restaurant.cuisineType}</p>
+                    </div>
+
+            </>
+        )
+    }
+}
+
+
+
+
+export const Profile = () => {
+    const userRepo = new UserRepository();
+    const [restaurantOwner, setRestaurantOwner] = useState(false);
+    const [userContext, setUserContext] = useContext(UserContext);
+
+    useEffect(() => {
+
+        if (userRepo.currentUser().restaurantID !== null) {
+            setRestaurantOwner(true);
+        }
+    }, []);
+
+    return restaurantOwner ? <RestaurantView /> : <CustomerView />;
 }

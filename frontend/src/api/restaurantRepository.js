@@ -41,7 +41,7 @@ export class RestaurantRepository {
   async addRestaurant(restInfo) {
     const errors = {success : false};
 
-    const {data, status} = axios.post(`${this.url}/addRestaurant`,
+    const {data, status} = await axios.post(`${this.url}/addRestaurant`,
         {
             restaurantName: restInfo[0],
             location: restInfo[1],
