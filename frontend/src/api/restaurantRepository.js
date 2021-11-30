@@ -18,7 +18,7 @@ export class RestaurantRepository {
 
   getRestaurant(restaurantID) {
     return new Promise((resolve, reject) => {
-      axios.get(`${this.url}/restaurant`, {params: {restaurantID : restaurantID}})
+      axios.get(`${this.url}/restaurant`, { params: { restaurantID: restaurantID } })
         .then(x => resolve(x.data))
         .catch(x => {
           alert(x);
@@ -29,7 +29,7 @@ export class RestaurantRepository {
 
   getMenuItems(restaurantID) {
     return new Promise((resolve, reject) => {
-      axios.get(`${this.url}/menuItems`, {params: {restaurantID : restaurantID}})
+      axios.get(`${this.url}/menuItems`, { params: { restaurantID: restaurantID } })
         .then(x => resolve(x.data))
         .catch(x => {
           alert(x);
@@ -38,9 +38,22 @@ export class RestaurantRepository {
     });
   }
 
-  getReviews(restaurantID) {
+  addRestaurant(restaurantName, location, hours, description, cuisineType, website, socialMediaName) {
     return new Promise((resolve, reject) => {
-      axios.get(`${this.url}/reviews`, {params: {restaurantID : restaurantID}})
+      axios.post(`${this.url}/addRestaurant`,
+        {
+          params: {
+            restaurantName: restaurantName,
+            location: location,
+            hours : hours,
+            description : description,
+            cuisineType : cuisineType,
+            website : website,
+            sponsored : 0,
+            socialMediaName : socialMediaName,
+            socialMediaURL : "socialMediaURL"
+          }
+        })
         .then(x => resolve(x.data))
         .catch(x => {
           alert(x);
@@ -48,8 +61,6 @@ export class RestaurantRepository {
         })
     });
   }
-
-
 
 
 }

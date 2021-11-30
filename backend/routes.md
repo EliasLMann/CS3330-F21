@@ -12,9 +12,8 @@
 - [x] All Restaurant descriptions
 - [x] All Restaurant cuisineTypes
 - [x] All Restaurant websites
-- [x] All Restaurant sponsoreds
-- [x] All Restaurant socialMediaName
-- [x] All Restaurant socialMediaURL
+- [x] All Restaurant socialMediaNames
+      \
 
 ### Menu
 
@@ -40,6 +39,8 @@
 
 - [x] Create User (Register)
 
+- [x] Add Review
+
 ## PUT
 
 - [x] Change rating in Menu by ID - melanie
@@ -61,14 +62,13 @@
 
 # Epic 1
 
-- [x] 1 GET restaurants by location
-- [ ] 2 GET restaurants by distance from location
-- [x] 3 GET restaurants by cuisine type (needs to be tested)
-- [x] 3 GET all restaurant cuisine types
-- [x] 4 GET restaurants with average menu price in a given range
-- [x] 5 GET restaurants with average rating in a given range
-- [ ] 6 view location in the app
-- [x] 7 GET restaurants by meal type served (needs to be tested)
+- [x] 1 GET restaurants by location - Ariyan
+- [ ] 2 GET restaurants by distance from location -- SCRATCHED
+- [x] 3 GET restaurants by cuisine type - Ariyan and Eli
+- [x] 3 GET all restaurant cuisine types - Ariyan
+- [x] 5 GET restaurants with average rating in a given range - Ariyan
+- [ ] 6 view location in the app -- SCRATCHED
+- [x] 7 GET restaurants by meal type served - Ariyan and Eli
 
 # Epic 2 - SCRATCHED
 
@@ -79,11 +79,11 @@
 
 # Epic 3
 
-- [x] 1 POST a menu for a given restaurant
-- [x] 2 POST restaurant name
-- [x] 3 POST restaurant hours
-- [x] 4 POST restaurant cuisine type
-- [x] 5 POST restaurant description
+- [x] 1 POST a menu for a given restaurant - Eli
+- [x] 2 POST restaurant name - Ariyan
+- [x] 3 POST restaurant hours - Ariyan
+- [x] 4 POST restaurant cuisine type - Aryian
+- [x] 5 POST restaurant description - Ariyan
 
 # Epic 4
 
@@ -102,28 +102,27 @@
 - [x] 1 PUT a meal
 - [x] 1 DELETE a meal
 
-# Epic 7 N/A For some reason
+# Epic 7 N/A for some reason
 
 # Epic 8
 
-- [ ] 1 PUT restaurant sponsored for restaurant (user story for creating a ad with paywall - modified)
-- [ ] 1 GET sponsored restaurants
+- [x] 1 PUT restaurant sponsored for restaurant (user story for creating a ad with paywall - modified) - Ariyan and Eli
+- [x] 1 GET sponsored restaurants - Ariyan and Eli
 - [x] 2 PUT menuItem featured - melanie
-- [ ] 2 GET featured dishes for a given restaurant
+- [x] 2 GET featured dishes for a given restaurant
 - [ ] 3 PUT isSponsored for a review by restaurantID and reviewID
 - [ ] 3 GET isSponsored reviews pertaining to a given restaurant
 
 # Epic 9
 
 - [ ] 1 button that copies link to restaurant to clipboard (frontend)
-- [x] 2 POST restaurant socialmediaURL
-- [ ] 2 GET restaurant socialmediaURL
-- [ ] 2 PUT restaurant socialmediaURL
-- [ ] 2 DELETE restaurant socialmediaURL
-- [x] 2 POST restaurant socialmediaName
-- [ ] 2 GET restaurant socialmediaName
-- [ ] 2 PUT restaurant socialmediaName
-- [ ] 2 DELETE restaurant socialmediaName
+- [x] 2 POST restaurant socialmediaURL - Ariyan
+- [x] 2 GET restaurant socialmediaURL - Eli
+- [x] 2 PUT restaurant socialmediaURL - Eli
+- [x] 2 REMOVE (PUT) restaurant socialmediaURL and Name - Eli
+- [x] 2 POST restaurant socialmediaName - Ariyan
+- [x] 2 GET restaurant socialmediaName - Eli
+- [x] 2 PUT restaurant socialmediaName - Eli
 - [ ] 3 & 4 button to copy link to a certain dish (frontend)
 
 # Epic 10
@@ -131,7 +130,7 @@
 - [x] 1 PUT increment likes for a given dish - melanie
 - [x] 1 PUT increment dislikes for a given dish - melanie
 - [x] 2 & 3 GET dishes with greatest amount of likes, up to 5 (should we do diffence between likes and dislikes?) - melanie (done with difference between likes and dislikes)
-- [ ] 4 sort popular dishes by this day, week, moth, all time (Scratched, not logically consitent with db)
+- [ ] 4 sort popular dishes by this day, week, moth, all time (SCRATCHED, not logically consitent with db)
 
 # Epic 11
 
