@@ -262,7 +262,7 @@ module.exports = function routes(app, logger) {
         // if there is no issue obtaining a connection, execute query and release connection
         var restaurantID = req.query["restaurantID"];
         connection.query(
-          "SELECT * FROM MenuItem WHERE restaurantID = (?)",
+          "SELECT * FROM MenuItem WHERE restaurantID = (?) ORDER BY mealType ASC;",
           restaurantID,
           function (err, rows, fields) {
             connection.release();
