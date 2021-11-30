@@ -12,10 +12,7 @@ import { Popover, OverlayTrigger } from 'react-bootstrap';
 const OwnerInfo = () => {
     const [restaurantName, setRestaurantName] = useState("");
     const [cuisineType, setCuisineType] = useState("");
-    const [addressStreet, setAddressStreet] = useState("");
-    const [addressCity, setAddressCity] = useState("");
-    const [addressState, setAddressState] = useState("");
-    const [addressZip, setAddressZip] = useState("");
+    const [location, setLocation] = useState("")
     const [openTimes, setOpenTimes] = useState("");
     const [restaurantDescription, setRestaurantDescription] = useState("");
     const [websiteURL, setWebsiteURL] = useState("");
