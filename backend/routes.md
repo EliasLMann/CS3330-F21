@@ -59,6 +59,7 @@
 
 - [x] Delete menuItem - melanie
 - [x] Delete price from MenuItem - melanie
+- [x] Delete restaurant
 
 # Epic 1
 
@@ -110,8 +111,8 @@
 - [x] 1 GET sponsored restaurants - Ariyan and Eli
 - [x] 2 PUT menuItem featured - melanie
 - [x] 2 GET featured dishes for a given restaurant
-- [ ] 3 PUT isSponsored for a review by restaurantID and reviewID
-- [ ] 3 GET isSponsored reviews pertaining to a given restaurant
+- [x] 3 PUT isSponsored for a review by reviewID
+- [x] 3 GET isSponsored reviews pertaining to a given restaurant
 
 # Epic 9
 
