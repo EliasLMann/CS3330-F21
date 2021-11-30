@@ -1,62 +1,107 @@
-import React, { useState } from "react"
+import React, { useState, useEffect } from "react"
+import { Link } from "react-router-dom";
+import { MenuItemRepository } from "../api/menuItemRepository";
+import { UserRepository } from "../api/userRespository";
 import { menuItem } from "../models/menuItem";
 
-export const AddMenu = props =>{
+export const AddMenu = props => {
+    const userRepo = new UserRepository();
+    const menuRepo = new MenuItemRepository();
+    const [restID, setRestID] = useState(undefined);
+    const [itemName, setItemName] = useState("");
+    const [price, setPrice] = useState(undefined);
+    const [itemLink, setItemLink] = useState("");
+    const [mealType, setMealType] = useState("");
+    const [featured, setFeatured] = useState(0);
+    const [photo, setPhoto] = useState("");
+    const [description, setDescription] = useState("")
 
-    const [menu, setMenu] = useState([]);
+    useEffect(() => {
+        setRestID(userRepo.currentUser().restaurantID);
+        console.log(restID);
+    }, []);
 
-    // useEffect(() => {
-    //     onLoad();
-    // }, []);
 
-    // let onLoad = params => {
-    //     setMenu(???.getMenu())
-    // }
-
-    const addItem = () =>{
-        let copyMenu = [...menu];
-        copyMenu.push(new menuItem(" ", 0, " "))
-        setMenu(copyMenu);
+    const addItem = () => {
+        let itemInfo = [restID, itemName, price, itemLink, mealType, 0, 0, featured, photo, description];
+        //menuRepo.addItem(itemInfo);
     }
 
     return <>
+        <br />
+        <br />
+        <div className="container d-flex justify-content-center">
+            <h1>Add or Edit your menu!</h1>
+        </div>
 
-        <h1>Add or Edit your menu!</h1> 
+        <div className="card mx-auto">
+            <form className="form-group card-body p-2">
+                <div className="row">
 
-        {
-            menu.map( (menuItem, i) => <div className="card w-75 mx-auto mb-3" key={i}>
-                <span className="card-header">Menu Item #{i}</span>
-
-                <form className="form-group card-body p-2">
-                    <div className="row">
-
-                        <div className="col-md-7">
-                            <label>Menu Item Name:</label>
-                            <input type="text"></input>
+                    <div className="col-md-7">
+                        <label htmlFor="name">Item Name:</label>
+                        <input
+                            id="name"
+                            name="name"
+                            type="text"
+                            value={itemName}
+                            onChange={(e) => setItemName(e.target.value)}></input>
+                    </div>
+                    <div className="col-md-7">
+                        <label htmlFor="price">Item Price: $</label>
+                        <input
+                            id="price"
+                            name="price"
+                            type="text"
+                            onChange={(e) => setPrice(e.target.value)}></input>
+                    </div>
+                    <div className="col-md-7">
+                        <label htmlFor="link">Item Link:</label>
+                        <input
+                            id="link"
+                            name="link"
+                            type="text"
+                            value={itemLink}
+                            onChange={(e) => setItemLink(e.target.value)}></input>
+                    </div>
+                    <div className="col-md-7">
+                        <label htmlFor="mealType">Meal Type:</label>
+                        <input
+                            id="mealType"
+                            name="mealType"
+                            type="text"
+                            value={mealType}
+                            onChange={(e) => setMealType(e.target.value)}></input>
+                    </div>
+                    <div className="col-md-7">
+                        <label htmlFor="description">Description:</label>
+                        <textarea value={description} id="description" name="description" onChange={(e) => setDescription(e.target.value)}></textarea>
+                    </div>
+                    <div className="col-md-7">
+                        <div className="form-check">
+                            <label className="form-check-label" htmlFor="flexCheckDefault">
+                                Featured Item
+                            </label>
+                            <input className="form-check-input" type="checkbox" value='1' id="flexCheckDefault" onChange={(e) => setFeatured(e.target.value)} />
                         </div>
-                        <div className="col-md-5">
-                            <label>Menu Item Price: $</label>
-                            <input className="w-25" type="text"></input>
-                        </div>
-
                     </div>
 
-                    <br/>
+                    <br />
 
-                    <div className="d-flex">
-                        <label className="text-center">Menu Item Description:</label>
-                        <textarea className="w-75 form-control"></textarea>
-                    </div>
-                    
-                </form>
 
-            </div>)
-        }
+                </div>
+
+                <br />
+
+
+
+            </form>
+        </div>
 
         <div className="mx-auto d-flex justify-content-center">
-            <button className="btn btn-secondary" onClick={() => addItem()}>Add Item</button>
-            <br/>
-            <button className="btn btn-primary">Save Menu</button>
+            <Link className="btn" to='/addMenu' onClick={addItem}>Save Item and Add Another</Link>
+            <br />
+            <Link className="btn" to='/' onClick={addItem}>Save Item and Finish</Link>
         </div>
 
 

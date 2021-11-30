@@ -49,32 +49,6 @@ const Register = () => {
         }
       };
 
-    // const register = () => {
-    //     if (accountType === "Restaurant Owner") {
-    //         userRepository.addUser(userName, password);
-    //         return history.push('/ownerInfo');
-    //     }
-    //     else if (accountType === "Customer") {
-    //         console.log("YAYAYAYA");
-    //         userRepository.addUser(userName, password);
-    //         setUserContext(userRepository.currentUser());
-    //         return history.push('/');
-    //     }
-        
-    // }
-    // const login = async (e) => {
-    //     e.preventDefault();
-    //     setIsLoading(true);
-    //     const res = await userRepository.login(username, password);
-    //     if (res) setIsLoading(false);
-    //     if (!res.success) {
-    //         setErrors(res);
-    //     } else {
-    //         setUserContext(userRepository.currentUser());
-    //         history.push('/');
-    //     }
-    // };
-
     useEffect(() => {
         console.log(accountType);
         const user = userContext;

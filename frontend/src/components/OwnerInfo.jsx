@@ -7,20 +7,20 @@ import { RestaurantOwnerForm } from './RestaurantOwnerForm';
 import { Header } from './Header';
 import { Landing } from './Landing';
 import { Popover, OverlayTrigger } from 'react-bootstrap';
+import { RestaurantRepository } from '../api/restaurantRepository';
 
 
 const OwnerInfo = () => {
     const [restaurantName, setRestaurantName] = useState("");
     const [cuisineType, setCuisineType] = useState("");
-    const [addressStreet, setAddressStreet] = useState("");
-    const [addressCity, setAddressCity] = useState("");
-    const [addressState, setAddressState] = useState("");
-    const [addressZip, setAddressZip] = useState("");
+    const [location, setLocation] = useState("")
     const [openTimes, setOpenTimes] = useState("");
     const [restaurantDescription, setRestaurantDescription] = useState("");
+    const [sponsored, setSponsored] = useState(0);
     const [websiteURL, setWebsiteURL] = useState("");
     const [instagramUser, setInstagramUser] = useState("");
-
+    const [socialMediaURL, setSocialMediaURL] = useState("");
+    const [postInfo, setPostInfo] = useState(undefined);
 
 
     const [errors, setErrors] = useState({});
@@ -28,6 +28,7 @@ const OwnerInfo = () => {
     const [userContext, setUserContext] = useContext(UserContext);
     const history = useHistory();
     const userRepository = new UserRepository();
+    const restRepo = new RestaurantRepository();
 
     const popoverRight = (
         <Popover className="p-1" id="popover-positioned-right" title="Popover right">
@@ -40,23 +41,25 @@ const OwnerInfo = () => {
     );
 
     const addRest = () => {
-
+        let restInfo = [restaurantName, location, openTimes, restaurantDescription, cuisineType, websiteURL, sponsored, instagramUser, socialMediaURL];
+        restRepo.addRestaurant(restInfo);
+        userRepository.linkUserRestaurant(userRepository.currentUser().userID, 1);
     }
 
 
     useEffect(() => {
-        const user = userContext;
-        if (user.username) {
-            console.log(user);
-            history.push('/');
-        }
-    });
+        userRepository.updateSession(userRepository.currentUser().username);
+        console.log(userRepository.currentUser());
+    }, [])
 
 
     return <>
         <Header />
         <form className="container card form-group" onSubmit={addRest}>
-            <h2 className="card-header">About your restaurant</h2>
+            <br/>
+            <div className="d-flex justify-content-center">
+                <h2 className="title mx-auto">About your restaurant</h2>
+            </div>
             <br />
             <div className="d-flex flex-row justify-content-center align-middle">
                 <label className="align-middle" htmlFor="restaurantName">Restaurant Name: </label>
@@ -75,57 +78,43 @@ const OwnerInfo = () => {
                     onChange={(e) => setCuisineType(e.target.value)}
                 >
                 </input>
+                <label className="align-middle" htmlFor="location">City: </label>
+                <input
+                    type="text" id="location" name="location"
+                    value={location}
+                    className="formControl"
+                    onChange={(e) => setLocation(e.target.value)}
+                >
+                </input>
             </div>
 
             <br />
-
-            <div className="mx-auto form-group">
-                <label htmlFor="restaurantAddress">Restaurant Address: </label>
+            <div className="d-flex justify-content-center">
+                <span className="mb-2">Open Times:</span>
+                <div>
+                    <textarea className="mx-auto w-25 h-100"
+                        onChange={(e) => setOpenTimes(e.target.value)}></textarea>
+                    <OverlayTrigger trigger="click" placement="right" overlay={popoverRight}>
+                        <Button className="mx-auto rounded-circle" > ? </Button>
+                    </OverlayTrigger>
+                </div>
             </div>
-            <div className="d-flex flex-row justify-content-center p-2">
-                <input type="text" id="addressStreet" name="addressStreet"
-                    value={addressStreet}
-                    onChange={(e) => setAddressStreet(e.target.value)}
-                    className="form-control w-75 formControl"
-                    placeholder="Street Name"
-                ></input>
-                <input type="text" id="addressCity" name="addressCity"
-                    value={addressCity}
-                    onChange={(e) => setAddressCity(e.target.value)}
-                    className="form-control w-25"
-                    placeholder="City"
-                ></input>
-                <input type="text" id="addressState" name="addressState"
-                    value={addressState}
-                    onChange={(e) => setAddressState(e.target.value)}
-                    className="form-control w-25"
-                    placeholder="State"
-                ></input>
-                <input type="text" id="addressZip" name="addressZip"
-                    value={addressZip}
-                    onChange={(e) => setAddressZip(e.target.value)}
-                    className="form-control w-25"
-                    placeholder="Zip Code"
-                ></input>
-            </div>
-
             <br />
-
-            <span className="mb-2">Open Times:</span>
-            <div>
-                <textarea className="mx-auto w-25 h-100"
-                    onChange={(e) => setOpenTimes(e.target.value)}></textarea>
-                <OverlayTrigger trigger="click" placement="right" overlay={popoverRight}>
-                    <Button className="mx-auto rounded-circle" > ? </Button>
-                </OverlayTrigger>
+            <div className="d-flex justify-content-center">
+                <span className="mb-2">Restaurant Description</span>
+                <div>
+                    <textarea className="mx-auto w-50 h-100 formControl"
+                        onChange={(e) => setRestaurantDescription(e.target.value)}></textarea>
+                </div>
             </div>
-
             <br />
-
-            <span className="mb-2">Restaurant Description</span>
-            <div>
-                <textarea className="mx-auto w-50 h-100 formControl"
-                    onChange={(e) => setRestaurantDescription(e.target.value)}></textarea>
+            <div className="d-flex justify-content-center">
+                <div className="form-check">
+                    <input className="form-check-input" type="checkbox" value='1' id="flexCheckDefault" onChange={(e) => setSponsored(e.target.value)}/>
+                    <label className="form-check-label" htmlFor="flexCheckDefault">
+                        Sponsored
+                    </label>
+                </div>
             </div>
 
             <br />
@@ -147,7 +136,18 @@ const OwnerInfo = () => {
                         onChange={(e) => setInstagramUser(e.target.value)} />
                 </div>
             </div>
+            <div className="w-75 mx-auto">
+                <div className="input-group mb-3">
+                    <div className="input-group-prepend">
+                        <span className="input-group-text" id="basic-addon3">Social Media Link:</span>
+                    </div>
+                    <input type="text" className="form-control" aria-describedby="basic-addon3"
+                        onChange={(e) => setSocialMediaURL(e.target.value)} />
+                </div>
+            </div>
             <br />
+
+            <Link to="/addMenu" className="btn" onClick={addRest}>Submit</Link>
         </form>
     </>
 }

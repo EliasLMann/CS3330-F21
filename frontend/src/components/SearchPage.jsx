@@ -23,11 +23,11 @@ export const SearchPage = props => {
     }
 
     return <>
-
+        <Header />
         <div className="card align-center w-75 mx-auto">
             <h2 className="card-header text-center">Search PopStop:</h2>
             
-            <div class="input-group mx-auto p-3 w-100 align-middle">
+            <div className="input-group mx-auto p-3 w-100 align-middle">
                 <Dropdown>
                     <Dropdown.Toggle variant="outline-secondary" id="dropdown-basic">
                         {searchFilter}
@@ -42,7 +42,7 @@ export const SearchPage = props => {
                         <Dropdown.Item onClick={(e) => setSearchFilter("Zip Code")}>Zip Code</Dropdown.Item>
                     </Dropdown.Menu>
                 </Dropdown>
-                <input type="text" class="form-control align-middle" placeholder="Find your next destination..."/>
+                <input type="text" className="form-control align-middle" placeholder="Find your next destination..."/>
                 <button className="btn btn-secondary h-25">Search</button>
             </div>
         </div>

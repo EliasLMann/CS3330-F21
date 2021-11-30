@@ -38,28 +38,37 @@ export class RestaurantRepository {
     });
   }
 
-  addRestaurant(restaurantName, location, hours, description, cuisineType, website, socialMediaName) {
-    return new Promise((resolve, reject) => {
-      axios.post(`${this.url}/addRestaurant`,
+  async addRestaurant(restInfo) {
+    const errors = {success : false};
+
+    const {data, status} = await axios.post(`${this.url}/addRestaurant`,
         {
-          params: {
-            restaurantName: restaurantName,
-            location: location,
-            hours : hours,
-            description : description,
-            cuisineType : cuisineType,
-            website : website,
-            sponsored : 0,
-            socialMediaName : socialMediaName,
-            socialMediaURL : "socialMediaURL"
-          }
-        })
-        .then(x => resolve(x.data))
-        .catch(x => {
-          alert(x);
-          reject(x);
-        })
-    });
+            restaurantName: restInfo[0],
+            location: restInfo[1],
+            hours : restInfo[2],
+            description : restInfo[3],
+            cuisineType : restInfo[4],
+            website : restInfo[5],
+            sponsored : restInfo[6],
+            socialMediaName : restInfo[7],
+            socialMediaURL : restInfo[8]
+        });
+
+        if (status <= 201) {
+          errors.success = true;
+          console.log(data.insertID);
+          console.log("Yay");
+          sessionStorage.setItem(
+            'rest',
+            JSON.stringify({
+              restaurantID: data.insertId,
+              status: 0
+            })
+          );
+        }
+
+        return errors;
+        
   }
 
 
