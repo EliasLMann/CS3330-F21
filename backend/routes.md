@@ -13,7 +13,6 @@
 - [x] All Restaurant cuisineTypes
 - [x] All Restaurant websites
 - [x] All Restaurant socialMediaNames
-      \
 
 ### Menu
 
@@ -59,6 +58,7 @@
 
 - [x] Delete menuItem - melanie
 - [x] Delete price from MenuItem - melanie
+- [x] Delete restaurant
 
 # Epic 1
 
@@ -110,8 +110,8 @@
 - [x] 1 GET sponsored restaurants - Ariyan and Eli
 - [x] 2 PUT menuItem featured - melanie
 - [x] 2 GET featured dishes for a given restaurant
-- [ ] 3 PUT isSponsored for a review by restaurantID and reviewID
-- [ ] 3 GET isSponsored reviews pertaining to a given restaurant
+- [x] 3 PUT isSponsored for a review by reviewID
+- [x] 3 GET isSponsored reviews pertaining to a given restaurant
 
 # Epic 9
 
@@ -129,7 +129,7 @@
 
 - [x] 1 PUT increment likes for a given dish - melanie
 - [x] 1 PUT increment dislikes for a given dish - melanie
-- [x] 2 & 3 GET dishes with greatest amount of likes, up to 5 (should we do diffence between likes and dislikes?) - melanie (done with difference between likes and dislikes)
+- [x] 2 & 3 GET dishes with greatest amount of likes, up to 5 (should we do diffence between likes and dislikes?) - melanie (done with difference between likes and dislikes) & Eli (changed so it is by restaurantID)
 - [ ] 4 sort popular dishes by this day, week, moth, all time (SCRATCHED, not logically consitent with db)
 
 # Epic 11
