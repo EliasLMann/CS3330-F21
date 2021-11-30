@@ -8,6 +8,7 @@ const restaurant = require("./routes/restaurant");
 const review = require("./routes/review");
 const user = require("./routes/user");
 const menuItem = require("./routes/menuItem");
+const photo = require("./routes/photo");
 
 module.exports = function routes(app, logger) {
   // GET /
@@ -115,39 +116,6 @@ module.exports = function routes(app, logger) {
               res.status(200).json({
                 data: rows,
               });
-            }
-          }
-        );
-      }
-    });
-  });
-
-  // POST /photo
-  // Adds photo to the photo table of given restaurantID
-  app.post("/photo", (req, res) => {
-    console.log(req.body.product);
-    // obtain a connection from our pool of connections
-    pool.getConnection(function (err, connection) {
-      if (err) {
-        // if there is an issue obtaining a connection, release the connection instance and log the error
-        logger.error("Problem obtaining MySQL connection", err);
-        res.status(400).send("Problem obtaining MySQL connection");
-      } else {
-        // if there is no issue obtaining a connection, execute query and release connection
-        let restaurantID = req.body.restaurantID;
-        let url = req.body.url;
-        let title = req.body.title;
-        connection.query(
-          "INSERT INTO Photo(restaurantID, URL, title) VALUES(?,?,?);",
-          [restaurantID, url, title],
-          function (err, rows, fields) {
-            connection.release();
-            if (err) {
-              // if there is an error with the query, log the error
-              logger.error("Problem inserting into Menu table: \n", err);
-              res.status(400).send("Problem inserting into table");
-            } else {
-              res.status(200).send(`added ${req.body.product} to the table!`);
             }
           }
         );
@@ -296,4 +264,5 @@ module.exports = function routes(app, logger) {
   app.use(restaurant);
   app.use(user);
   app.use(menuItem);
+  app.use(photo);
 };
