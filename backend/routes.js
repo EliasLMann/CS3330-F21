@@ -1576,5 +1576,88 @@ module.exports = function routes(app, logger) {
     });
   });
 
+    //GET /reviews/{restaurantID}
+  //gets reviews by restaurantID
+<<<<<<< Updated upstream
+  app.get("/reviews", (req, res) => {
+=======
+  app.get("/Restaurantreviews", (req, res) => {
+>>>>>>> Stashed changes
+    // obtain a connection from our pool of connections
+    pool.getConnection(function (err, connection) {
+      if (err) {
+        // if there is an issue obtaining a connection, release the connection instance and log the error
+        logger.error("Problem obtaining MySQL connection", err);
+        res.status(400).send("Problem obtaining MySQL connection");
+      } else {
+        // if there is no issue obtaining a connection, execute query and release connection
+        var restaurantID = req.query["restaurantID"];
+        connection.query(
+          "SELECT * FROM Review WHERE restaurantID = (?)",
+          restaurantID,
+          function (err, rows, fields) {
+            connection.release();
+            if (err) {
+              logger.error("Error while fetching values: \n", err);
+              res.status(400).json({
+                data: [],
+                error: "Error obtaining values",
+              });
+            } else {
+              res.status(200).json({
+                data: rows,
+              });
+            }
+          }
+        );
+      }
+    });
+  });
+
+  //GET /reviews/{userID}
+  //gets reviews by userID
+<<<<<<< Updated upstream
+  app.get("/reviews", (req, res) => {
+=======
+  app.get("/userReviews", (req, res) => {
+>>>>>>> Stashed changes
+    // obtain a connection from our pool of connections
+    pool.getConnection(function (err, connection) {
+      if (err) {
+        // if there is an issue obtaining a connection, release the connection instance and log the error
+        logger.error("Problem obtaining MySQL connection", err);
+        res.status(400).send("Problem obtaining MySQL connection");
+      } else {
+        // if there is no issue obtaining a connection, execute query and release connection
+        var userID = req.query["userID"];
+        connection.query(
+          "SELECT * FROM Review WHERE userID = (?)",
+          userID, 
+          function (err, rows, fields) {
+            connection.release();
+            if (err) {
+              logger.error("Error while fetching values: \n", err);
+              res.status(400).json({
+                data: [],
+                error: "Error obtaining values",
+              });
+            } else {
+              res.status(200).json({
+                data: rows,
+              });
+            }
+          }
+        );
+      }
+    });
+  });
+
+<<<<<<< Updated upstream
+  
+
+=======
+>>>>>>> Stashed changes
+
+
   app.use(restaurant);
 };
