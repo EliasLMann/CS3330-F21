@@ -1577,7 +1577,7 @@ module.exports = function routes(app, logger) {
   });
 
 
-  // GET /user/{userID}
+  // GET /user/{userName}
 app.get("/user", (req, res) => {
   // obtain a connection from our pool of connections
   pool.getConnection(function (err, connection) {
@@ -1587,10 +1587,10 @@ app.get("/user", (req, res) => {
       res.status(400).send("Problem obtaining MySQL connection");
     } else {
       // if there is no issue obtaining a connection, execute query and release connection
-      let userID = req.query["userID"];
+      let userName = req.query["userName"];
       connection.query(
-        "SELECT * FROM User WHERE userID = ?",
-        userID,
+        "SELECT * FROM User WHERE userName = ?",
+        userName,
         function (err, rows, fields) {
           connection.release();
           if (err) {

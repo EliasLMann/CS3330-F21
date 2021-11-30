@@ -599,7 +599,9 @@ router.post("/addRestaurant", (req, res) => {
           logger.error("Problem inserting into Restaurant table: \n", err);
           res.status(400).send("Problem inserting into table");
         } else {
-          res.status(200).send(`added ${restaurantName} to the table!`);
+          res.status(200).json({
+            data: rows,
+          });
         }
       });
     }
@@ -790,5 +792,7 @@ router.delete("/restaurant/delete", (req, res) => {
     }
   });
 });
+
+
 
 module.exports = router;

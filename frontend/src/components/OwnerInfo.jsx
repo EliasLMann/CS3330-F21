@@ -20,7 +20,7 @@ const OwnerInfo = () => {
     const [websiteURL, setWebsiteURL] = useState("");
     const [instagramUser, setInstagramUser] = useState("");
     const [socialMediaURL, setSocialMediaURL] = useState("");
-
+    const [postInfo, setPostInfo] = useState(undefined);
 
 
     const [errors, setErrors] = useState({});
@@ -43,13 +43,14 @@ const OwnerInfo = () => {
     const addRest = () => {
         let restInfo = [restaurantName, location, openTimes, restaurantDescription, cuisineType, websiteURL, sponsored, instagramUser, socialMediaURL];
         restRepo.addRestaurant(restInfo);
+        userRepository.linkUserRestaurant(userRepository.currentUser().userID, 1);
     }
 
 
     useEffect(() => {
-        // console.log(sponsored);
-        // console.log(restaurantName)
-    });
+        userRepository.updateSession(userRepository.currentUser().username);
+        console.log(userRepository.currentUser());
+    }, [])
 
 
     return <>
@@ -146,7 +147,7 @@ const OwnerInfo = () => {
             </div>
             <br />
 
-            <button type="button" className="btn" onClick={addRest}>Submit</button>
+            <Link to="/addMenu" className="btn" onClick={addRest}>Submit</Link>
         </form>
     </>
 }

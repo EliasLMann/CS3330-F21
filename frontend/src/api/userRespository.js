@@ -28,8 +28,9 @@ export class UserRepository {
   }
 
   linkUserRestaurant(userID, restID){
+    console.log(userID + " " + restID)
     return new Promise((resolve, reject) => {
-      axios.put(`${this.url}/assignRestaurant`, {userID: userID, restID: restID})
+      axios.put(`${this.url}/assignRestaurant`, {userID: userID, newRestID: restID})
             .then(x => resolve(x.data))
             .catch(x => {
                 alert(x);
@@ -85,6 +86,27 @@ export class UserRepository {
     sessionStorage.removeItem('user');
   }
 
+  async updateSession(userName) {
+    const errors = { success: false };
+    const { data, status } = await axios.get(url + '/user', {
+      params: { userName: userName }
+    });
+
+    if (status >= 201) errors.request = 'Bad Request';
+    else {
+      sessionStorage.setItem(
+        'user',
+        JSON.stringify({
+          ...this.currentUser(),
+          userID: data.data[0].userID,
+          restaurantID: data.data[0].restaurantID
+        })
+      );
+      errors.success = true;
+    }
+    return errors;
+  }
+
   async login(user, pass) {
     const errors = {};
     const { data, status } = await axios.get(url + '/login', {
@@ -132,6 +154,18 @@ export class UserRepository {
     })
   }
 
+  getMoreInfo(userName) {
+    return new Promise((resolve, reject) => {
+
+      axios.get(`${this.url}/user`, {params: {userName : userName}})
+        .then(x => resolve(x.data))
+        .catch(x => {
+          alert(x);
+          reject(x);
+        })
+    })
+  }
+
   async register(userName, password) {
     const errors = {success : false};
 
@@ -141,6 +175,7 @@ export class UserRepository {
 
     if (status <= 201) {
       errors.success = true;
+      console.log(data);
       sessionStorage.setItem(
         'user',
         JSON.stringify({
