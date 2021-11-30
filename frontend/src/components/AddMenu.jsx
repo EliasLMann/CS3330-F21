@@ -4,7 +4,7 @@ import { MenuItemRepository } from "../api/menuItemRepository";
 import { UserRepository } from "../api/userRespository";
 import { menuItem } from "../models/menuItem";
 
-export const AddMenu = props => {
+export const AddMenu = () => {
     const userRepo = new UserRepository();
     const menuRepo = new MenuItemRepository();
     const [restID, setRestID] = useState(undefined);
@@ -20,12 +20,6 @@ export const AddMenu = props => {
         setRestID(userRepo.currentUser().restaurantID);
         console.log(restID);
     }, []);
-
-
-    const addAndClose = () => {
-        let itemInfo = [restID, itemName, price, itemLink, mealType, 0, 0, featured, photo, description];
-        menuRepo.addMenuItem(itemInfo);
-    }
 
     const addAndContinue = () => {
         let itemInfo = [restID, itemName, price, itemLink, mealType, 0, 0, featured, photo, description];

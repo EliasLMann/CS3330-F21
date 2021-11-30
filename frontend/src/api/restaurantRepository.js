@@ -101,5 +101,16 @@ export class RestaurantRepository {
     })
   }
 
+  getRestaurantReviews(restaurantID) {
+    return new Promise((resolve, reject) => {
+      axios.get(`${this.url}/Restaurantreviews`, {params : {restaurantID : restaurantID}})
+        .then(x => resolve(x.data))
+        .catch(x => {
+          alert(x);
+          reject(x);
+        })
+    })
+  }
+
 
 }

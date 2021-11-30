@@ -4,6 +4,7 @@ import { RestaurantRepository } from '../api/restaurantRepository';
 import { UserContext } from '../context';
 import { Header } from "./Header";
 import { MenuItemRepository } from '../api/menuItemRepository';
+import { ReviewList } from './ReviewList';
 
 
 
@@ -13,7 +14,8 @@ export const RestaurantDetails = () => {
     const [userContext, setUserContext] = useContext(UserContext);
     const [restaurant, setRestaurant] = useState(undefined);
     const [menu, setMenu] = useState(undefined);
-    const [featuredItems, setFeaturedItems] = useState(undefined)
+    const [featuredItems, setFeaturedItems] = useState(undefined);
+    const [reviews, setReviews] = useState(undefined);
     const restRepo = new RestaurantRepository();
     const { restaurantID } = useParams();
     //let restID = params.restaurantID
@@ -23,10 +25,11 @@ export const RestaurantDetails = () => {
         restRepo.getRestaurant(restaurantID).then(x => setRestaurant(x.data[0]));
         restRepo.getMenuItems(restaurantID).then(x => setMenu(x.data));
         restRepo.getFeatItems(restaurantID).then(x => setFeaturedItems(x.data));
-        console.log(featuredItems);
+        restRepo.getRestaurantReviews(restaurantID).then(x => setReviews(x.data));
+        console.log(reviews);
     }, []);
 
-    if (!restaurant || !menu || !featuredItems) {
+    if (!restaurant || !menu || !featuredItems || !reviews) {
         return (
             <div>Loading...</div>
         )
@@ -50,7 +53,7 @@ export const RestaurantDetails = () => {
                         {
                             featuredItems.map((x, i) =>
                                 <div key={i}>
-                                    <li class="list-group-item list-group-item-primary">{x.itemName} (${x.price}) -- {x.description}</li>
+                                    <li className="list-group-item list-group-item-primary">{x.itemName} (${x.price}) -- {x.description}</li>
                                 </div>)
                         }
                     </ul>
@@ -87,6 +90,9 @@ export const RestaurantDetails = () => {
                     </div>
                     <hr />
                     <h4>Reviews</h4>
+                    <div>
+                        {/* <ReviewList props={reviews} /> */}
+                    </div>
                     <br/><br/>
                 </div>
 
