@@ -22,11 +22,11 @@ export const RestaurantDetails = () => {
         console.log("ID: " + restaurantID);
         restRepo.getRestaurant(restaurantID).then(x => setRestaurant(x.data[0]));
         restRepo.getMenuItems(restaurantID).then(x => setMenu(x.data));
-        // restRepo.getFeaturedItems(restaurantID).then(x => setFeaturedItems(x.data));
+        restRepo.getFeatItems(restaurantID).then(x => setFeaturedItems(x.data));
         console.log(featuredItems);
     }, []);
 
-    if (!restaurant || !menu) {
+    if (!restaurant || !menu || !featuredItems) {
         return (
             <div>Loading...</div>
         )
@@ -37,7 +37,7 @@ export const RestaurantDetails = () => {
                 <Header />
                 <div className="container card">
                     <div className="card-title mx-auto px-auto">
-                        <h2>{restaurant.restaurantName}</h2>
+                        <h1>{restaurant.restaurantName}</h1>
                     </div>
                     <div className="card-body">
                         <p>Location: {restaurant.location}</p>
@@ -45,20 +45,22 @@ export const RestaurantDetails = () => {
                         <p>Cuisine Type: {restaurant.cuisineType}</p>
                     </div>
                     <hr />
-                    <h4>Featured Items</h4>
+                    <h2 className="d-flex justify-content-center">Featured Items</h2>
                     <div>
-                    {/* {
-                        featuredItems.map((x, i) =>
-                            <div className="row justify-content-center" key={i}>
-                                <div className="card col-5">
-                                    <h3 className="card-title mx-auto">{x.itemName}</h3>
-                                    <div className="card-body mx-auto">
-                                        <h5>${x.price}</h5>
-                                        <p>{x.description}</p>
+                        {
+                            featuredItems.map((x, i) =>
+                                <div className="row d-flex justify-content-center" key={i}>
+                                    <div className=" card col-md-3">
+                                        <div className="d-flex justify-content-center">
+                                            <h4 className="card-title mx-auto">{x.itemName}</h4>
+                                        </div>
+                                        <div className="card-body mx-auto">
+                                            <p>${x.price}</p>
+                                            <p>{x.description}</p>
+                                        </div>
                                     </div>
-                                </div>
-                            </div>)
-                    } */}
+                                </div>)
+                        }
                     </div>
                     <hr />
                     <h4>Menu</h4>
@@ -81,7 +83,7 @@ export const RestaurantDetails = () => {
                                             <th className="fw-normal">${x.price}</th>
                                             <th className="fw-normal">{x.mealType}</th>
                                             <th className="fw-normal">
-                                                <button className="mx-auto" onClick={() => itemRepo.incrementLikes(x.itemID)} > {x.likes} </button>
+                                                <button type="submit" className="mx-auto" onClick={() => itemRepo.incrementLikes(x.itemID)} > {x.likes} </button>
                                             </th>
                                             <th className="fw-normal">
                                                 <button className="mx-auto" onClick={() => itemRepo.incrementDislikes(x.itemID)}> {x.dislikes} </button>
@@ -91,8 +93,9 @@ export const RestaurantDetails = () => {
                             </tbody>
                         </table>
                     </div>
-                    <hr/>
+                    <hr />
                     <h4>Reviews</h4>
+                    <br/><br/>
                 </div>
 
             </>

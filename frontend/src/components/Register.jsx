@@ -9,7 +9,6 @@ import { Landing } from './Landing';
 
 
 const Register = () => {
-    const [email, setEmail] = useState('');
     const [userName, setUserName] = useState('');
     const [password, setPassword] = useState('');
     const [redoPassword, setRedoPassword] = useState('');
@@ -42,10 +41,10 @@ const Register = () => {
         }
 
         if (accountType === "Restaurant Owner") {
-            return history.push('/ownerInfo');
+            history.push('/ownerInput');
         }
         else if (accountType === "Customer") {
-            return history.push('/');
+            history.push('/');
         }
       };
 
@@ -56,7 +55,7 @@ const Register = () => {
             console.log(user);
             history.push('/');
         }
-    });
+    }, []);
 
     return <>
         <Header />
@@ -65,15 +64,7 @@ const Register = () => {
             <h1 className="card-header w-100 pt-2 text-center align-center">Register</h1>
 
             <form id="registerForm" className="card-body text-center" onSubmit={register}>
-                <label htmlFor="email">Enter your email: </label>
-                <input
-                    type="text" id="email" name="email"
-                    value={email}
-                    onChange={(e) => setEmail(e.target.value)}
-                >
-                </input>
 
-                <br />
 
                 <label htmlFor="userName">Username: </label>
                 <input

@@ -38,6 +38,28 @@ export class RestaurantRepository {
     });
   }
 
+  getFeatItems(restaurantID) {
+    return new Promise((resolve, reject) => {
+      axios.get(`${this.url}/featItems`, { params: { restaurantID: restaurantID } })
+        .then(x => resolve(x.data))
+        .catch(x => {
+          alert(x);
+          reject(x);
+        })
+    });
+  }
+
+  getRestID() {
+    return new Promise((resolve, reject) => {
+      axios.get(`${this.url}/restaurantId`)
+        .then(x => resolve(x.data))
+        .catch(x => {
+          alert(x);
+          reject(x);
+        })
+    });
+  }
+
   async addRestaurant(restInfo) {
     const errors = {success : false};
 
@@ -56,8 +78,6 @@ export class RestaurantRepository {
 
         if (status <= 201) {
           errors.success = true;
-          console.log(data.insertID);
-          console.log("Yay");
           sessionStorage.setItem(
             'rest',
             JSON.stringify({
@@ -68,7 +88,17 @@ export class RestaurantRepository {
         }
 
         return errors;
-        
+  }
+
+  getSponsoredRestaurants() {
+    return new Promise((resolve, reject) => {
+      axios.get(`${this.url}/restaurants/sponsored`)
+        .then(x => resolve(x.data))
+        .catch(x => {
+          alert(x);
+          reject(x);
+        })
+    })
   }
 
 

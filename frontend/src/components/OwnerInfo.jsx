@@ -23,6 +23,8 @@ const OwnerInfo = () => {
     const [postInfo, setPostInfo] = useState(undefined);
 
 
+    const [restID, setRestID] = useState(undefined);
+
     const [errors, setErrors] = useState({});
     const [isLoading, setIsLoading] = useState(false);
     const [userContext, setUserContext] = useContext(UserContext);
@@ -43,19 +45,28 @@ const OwnerInfo = () => {
     const addRest = () => {
         let restInfo = [restaurantName, location, openTimes, restaurantDescription, cuisineType, websiteURL, sponsored, instagramUser, socialMediaURL];
         restRepo.addRestaurant(restInfo);
-        userRepository.linkUserRestaurant(userRepository.currentUser().userID, 1);
+        restRepo.getRestID().then(x => setRestID(x.data.id));
+        userRepository.linkUserRestaurant(userRepository.currentUser().userID, restID);
+        userRepository.updateSession(userRepository.currentUser().username);
+        console.log(userRepository.currentUser().restaurantID);
+        if(userRepository.currentUser().restaurantID !== null) {
+            history.push('/addMenu')
+        }
     }
 
 
     useEffect(() => {
         userRepository.updateSession(userRepository.currentUser().username);
+        restRepo.getRestID().then(x => setRestID(x.data[0].id));
+        setRestID(restID);
+        console.log(restID);
         console.log(userRepository.currentUser());
-    }, [])
+    }, []);
 
 
     return <>
         <Header />
-        <form className="container card form-group" onSubmit={addRest}>
+        <form className="container card form-group">
             <br/>
             <div className="d-flex justify-content-center">
                 <h2 className="title mx-auto">About your restaurant</h2>
@@ -147,7 +158,7 @@ const OwnerInfo = () => {
             </div>
             <br />
 
-            <Link to="/addMenu" className="btn" onClick={addRest}>Submit</Link>
+            <button className="btn btn-primary" onClick={addRest}>Submit</button>
         </form>
     </>
 }
