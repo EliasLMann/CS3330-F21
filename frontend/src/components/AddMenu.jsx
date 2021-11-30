@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import { MenuItemRepository } from "../api/menuItemRepository";
 import { UserRepository } from "../api/userRespository";
 import { menuItem } from "../models/menuItem";
+import { Header } from "./Header";
 
 export const AddMenu = () => {
     const userRepo = new UserRepository();
@@ -17,6 +18,7 @@ export const AddMenu = () => {
     const [description, setDescription] = useState("")
 
     useEffect(() => {
+        userRepo.updateSession(userRepo.currentUser().username);
         setRestID(userRepo.currentUser().restaurantID);
         console.log(restID);
     }, []);
@@ -34,6 +36,7 @@ export const AddMenu = () => {
         inputs.checked = false;
     }
     return <>
+        <Header/>
         <br />
         <br />
         <div className="container d-flex justify-content-center">
