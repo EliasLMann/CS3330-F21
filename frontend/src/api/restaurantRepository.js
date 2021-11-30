@@ -38,21 +38,20 @@ export class RestaurantRepository {
     });
   }
 
-  addRestaurant(restaurantName, location, hours, description, cuisineType, website, socialMediaName) {
+  addRestaurant(restInfo) {
+    console.log(restInfo[1]);
     return new Promise((resolve, reject) => {
       axios.post(`${this.url}/addRestaurant`,
         {
-          params: {
-            restaurantName: restaurantName,
-            location: location,
-            hours : hours,
-            description : description,
-            cuisineType : cuisineType,
-            website : website,
-            sponsored : 0,
-            socialMediaName : socialMediaName,
-            socialMediaURL : "socialMediaURL"
-          }
+            restaurantName: restInfo[0],
+            location: restInfo[1],
+            hours : restInfo[2],
+            description : restInfo[3],
+            cuisineType : restInfo[4],
+            website : restInfo[5],
+            sponsored : restInfo[6],
+            socialMediaName : restInfo[7],
+            socialMediaURL : restInfo[8]
         })
         .then(x => resolve(x.data))
         .catch(x => {

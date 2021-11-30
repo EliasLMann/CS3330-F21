@@ -567,15 +567,15 @@ router.post("/addRestaurant", (req, res) => {
       logger.error("Problem obtaining MySQL connection", err);
       res.status(400).send("Problem obtaining MySQL connection");
     } else {
-      let restaurantName = req.query["restaurantName"];
-      let location = req.query["location"];
-      let hours = req.query["hours"];
-      let description = req.query["description"];
-      let cuisineType = req.query["cuisineType"];
-      let website = req.query["website"];
-      let sponsored = req.query["sponsored"] == "true";
-      let socialMediaName = req.query["socialMediaName"];
-      let socialMediaURL = req.query["socialMediaURL"];
+      let restaurantName = req.body.restaurantName;
+      let location = req.body.location;
+      let hours = req.body.hours;
+      let description = req.body.description;
+      let cuisineType = req.body.cuisineType;
+      let website = req.body.website;
+      let sponsored = req.body.sponsored;
+      let socialMediaName = req.body.socialMediaName;
+      let socialMediaURL = req.body.socialMediaURL;
       let insert = [
         [
           restaurantName,

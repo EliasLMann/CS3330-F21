@@ -60,7 +60,7 @@ function App() {
         <Route component={RestaurantDetails} path="/restaurants/:restaurantID" />
         <Route component={AddMenu} path="/addMenu" />
         <Route component={OwnerInfo} path="/ownerInput" />
-        <Route component={Landing} path="/" exact />
+        <Route component={Landing} exact path="/" />
         <Route component={Register} path="/reg" />
       </Router>
     </UserContext.Provider>
