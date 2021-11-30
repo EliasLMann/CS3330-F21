@@ -26,4 +26,30 @@ export class RestaurantRepository {
         })
     });
   }
+
+  getMenuItems(restaurantID) {
+    return new Promise((resolve, reject) => {
+      axios.get(`${this.url}/menuItems`, {params: {restaurantID : restaurantID}})
+        .then(x => resolve(x.data))
+        .catch(x => {
+          alert(x);
+          reject(x);
+        })
+    });
+  }
+
+  getReviews(restaurantID) {
+    return new Promise((resolve, reject) => {
+      axios.get(`${this.url}/reviews`, {params: {restaurantID : restaurantID}})
+        .then(x => resolve(x.data))
+        .catch(x => {
+          alert(x);
+          reject(x);
+        })
+    });
+  }
+
+
+
+
 }
