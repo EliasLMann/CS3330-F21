@@ -36,7 +36,7 @@ router.get("/getmealtypes", (req, res) => {
 });
 
 //get the top menu items of a given restaurant
-// GET /topmenuitem{resaurantID}
+// GET /topmenuitem{restaurantID}
 router.get("/topmenuitem", (req, res) => {
   // obtain a connection from our pool of connections
   pool.getConnection(function (err, connection) {
