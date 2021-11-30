@@ -6,6 +6,7 @@ const { json } = require("body-parser");
 const e = require("express");
 const restaurant = require("./routes/restaurant");
 const review = require("./routes/review");
+const user = require("./routes/user");
 
 module.exports = function routes(app, logger) {
   // GET /
@@ -133,37 +134,6 @@ module.exports = function routes(app, logger) {
         // if there is no issue obtaining a connection, execute query and release connection
         connection.query(
           "SELECT itemID, mealType FROM `PopStop`.`MenuItem`",
-          function (err, rows, fields) {
-            connection.release();
-            if (err) {
-              logger.error("Error while fetching values: \n", err);
-              res.status(400).json({
-                data: [],
-                error: "Error obtaining values",
-              });
-            } else {
-              res.status(200).json({
-                data: rows,
-              });
-            }
-          }
-        );
-      }
-    });
-  });
-
-  // GET /menu
-  app.get("/menu", (req, res) => {
-    // obtain a connection from our pool of connections
-    pool.getConnection(function (err, connection) {
-      if (err) {
-        // if there is an issue obtaining a connection, release the connection instance and log the error
-        logger.error("Problem obtaining MySQL connection", err);
-        res.status(400).send("Problem obtaining MySQL connection");
-      } else {
-        // if there is no issue obtaining a connection, execute query and release connection
-        connection.query(
-          "SELECT * FROM `PopStop`.`Menu`",
           function (err, rows, fields) {
             connection.release();
             if (err) {
@@ -445,39 +415,6 @@ module.exports = function routes(app, logger) {
               res.status(200).json({
                 data: rows,
               });
-            }
-          }
-        );
-      }
-    });
-  });
-
-  // for user story 3.1
-  // POST /postmenu
-  // takes all params and creates an associated menu
-  app.post("/postmenu", (req, res) => {
-    console.log(req.body.product);
-    // obtain a connection from our pool of connections
-    pool.getConnection(function (err, connection) {
-      if (err) {
-        // if there is an issue obtaining a connection, release the connection instance and log the error
-        logger.error("Problem obtaining MySQL connection", err);
-        res.status(400).send("Problem obtaining MySQL connection");
-      } else {
-        // if there is no issue obtaining a connection, execute query and release connection
-        var body = req.param("body");
-        var rating = req.param("rating");
-        connection.query(
-          "INSERT INTO `PopStop`.`Menu`(body, rating) VALUES(?,?)",
-          [restaurantID, body, rating],
-          function (err, rows, fields) {
-            connection.release();
-            if (err) {
-              // if there is an error with the query, log the error
-              logger.error("Problem inserting into Menu table: \n", err);
-              res.status(400).send("Problem inserting into table");
-            } else {
-              res.status(200).send(`added ${req.body.product} to the table!`);
             }
           }
         );
@@ -1113,37 +1050,6 @@ module.exports = function routes(app, logger) {
     });
   });
 
-  //===================================GET users========================================
-  app.get("/users", (req, res) => {
-    // obtain a connection from our pool of connections
-    pool.getConnection(function (err, connection) {
-      if (err) {
-        // if there is an issue obtaining a connection, release the connection instance and log the error
-        logger.error("Problem obtaining MySQL connection", err);
-        res.status(400).send("Problem obtaining MySQL connection");
-      } else {
-        // if there is no issue obtaining a connection, execute query and release connection
-        connection.query(
-          "SELECT * FROM `PopStop`.`User`",
-          function (err, rows, fields) {
-            connection.release();
-            if (err) {
-              logger.error("Error while fetching values: \n", err);
-              res.status(400).json({
-                data: [],
-                error: "Error obtaining values",
-              });
-            } else {
-              res.status(200).json({
-                data: rows,
-              });
-            }
-          }
-        );
-      }
-    });
-  });
-
   //=================================POST /register==================================
   //sign in api to create new user
   app.post("/register", async (req, res) => {
@@ -1576,4 +1482,5 @@ module.exports = function routes(app, logger) {
 
   app.use(review);
   app.use(restaurant);
+  app.use(user);
 };
