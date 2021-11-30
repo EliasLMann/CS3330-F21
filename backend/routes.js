@@ -794,7 +794,7 @@ module.exports = function routes(app, logger) {
         res.status(400).send("Problem obtaining MySQL connection");
       } else {
         // if there is no issue obtaining a connection, execute query and release connection
-        var itemID = req.param("itemID");
+        var itemID = req.query["itemID"];
         connection.query(
           "DELETE FROM `PopStop`.`MenuItem` WHERE itemID = ?",
           itemID,

@@ -4,6 +4,9 @@ import { UserRepository } from '../api/userRespository';
 import { Header } from './Header';
 import { RestaurantRepository } from '../api/restaurantRepository';
 import { Link } from 'react-router-dom';
+import { MenuItemRepository } from '../api/menuItemRepository';
+
+
 
 const CustomerView = () => {
     return (
@@ -19,8 +22,13 @@ const CustomerView = () => {
 const RestaurantView = () => {
     const restRepo = new RestaurantRepository();
     const userRepo = new UserRepository();
+    const itemRepo = new MenuItemRepository();
     const [restaurant, setRestaurant] = useState(undefined);
     const [menu, setMenu] = useState(undefined);
+
+    const deleteItem = async (itemID) => {
+        console.log(itemID);
+    }
 
     useEffect(() => {
         let restID = userRepo.currentUser().restaurantID;
@@ -85,7 +93,7 @@ const RestaurantView = () => {
                                                 <button className="btn btn-primary mx-auto"> Edit Item </button>
                                             </th>
                                             <th className="fw-normal">
-                                                <button className="btn btn-danger mx-auto"> Delete </button>
+                                                <button className="btn btn-danger mx-auto" onClick={() => itemRepo.deleteItem(x.itemID)}> Delete </button>
                                             </th>
                                         </tr>)
                                 }

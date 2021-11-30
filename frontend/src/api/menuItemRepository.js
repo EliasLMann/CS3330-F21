@@ -50,6 +50,15 @@ export class MenuItemRepository {
     })
   }
 
-  
+  deleteItem(itemID) {
+    return new Promise((resolve, reject) => {
+      axios.delete(`${this.url}/deleteitem`, {params: {itemID : itemID}})
+            .then(x => resolve(x.data))
+            .catch(x => {
+                alert(x);
+                reject(x);
+            })
+    })
+  }
 
 }
