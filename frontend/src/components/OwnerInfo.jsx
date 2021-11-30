@@ -51,14 +51,12 @@ const OwnerInfo = () => {
         if(userRepository.currentUser().restaurantID === null) {
             userRepository.updateSession(userRepository.currentUser().username);
         }
-        history.push('/addMenu')
+        document.getElementById("restForm").visiblity="none";
     }
 
 
     useEffect(() => {
-        if(userRepository.currentUser().restaurantID === null) {
-            userRepository.updateSession(userRepository.currentUser().username);
-        }
+        userRepository.updateSession(userRepository.currentUser().username);
         restRepo.getRestID().then(x => setRestID(x.data[0].id));
         setRestID(restID);
         console.log(restID);
@@ -68,7 +66,7 @@ const OwnerInfo = () => {
 
     return <>
         <Header />
-        <form className="container card form-group">
+        <form id="restForm" className="container card form-group">
             <br/>
             <div className="d-flex justify-content-center">
                 <h2 className="title mx-auto">About your restaurant</h2>
@@ -160,8 +158,11 @@ const OwnerInfo = () => {
             </div>
             <br />
 
-            <button className="btn btn-primary" onClick={addRest}>Submit</button>
+            <button type="button" className="btn btn-primary" onClick={addRest}>Submit</button>
         </form>
+        <div className="container">
+        <Link className="btn btn-success" to='/addMenu'>Continue</Link>
+        </div>
     </>
 }
 

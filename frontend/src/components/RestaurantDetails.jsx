@@ -11,14 +11,15 @@ import { ReviewList } from './ReviewList';
 export const RestaurantDetails = () => {
 
     const itemRepo = new MenuItemRepository();
-    const [userContext, setUserContext] = useContext(UserContext);
+    const restRepo = new RestaurantRepository();
+
     const [restaurant, setRestaurant] = useState(undefined);
     const [menu, setMenu] = useState(undefined);
     const [featuredItems, setFeaturedItems] = useState(undefined);
     const [reviews, setReviews] = useState(undefined);
-    const restRepo = new RestaurantRepository();
+    const [rating, setRating] = useState('');
+    const [reviewBody, setReviewBody] = useState("")
     const { restaurantID } = useParams();
-    //let restID = params.restaurantID
 
     useEffect(() => {
         console.log("ID: " + restaurantID);
@@ -93,6 +94,39 @@ export const RestaurantDetails = () => {
                     <div>
                         {/* <ReviewList props={reviews} /> */}
                     </div>
+                    <div className="container">
+                <form className="card reviewForm">
+                    <h5 className="card-header fw-bolder">Add review</h5>
+                    <div className="card-body row">
+                        <div className="form-group col">
+                            <label htmlFor="ratingField">Rating</label>
+                            <select id="ratingField"
+                                name="ratingField"
+                                className="form-control"
+                                value={rating}
+                                onChange={(e) => setRating(e.target.value)}
+                                >
+                                <option value={0} defaultValue></option>
+                                <option value={1}>1 star</option>
+                                <option value={2}>2 stars</option>
+                                <option value={3}>3 stars</option>
+                                <option value={4}>4 stars</option>
+                                <option value={5}>5 stars</option>
+                            </select>
+                        </div>
+                        <div className="form-group mb-4">
+                            <label htmlFor="comments">Comments</label>
+                            <textarea
+                                id="comments" name="comments"
+                                value={reviewBody}
+                                onChange={(e) => setReviewBody(e.target.value)}
+                                className="form-control" />
+                        </div>
+
+                        <button type="button" className="btn btn-primary col-1 mx-3" onClick={() => this.onAddClick()}>Submit</button>
+                    </div>
+                </form>
+            </div>
                     <br/><br/>
                 </div>
 
