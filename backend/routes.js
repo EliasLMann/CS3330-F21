@@ -1578,7 +1578,11 @@ module.exports = function routes(app, logger) {
 
     //GET /reviews/{restaurantID}
   //gets reviews by restaurantID
+<<<<<<< Updated upstream
   app.get("/reviews", (req, res) => {
+=======
+  app.get("/Restaurantreviews", (req, res) => {
+>>>>>>> Stashed changes
     // obtain a connection from our pool of connections
     pool.getConnection(function (err, connection) {
       if (err) {
@@ -1612,7 +1616,11 @@ module.exports = function routes(app, logger) {
 
   //GET /reviews/{userID}
   //gets reviews by userID
+<<<<<<< Updated upstream
   app.get("/reviews", (req, res) => {
+=======
+  app.get("/userReviews", (req, res) => {
+>>>>>>> Stashed changes
     // obtain a connection from our pool of connections
     pool.getConnection(function (err, connection) {
       if (err) {
@@ -1644,8 +1652,11 @@ module.exports = function routes(app, logger) {
     });
   });
 
+<<<<<<< Updated upstream
   
 
+=======
+>>>>>>> Stashed changes
 
 
   app.use(restaurant);
