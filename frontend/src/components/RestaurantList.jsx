@@ -7,7 +7,7 @@ const RestaurantList = () => {
     const [restaurants, setRestaurants] = useState(undefined);
 
     useEffect(() => {
-        restRepo.getSponsoredRestaurants().then(x => setRestaurants(x));
+        restRepo.getRestaurants().then(x => setRestaurants(x));
     }, [])
 
     if (!restaurants) {
@@ -25,9 +25,9 @@ const RestaurantList = () => {
                         <h1>Featured Restaurants</h1>
                     </div>
                     {
-                        restaurants.data.map((x, i) => <div className="card prod col-4" key={i}>
-                            <div className="card-body">
-                                <div className="d-flex justify-content-center">
+                        restaurants.data.map((x, i) => <div className="card prod col-4 mx-auto" key={i}>
+                            <div className="card-body mx-auto">
+                                <div className="mx-4 d-flex justify-content-center">
                                     <h3>{x.restaurantName}</h3>
                                 </div>
                                 <div className="row d-flex justify-content-center">

@@ -46,22 +46,14 @@ export const RestaurantDetails = () => {
                     </div>
                     <hr />
                     <h2 className="d-flex justify-content-center">Featured Items</h2>
-                    <div>
+                    <ul className="mx-auto">
                         {
                             featuredItems.map((x, i) =>
-                                <div className="row d-flex justify-content-center" key={i}>
-                                    <div className=" card col-md-3">
-                                        <div className="d-flex justify-content-center">
-                                            <h4 className="card-title mx-auto">{x.itemName}</h4>
-                                        </div>
-                                        <div className="card-body mx-auto">
-                                            <p>${x.price}</p>
-                                            <p>{x.description}</p>
-                                        </div>
-                                    </div>
+                                <div key={i}>
+                                    <li class="list-group-item list-group-item-primary">{x.itemName} (${x.price}) -- {x.description}</li>
                                 </div>)
                         }
-                    </div>
+                    </ul>
                     <hr />
                     <h4>Menu</h4>
                     <div>
@@ -83,10 +75,10 @@ export const RestaurantDetails = () => {
                                             <th className="fw-normal">${x.price}</th>
                                             <th className="fw-normal">{x.mealType}</th>
                                             <th className="fw-normal">
-                                                <button type="submit" className="mx-auto" onClick={() => itemRepo.incrementLikes(x.itemID)} > {x.likes} </button>
+                                                <button type="submit" className="btn btn-success mx-auto" onClick={() => itemRepo.incrementLikes(x.itemID)} > {x.likes} </button>
                                             </th>
                                             <th className="fw-normal">
-                                                <button className="mx-auto" onClick={() => itemRepo.incrementDislikes(x.itemID)}> {x.dislikes} </button>
+                                                <button className="btn btn-danger mx-auto" onClick={() => itemRepo.incrementDislikes(x.itemID)}> {x.dislikes} </button>
                                             </th>
                                         </tr>)
                                 }

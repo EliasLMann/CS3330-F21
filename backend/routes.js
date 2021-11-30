@@ -1413,16 +1413,16 @@ module.exports = function routes(app, logger) {
         logger.error("Problem obtaining MySQL connection", err);
         res.status(400).send("Problem obtaining MySQL connection");
       } else {
-        let restaurantID = req.body["restaurantID"];
-        let itemName = req.body["itemName"];
-        let price = req.body["price"];
-        let itemLink = req.body["itemLink"];
-        let mealType = req.body["mealType"];
-        let likes = req.body["likes"];
-        let dislikes = req.body["dislikes"];
-        let featured = req.body["featured"];
-        let photo = req.body["photo"];
-        let description = req.body["description"];
+        let restaurantID = req.body.restaurantID;
+        let itemName = req.body.itemName;
+        let price = req.body.price;
+        let itemLink = req.body.itemLink;
+        let mealType = req.body.mealType;
+        let likes = req.body.likes;
+        let dislikes = req.body.dislikes;
+        let featured = req.body.featured;
+        let photo = req.body.photo;
+        let description = req.body.description;
         let insert = [
           [
             restaurantID,
@@ -1451,7 +1451,6 @@ module.exports = function routes(app, logger) {
           }
         });
       }
-      connection.release();
     });
   });
 

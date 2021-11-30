@@ -178,8 +178,8 @@ router.get("/restaurants/avgRating", (req, res) => {
       res.status(400).send("Problem obtaining MySQL connection");
     } else {
       // if there is no issue obtaining a connection, execute query and release connection
-      var lowRating = req.param("lowRating");
-      var highRating = req.param("highRating");
+      var lowRating = req.query("lowRating");
+      var highRating = req.query("highRating");
       connection.query(
         "SELECT r.*, AVG(rating) FROM Restaurant r JOIN Review re ON r.restaurantID = re.restaurantID GROUP BY r.restaurantID HAVING AVG(rating) BETWEEN (?) AND (?);",
         [lowRating, highRating],

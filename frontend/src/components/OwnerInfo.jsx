@@ -47,16 +47,18 @@ const OwnerInfo = () => {
         restRepo.addRestaurant(restInfo);
         restRepo.getRestID().then(x => setRestID(x.data.id));
         userRepository.linkUserRestaurant(userRepository.currentUser().userID, restID);
-        userRepository.updateSession(userRepository.currentUser().username);
-        console.log(userRepository.currentUser().restaurantID);
-        if(userRepository.currentUser().restaurantID !== null) {
-            history.push('/addMenu')
+        // console.log(userRepository.currentUser().restaurantID);
+        if(userRepository.currentUser().restaurantID === null) {
+            userRepository.updateSession(userRepository.currentUser().username);
         }
+        history.push('/addMenu')
     }
 
 
     useEffect(() => {
-        userRepository.updateSession(userRepository.currentUser().username);
+        if(userRepository.currentUser().restaurantID === null) {
+            userRepository.updateSession(userRepository.currentUser().username);
+        }
         restRepo.getRestID().then(x => setRestID(x.data[0].id));
         setRestID(restID);
         console.log(restID);

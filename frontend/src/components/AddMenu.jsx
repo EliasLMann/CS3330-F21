@@ -22,16 +22,28 @@ export const AddMenu = props => {
     }, []);
 
 
-    const addItem = () => {
+    const addAndClose = () => {
         let itemInfo = [restID, itemName, price, itemLink, mealType, 0, 0, featured, photo, description];
-        //menuRepo.addItem(itemInfo);
+        menuRepo.addMenuItem(itemInfo);
     }
 
+    const addAndContinue = () => {
+        let itemInfo = [restID, itemName, price, itemLink, mealType, 0, 0, featured, photo, description];
+        menuRepo.addMenuItem(itemInfo);
+        setItemName("");
+        setPrice("");
+        setItemLink("");
+        setMealType("");
+        setDescription("");
+        setFeatured(0);
+        let inputs = document.getElementById('featuredCheck');
+        inputs.checked = false;
+    }
     return <>
         <br />
         <br />
         <div className="container d-flex justify-content-center">
-            <h1>Add or Edit your menu!</h1>
+            <h1>Add to your menu!</h1>
         </div>
 
         <div className="card mx-auto">
@@ -53,6 +65,7 @@ export const AddMenu = props => {
                             id="price"
                             name="price"
                             type="text"
+                            value={price}
                             onChange={(e) => setPrice(e.target.value)}></input>
                     </div>
                     <div className="col-md-7">
@@ -82,7 +95,7 @@ export const AddMenu = props => {
                             <label className="form-check-label" htmlFor="flexCheckDefault">
                                 Featured Item
                             </label>
-                            <input className="form-check-input" type="checkbox" value='1' id="flexCheckDefault" onChange={(e) => setFeatured(e.target.value)} />
+                            <input className="form-check-input" type="checkbox" value='1' id="featuredCheck" onChange={(e) => setFeatured(e.target.value)} />
                         </div>
                     </div>
 
@@ -93,16 +106,18 @@ export const AddMenu = props => {
 
                 <br />
 
+                <div className="mx-auto d-flex justify-content-center row">
+                    <Link className="btn btn-primary mx-auto col-md-5" to='/addMenu' onClick={addAndContinue}>Save Item</Link>
+                    <br />
+                    <Link className="btn btn-danger mx-auto col-md-5" to='/'>Exit</Link>
+                </div>
+
 
 
             </form>
         </div>
 
-        <div className="mx-auto d-flex justify-content-center">
-            <Link className="btn" to='/addMenu' onClick={addItem}>Save Item and Add Another</Link>
-            <br />
-            <Link className="btn" to='/' onClick={addItem}>Save Item and Finish</Link>
-        </div>
+
 
 
     </>
