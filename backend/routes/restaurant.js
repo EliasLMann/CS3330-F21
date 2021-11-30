@@ -133,7 +133,7 @@ router.get("/restaurants/byCuisineType", (req, res) => {
   });
 });
 
-//GET /restaurants/{mealType}
+//GET /restaurants/byMealType{mealType}
 //gets restaurants by mealType served
 router.get("/restaurants/byMealType", (req, res) => {
   // obtain a connection from our pool of connections
@@ -485,6 +485,76 @@ router.get("/restaurant/socialMediaNames", (req, res) => {
   });
 });
 
+//GET /resatuant/socialMediaName/byID{restaurantID}
+//GET all restaurant socialMediaName by ID
+router.get("/restaurant/socialMediaName/byID", (req, res) => {
+  // obtain a connection from our pool of connections
+  pool.getConnection(function (err, connection) {
+    if (err) {
+      // if there is an issue obtaining a connection, release the connection instance and log the error
+      logger.error("Problem obtaining MySQL connection", err);
+      res.status(400).send("Problem obtaining MySQL connection");
+    } else {
+      // if there is no issue obtaining a connection, execute query and release connection
+      var restaurantID = req.param("restaurantID");
+      connection.query(
+        "SELECT socialMediaName FROM Restaurant WHERE restaurantID ='" +
+          restaurantID +
+          "'",
+        function (err, rows, fields) {
+          connection.release();
+          if (err) {
+            logger.error("Error while fetching values: \n", err);
+            res.status(400).json({
+              data: [],
+              error: "Error obtaining values",
+            });
+          } else {
+            res.status(200).json({
+              data: rows,
+            });
+          }
+        }
+      );
+    }
+  });
+});
+
+//GET /resatuant/socialMediaURL/byID{restaurantID}
+//GET all restaurant socialMediaURL by ID
+router.get("/restaurant/socialMediaURL/byID", (req, res) => {
+  // obtain a connection from our pool of connections
+  pool.getConnection(function (err, connection) {
+    if (err) {
+      // if there is an issue obtaining a connection, release the connection instance and log the error
+      logger.error("Problem obtaining MySQL connection", err);
+      res.status(400).send("Problem obtaining MySQL connection");
+    } else {
+      // if there is no issue obtaining a connection, execute query and release connection
+      var restaurantID = req.param("restaurantID");
+      connection.query(
+        "SELECT socialMediaURL FROM Restaurant WHERE restaurantID ='" +
+          restaurantID +
+          "'",
+        function (err, rows, fields) {
+          connection.release();
+          if (err) {
+            logger.error("Error while fetching values: \n", err);
+            res.status(400).json({
+              data: [],
+              error: "Error obtaining values",
+            });
+          } else {
+            res.status(200).json({
+              data: rows,
+            });
+          }
+        }
+      );
+    }
+  });
+});
+
 //=============================================== POST =======================================
 
 // POST Add restaurant
@@ -571,6 +641,152 @@ router.put("/updateSponsored", (req, res) => {
             .send(`Updated Restaurant ${req.param("restaurantID")}'s value!`);
         }
       });
+    }
+  });
+});
+
+//PUT social MediaURL of restaurant
+//Changes socialMediaURL of given restaurant
+router.put("/restaurant/changeSocialURL", (req, res) => {
+  console.log(req.body.product);
+  // obtain a connection from our pool of connections
+  pool.getConnection(function (err, connection) {
+    if (err) {
+      // if there is an issue obtaining a connection, release the connection instance and log the error
+      logger.error("Problem obtaining MySQL connection", err);
+      res.status(400).send("Problem obtaining MySQL connection");
+    } else {
+      // if there is no issue obtaining a connection, execute query and release connection
+      let newURL = req.param("newURL");
+      let restaurantID = req.param("restaurantID");
+      let sql =
+        "UPDATE Restaurant SET socialMediaURL = ? WHERE restaurantID = ?";
+      connection.query(
+        sql,
+        [newURL, restaurantID],
+        function (err, rows, fields) {
+          connection.release();
+          if (err) {
+            // if there is an error with the query, log the error
+            logger.error("Problem updating Restaurant table: \n", err);
+            res.status(400).send("Problem updating table");
+          } else {
+            res
+              .status(200)
+              .send(
+                `Updated Restaurant ${req.param(
+                  "restaurantID"
+                )}'s socialMediaURL!`
+              );
+          }
+        }
+      );
+    }
+  });
+});
+
+//PUT social MediaURL of restaurant
+//Changes socialMediaURL of given restaurant
+router.put("/restaurant/changeSocialName", (req, res) => {
+  console.log(req.body.product);
+  // obtain a connection from our pool of connections
+  pool.getConnection(function (err, connection) {
+    if (err) {
+      // if there is an issue obtaining a connection, release the connection instance and log the error
+      logger.error("Problem obtaining MySQL connection", err);
+      res.status(400).send("Problem obtaining MySQL connection");
+    } else {
+      // if there is no issue obtaining a connection, execute query and release connection
+      let newName = req.param("newName");
+      let restaurantID = req.param("restaurantID");
+      let sql =
+        "UPDATE Restaurant SET socialMediaName = ? WHERE restaurantID = ?";
+      connection.query(
+        sql,
+        [newName, restaurantID],
+        function (err, rows, fields) {
+          connection.release();
+          if (err) {
+            // if there is an error with the query, log the error
+            logger.error("Problem updating Restaurant table: \n", err);
+            res.status(400).send("Problem updating table");
+          } else {
+            res
+              .status(200)
+              .send(
+                `Updated Restaurant ${req.param(
+                  "restaurantID"
+                )}'s socialMediaName!`
+              );
+          }
+        }
+      );
+    }
+  });
+});
+
+//PUT socialMediaURL and socialMediaName to null
+//Changes removes the social media from a restaurant's database
+router.put("/restaurant/removeSocial", (req, res) => {
+  console.log(req.body.product);
+  // obtain a connection from our pool of connections
+  pool.getConnection(function (err, connection) {
+    if (err) {
+      // if there is an issue obtaining a connection, release the connection instance and log the error
+      logger.error("Problem obtaining MySQL connection", err);
+      res.status(400).send("Problem obtaining MySQL connection");
+    } else {
+      // if there is no issue obtaining a connection, execute query and release connection
+      let restaurantID = req.param("restaurantID");
+      let sql =
+        "UPDATE Restaurant SET socialMediaName = null, socialMediaURL = null WHERE restaurantID = ?";
+      connection.query(sql, [restaurantID], function (err, rows, fields) {
+        connection.release();
+        if (err) {
+          // if there is an error with the query, log the error
+          logger.error("Problem updating Restaurant table: \n", err);
+          res.status(400).send("Problem updating table");
+        } else {
+          res
+            .status(200)
+            .send(`Removed Restaurant ${req.param("restaurantID")}'s socials!`);
+        }
+      });
+    }
+  });
+});
+
+//===================================== DELETE ==============================
+
+// DELETE /restaurant/delete{restaurantID}
+// deleting a restaurant from the database by restaurantID
+router.delete("/restaurant/delete", (req, res) => {
+  console.log(req.body.product);
+  // obtain a connection from our pool of connections
+  pool.getConnection(function (err, connection) {
+    if (err) {
+      // if there is an issue obtaining a connection, release the connection instance and log the error
+      logger.error("Problem obtaining MySQL connection", err);
+      res.status(400).send("Problem obtaining MySQL connection");
+    } else {
+      // if there is no issue obtaining a connection, execute query and release connection
+      var restaurantID = req.param("restaurantID");
+      connection.query(
+        "DELETE FROM `PopStop`.`Restaurant` WHERE restaurantID = ?",
+        restaurantID,
+        function (err, rows, fields) {
+          connection.release();
+          if (err) {
+            // if there is an error with the query, log the error
+            logger.error("Problem deleting from MenuItem table: \n", err);
+            res.status(400).send("Problem deleting from table");
+          } else {
+            res
+              .status(200)
+              .send(`removed restaurant ${restaurantID} from the table`);
+          }
+        }
+      );
     }
   });
 });
