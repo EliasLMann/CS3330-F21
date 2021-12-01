@@ -79,10 +79,10 @@ export const RestaurantDetails = () => {
                                             <th className="fw-normal">${x.price}</th>
                                             <th className="fw-normal">{x.mealType}</th>
                                             <th className="fw-normal">
-                                                <button type="submit" className="btn btn-success mx-auto" onClick={() => itemRepo.incrementLikes(x.itemID)} > Upvote </button>
+                                                <button type="submit" className="btn btn-outline-success mx-auto" onClick={() => itemRepo.incrementLikes(x.itemID)} > Upvote </button>
                                             </th>
                                             <th className="fw-normal">
-                                                <button className="btn btn-danger mx-auto" onClick={() => itemRepo.incrementDislikes(x.itemID)}> Downvote </button>
+                                                <button className="btn btn-outline-danger mx-auto" onClick={() => itemRepo.incrementDislikes(x.itemID)}> Downvote </button>
                                             </th>
                                         </tr>)
                                 }
@@ -122,8 +122,9 @@ export const RestaurantDetails = () => {
                                 onChange={(e) => setReviewBody(e.target.value)}
                                 className="form-control" />
                         </div>
-
-                        <button type="button" className="btn btn-primary col-1 mx-3" onClick={() => this.onAddClick()}>Submit</button>
+                        <div class="d-grid gap-2">
+                        <button type="button" className="btn btn-primary mx-3" onClick={() => this.onAddClick()}>Submit</button>
+                        </div>
                     </div>
                 </form>
             </div>

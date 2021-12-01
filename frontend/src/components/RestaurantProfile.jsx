@@ -103,10 +103,10 @@ const RestaurantView = () => {
                                                 <button className="btn btn-danger mx-auto"> {x.dislikes} </button>
                                             </th>
                                             <th className="fw-normal">
-                                                <Link className="btn btn-primary mx-auto" to={`updateMenu/${x.itemID}`}>Edit Item</Link>
+                                                <Link className="btn btn-outline-primary mx-auto" to={`updateMenu/${x.itemID}`}>Edit Item</Link>
                                             </th>
                                             <th className="fw-normal">
-                                                <button className="btn btn-danger mx-auto" onClick={() => itemRepo.deleteItem(x.itemID)}> Delete </button>
+                                                <button className="btn btn-outline-danger mx-auto" onClick={() => itemRepo.deleteItem(x.itemID)}> Delete </button>
                                             </th>
                                         </tr>)
                                 }
