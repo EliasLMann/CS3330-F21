@@ -11,6 +11,8 @@
     position: absolute;
     width: 100%;
     height: 100%;
+    background-attachment: "fixed";
+    filter: 'grayscale(40%)';
 }
 
 .login_text{
@@ -24,4 +26,8 @@
     border-color: rgb(197, 102, 126);
     background-color: rgba(236, 195, 205, 0.959);
 } 
+
+nav{
+    background-color:rgb(173, 229, 233);
+}
 
