@@ -7,7 +7,7 @@ import { useState, useEffect } from "react";
 import RestaurantList from "./RestaurantList";
 import { RestaurantRepository } from "../api/restaurantRepository";
 
-import Slider, { Range } from 'rc-slider';
+import { Range } from 'rc-slider';
 import 'rc-slider/assets/index.css';
 
 export const SearchPage = props => {

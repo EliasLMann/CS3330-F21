@@ -13,10 +13,10 @@ const RestaurantList = (props) => {
     }
     else {
         return <>
-            <div className="container">
+            <div className="container card mt-3">
                 <div className="ul row justify-content-center">
                     <div className="d-flex justify-content-center">
-                        <h1>Featured Restaurants</h1>
+                        <h1 className="cardHeader">Featured Restaurants</h1>
                     </div>
                     {
                         props.restaurants.map((x, i) => <div className="card prod col-4 mx-auto" key={i}>
