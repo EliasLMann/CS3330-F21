@@ -112,5 +112,16 @@ export class RestaurantRepository {
     })
   }
 
+  getRestaurantByCuisineType(query){
+    return new Promise((resolve, reject) => {
+      axios.get(`${this.url}/restaurants/byCuisineType`, query)
+        .then(x => resolve(x.data))
+        .catch(x => {
+          alert(x);
+          reject(x);
+        })
+    })
+  }
+
 
 }
