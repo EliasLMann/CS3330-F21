@@ -21,6 +21,7 @@ import { RestaurantDetails } from './components/RestaurantDetails';
 import Register from './components/Register';
 import OwnerInfo from './components/OwnerInfo';
 import { UpdateMenu } from './components/UpdateMenu';
+import { SearchPage } from './components/SearchPage';
 
 // React functional component
 function App() {
