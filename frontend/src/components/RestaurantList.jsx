@@ -2,15 +2,9 @@ import React, { setState, useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { RestaurantRepository } from '../api/restaurantRepository';
 
-const RestaurantList = () => {
-    const restRepo = new RestaurantRepository();
-    const [restaurants, setRestaurants] = useState(undefined);
-
-    useEffect(() => {
-        restRepo.getRestaurants().then(x => setRestaurants(x));
-    }, [])
-
-    if (!restaurants) {
+const RestaurantList = (props) => {
+    
+    if (!props.restaurants) {
         return <>
             <div>
                 Restaurants Loading...
@@ -25,7 +19,7 @@ const RestaurantList = () => {
                         <h1>Featured Restaurants</h1>
                     </div>
                     {
-                        restaurants.data.map((x, i) => <div className="card prod col-4 mx-auto" key={i}>
+                        props.restaurants.map((x, i) => <div className="card prod col-4 mx-auto" key={i}>
                             <div className="card-body mx-auto">
                                 <div className="mx-4 d-flex justify-content-center">
                                     <h3>{x.restaurantName}</h3>
