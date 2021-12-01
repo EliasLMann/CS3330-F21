@@ -18,7 +18,7 @@ const Welcome = () => {
         <div className="d-flex flex-row justify-content-center">
             <Card id="login_box" className="p-2 mx-l" style={{ width: '30rem' }}>
                 <Card.Body>
-                    <Card.Title className="text-center login_text">Login or register to find you next meal!</Card.Title>
+                    <Card.Title className="text-center login_text">Login or register to find you next meal!!!!</Card.Title>
                     {/* <Card.Text class="text-center text-muted">
                             <h5>If you own/represent a restaurant, follow the links below </h5>
                         </Card.Text> */}
