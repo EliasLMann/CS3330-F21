@@ -60,7 +60,7 @@ function App() {
         <Route component={UpdateMenu} path="/updateMenu/:itemID" />
         <Route component={AddMenu} path="/addMenu" />
         <Route component={OwnerInfo} path="/ownerInput" />
-        <Route component={Landing} exact path="/" />
+        <Route component={Landing} path="/" exact />
         <Route component={Register} path="/reg" />
       </Router>
     </UserContext.Provider>

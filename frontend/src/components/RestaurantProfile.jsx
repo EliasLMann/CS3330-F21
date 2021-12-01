@@ -7,14 +7,26 @@ import { Link } from 'react-router-dom';
 import { MenuItemRepository } from '../api/menuItemRepository';
 
 
+import { ReviewList } from './ReviewList';
 
 const CustomerView = () => {
+    const userRepo = new UserRepository();
+    const [userContext, setUserContext] = useContext(UserContext);
+
+    useEffect(() => {
+        const user = userContext;
+        let userID = userRepo.currentUser().userID;
+        setUserContext(userRepo.currentUser());
+
+        
+        console.log("userID: " + userContext.userId)
+    }, []);
+
     return (
         <>
             <Header />
-            <div className="container d-flex justify-content-center">
-                <h1>My Reviews</h1>
-            </div>
+            <ReviewList/>
+
         </>
     )
 }
@@ -106,6 +118,7 @@ const RestaurantView = () => {
                         <br/>
                     </div>
                 </div>
+                <ReviewList/>
             </>
         )
     }
