@@ -1,9 +1,9 @@
 import axios from 'axios';
 
-const url = "http://localhost:8000"
+const url = "http://ec2-3-15-138-60.us-east-2.compute.amazonaws.com:8000"
 export class UserRepository {
 
-  url = "http://localhost:8000"
+  url = "http://ec2-3-15-138-60.us-east-2.compute.amazonaws.com:8000"
 
   getRestaurants(){
     return new Promise((resolve, reject) => {
