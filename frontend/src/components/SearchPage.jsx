@@ -67,7 +67,7 @@ export const SearchPage = props => {
                     </Dropdown.Menu>
                 </Dropdown>
 
-                <input type="text" className="form-control align-middle" placeholder="Find your next destination..."
+                <input type="text" className="form-control align-middle" placeholder="Search Term..."
                         onChange={(e) => setQuery(e.target.value)}/>
 
                 <button className="btn btn-secondary h-25"

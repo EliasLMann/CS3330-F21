@@ -10,7 +10,7 @@ export const AddMenu = () => {
     const menuRepo = new MenuItemRepository();
     const [restID, setRestID] = useState(undefined);
     const [itemName, setItemName] = useState("");
-    const [price, setPrice] = useState(undefined);
+    const [price, setPrice] = useState("");
     const [itemLink, setItemLink] = useState("");
     const [mealType, setMealType] = useState("");
     const [featured, setFeatured] = useState(0);
@@ -18,10 +18,15 @@ export const AddMenu = () => {
     const [description, setDescription] = useState("")
 
     useEffect(() => {
+        updateUser();
+    }, []);
+
+    let updateUser = () => {
         userRepo.updateSession(userRepo.currentUser().username);
+        console.log("");
         setRestID(userRepo.currentUser().restaurantID);
         console.log(restID);
-    }, []);
+    }
 
     const addAndContinue = () => {
         let itemInfo = [restID, itemName, price, itemLink, mealType, 0, 0, featured, photo, description];
@@ -106,7 +111,7 @@ export const AddMenu = () => {
                 <div className="mx-auto d-flex justify-content-center row">
                     <Link className="btn btn-primary mx-auto col-md-5" to='/addMenu' onClick={addAndContinue}>Save Item</Link>
                     <br />
-                    <Link className="btn btn-danger mx-auto col-md-5" to='/'>Exit</Link>
+                    <Link className="btn btn-danger mx-auto col-md-5" to='/profile'>Exit</Link>
                 </div>
 
 

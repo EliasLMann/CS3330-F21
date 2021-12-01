@@ -80,7 +80,7 @@ router.get("/restaurants/byLocation", (req, res) => {
       // if there is no issue obtaining a connection, execute query and release connection
       var location = req.query["location"];
       connection.query(
-        "SELECT * FROM Restaurant WHERE location ='" + location + "'",
+        "SELECT * FROM Restaurant WHERE location LIKE'%" + location + "%'",
         function (err, rows, fields) {
           connection.release();
           if (err) {
@@ -113,7 +113,7 @@ router.get("/restaurants/byCuisineType", (req, res) => {
       // if there is no issue obtaining a connection, execute query and release connection
       var cuisineType = req.query["cuisineType"];
       connection.query(
-        "SELECT * FROM Restaurant WHERE cuisineType ='" + cuisineType + "'",
+        "SELECT * FROM Restaurant WHERE cuisineType LIKE '%" + cuisineType + "%'",
         function (err, rows, fields) {
           connection.release();
           if (err) {
@@ -146,8 +146,7 @@ router.get("/restaurants/byMealType", (req, res) => {
       // if there is no issue obtaining a connection, execute query and release connection
       var mealType = req.query["mealType"];
       connection.query(
-        "SELECT r.* FROM Restaurant r JOIN MenuItem m ON r.restaurantID = m.restaurantID WHERE mealType = (?)",
-        mealType,
+        "SELECT r.* FROM Restaurant r JOIN MenuItem m ON r.restaurantID = m.restaurantID WHERE mealType LIKE '%" + mealType + "%'",
         function (err, rows, fields) {
           connection.release();
           if (err) {

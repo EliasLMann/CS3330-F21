@@ -52,7 +52,7 @@ export const UserReviewList = props => {
     console.log("Review1" + reviews[0]),
     console.log("reviews[1]" + reviews[1])
 }
-    <h1 className="ms-5">{userContext.username}</h1> 
+    {/* <h1 className="ms-5">{userContext.username}</h1>  */}
     <div className="d-flex flex-row justify-content-center">
         
         <Card className="p-2 mx-l" style={{ width: '75%' }}>
