@@ -112,10 +112,53 @@ export class RestaurantRepository {
     })
   }
 
-  getRestaurantByCuisineType(query){
-    console.log(query);
+  getRestaurantByLocation(query){
     return new Promise((resolve, reject) => {
-      axios.get(`${this.url}/restaurants/byCuisineType`, {cuisineType: query})
+      axios.get(`${this.url}/restaurants/byLocation`, {params:{location: query}})
+        .then(x => resolve(x.data))
+        .catch(x => {
+          alert(x);
+          reject(x);
+        })
+    })
+  }
+
+  getRestaurantByAvgPrice(lowPrice, highPrice){
+    return new Promise((resolve, reject) => {
+      axios.get(`${this.url}/restaurants/avgPrice`, {params:{lowPrice: lowPrice, highPrice: highPrice}})
+        .then(x => resolve(x.data))
+        .catch(x => {
+          alert(x);
+          reject(x);
+        })
+    })
+  }
+
+  getRestaurantByAvgRating(lowRating, highRating){
+    return new Promise((resolve, reject) => {
+      axios.get(`${this.url}/restaurants/avgRating`, {params:{lowRating: lowRating, highRating: highRating}})
+        .then(x => resolve(x.data))
+        .catch(x => {
+          alert(x);
+          reject(x);
+        })
+    })
+  }
+
+  getRestaurantByCuisineType(query){
+    return new Promise((resolve, reject) => {
+      axios.get(`${this.url}/restaurants/byCuisineType`, {params:{cuisineType: query}})
+        .then(x => resolve(x.data))
+        .catch(x => {
+          alert(x);
+          reject(x);
+        })
+    })
+  }
+
+  getRestaurantByMealType(query){
+    return new Promise((resolve, reject) => {
+      axios.get(`${this.url}/restaurants/byMealType`, {params:{mealType: query}})
         .then(x => resolve(x.data))
         .catch(x => {
           alert(x);
