@@ -10,8 +10,6 @@ import {
 } from 'react-router-dom';
 
 import Login, { LoginPage } from './components/LoginPage';
-import { RegisterPage } from './components/RegisterPage';
-import { SearchPage } from './components/SearchPage';
 import { Profile } from './components/RestaurantProfile';
 import { Header } from './components/Header';
 import { CustomerAccount } from './components/CustomerAccount';
@@ -22,6 +20,8 @@ import { UserRepository } from './api/userRespository';
 import { RestaurantDetails } from './components/RestaurantDetails';
 import Register from './components/Register';
 import OwnerInfo from './components/OwnerInfo';
+import { UpdateMenu } from './components/UpdateMenu';
+import { SearchPage } from './components/SearchPage';
 
 // React functional component
 function App() {
@@ -58,11 +58,11 @@ function App() {
         <Route component={Register} path="/register" />
         <Route component={Profile} path="/profile" />
         <Route component={RestaurantDetails} path="/restaurants/:restaurantID" />
+        <Route component={UpdateMenu} path="/updateMenu/:itemID" />
         <Route component={AddMenu} path="/addMenu" />
         <Route component={OwnerInfo} path="/ownerInput" />
+        <Route component={Landing} path="/" exact />
         <Route component={SearchPage} path="/search" />
-        <Route component={Landing} exact path="/" />
-        <Route component={Register} path="/reg" />
       </Router>
     </UserContext.Provider>
 
