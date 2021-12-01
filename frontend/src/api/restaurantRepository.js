@@ -60,6 +60,17 @@ export class RestaurantRepository {
     });
   }
 
+  getRestNameByID() {
+    return new Promise((resolve, reject) => {
+      axios.get(`${this.url}/restaurantName`)
+        .then(x => resolve(x.data))
+        .catch(x => {
+          alert(x);
+          reject(x);
+        })
+    });
+  }
+
   async addRestaurant(restInfo) {
     const errors = {success : false};
 
@@ -100,6 +111,18 @@ export class RestaurantRepository {
         })
     })
   }
+
+    //GET userReviews by ID
+    getRestaurantReviews(restaurantID){
+      return new Promise((resolve, reject) => {
+        axios.get(`${this.url}/restaurantReviews`, { params: { restaurantID: restaurantID } })
+            .then(x => resolve(x.data))
+            .catch(x => {
+                alert(x);
+                reject(x);
+            })
+      });
+    }
 
 
 }

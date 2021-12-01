@@ -1577,7 +1577,7 @@ module.exports = function routes(app, logger) {
 
     //GET /restaurantReviews/{restaurantID}
   //gets reviews by restaurantID
-  app.get("/Restaurantreviews", (req, res) => {
+  app.get("/restaurantReviews", (req, res) => {
     // obtain a connection from our pool of connections
     pool.getConnection(function (err, connection) {
       if (err) {
@@ -1588,7 +1588,7 @@ module.exports = function routes(app, logger) {
         // if there is no issue obtaining a connection, execute query and release connection
         var restaurantID = req.query["restaurantID"];
         connection.query(
-          "SELECT * FROM Review WHERE restaurantID = (?)",
+          "SELECT * FROM Review WHERE restaurantID = (?) Order by isSponsored DESC",
           restaurantID,
           function (err, rows, fields) {
             connection.release();
@@ -1622,7 +1622,7 @@ module.exports = function routes(app, logger) {
         // if there is no issue obtaining a connection, execute query and release connection
         var userID = req.query["userID"];
         connection.query(
-          "SELECT * FROM Review WHERE userID = (?)",
+          "SELECT * FROM Review WHERE userID = (?) Order by isSponsored DESC",
           userID, 
           function (err, rows, fields) {
             connection.release();
@@ -1642,6 +1642,8 @@ module.exports = function routes(app, logger) {
       }
     });
   });
+
+  
 
 
   // GET /user/{userName}
@@ -1676,6 +1678,7 @@ app.get("/user", (req, res) => {
     }
   });
 });
+
 
 //GET /featItems/{restaurantID}
   //gets featureditems by restaurantID

@@ -12,7 +12,7 @@ import {
 import Login, { LoginPage } from './components/LoginPage';
 import { RegisterPage } from './components/RegisterPage';
 import { SearchPage } from './components/SearchPage';
-import { Profile } from './components/RestaurantProfile';
+import { Profile  } from './components/RestaurantProfile';
 import { Header } from './components/Header';
 import { CustomerAccount } from './components/CustomerAccount';
 import { AddMenu } from './components/AddMenu';
@@ -60,7 +60,7 @@ function App() {
         <Route component={RestaurantDetails} path="/restaurants/:restaurantID" />
         <Route component={AddMenu} path="/addMenu" />
         <Route component={OwnerInfo} path="/ownerInput" />
-        <Route component={Landing} exact path="/" />
+        <Route component={Landing} path="/" exact />
         <Route component={Register} path="/reg" />
       </Router>
     </UserContext.Provider>
