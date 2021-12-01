@@ -9,15 +9,16 @@ const LoggedInHeader = () => {
     const userRepo = new UserRepository(); 
     return (
         <Navbar className="d-flex flex-row p-2">
+            <span>&nbsp;</span>
             <a className="navbar-brand" href="/">PopStop</a>
             <Nav className="">
                 <div className="d-flex flex-row">
                     <Nav.Link href="/"
-                        className="p-2">Find Restaurants</Nav.Link>
+                        className="p-2 btn btn-outline-secondary">Find Restaurants</Nav.Link><span>&nbsp;</span>
                     <Nav.Link href="/profile"
-                        className="p-2">My Profile</Nav.Link>
+                        className="p-2 btn btn-outline-secondary">My Profile</Nav.Link> <span>&nbsp;</span>
                     <Nav.Link href="/"
-                        className="text-end" onClick={() => userRepo.logout()}>Logout</Nav.Link>
+                        className="text-end btn btn-outline-secondary" onClick={() => userRepo.logout()}>Logout</Nav.Link>
                 </div>
             </Nav>
         </Navbar>
