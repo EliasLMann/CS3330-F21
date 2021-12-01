@@ -4,42 +4,42 @@ import { MenuItemRepository } from "../api/menuItemRepository";
 import { UserRepository } from "../api/userRespository";
 import { menuItem } from "../models/menuItem";
 import { Header } from "./Header";
+import { useParams } from 'react-router';
 
-export const AddMenu = () => {
+export const UpdateMenu = () => {
     const userRepo = new UserRepository();
     const menuRepo = new MenuItemRepository();
     const [restID, setRestID] = useState(undefined);
     const [itemName, setItemName] = useState("");
-    const [price, setPrice] = useState("");
+    const [price, setPrice] = useState(undefined);
     const [itemLink, setItemLink] = useState("");
     const [mealType, setMealType] = useState("");
     const [featured, setFeatured] = useState(0);
     const [photo, setPhoto] = useState("");
-    const [description, setDescription] = useState("")
+    const [description, setDescription] = useState("");
+    const [oldItem, setOldItem] = useState(undefined);
+    const { itemID } = useParams();
 
     useEffect(() => {
-        updateUser();
+        console.log(itemID);
+        menuRepo.getItem(itemID).then(x => setOldItem(x.data[0]));
+        menuRepo.getItem(itemID).then(x => setItemName(x.data[0].itemName));
+        menuRepo.getItem(itemID).then(x => setPrice(x.data[0].price));
+        menuRepo.getItem(itemID).then(x => setMealType(x.data[0].mealType));
+        menuRepo.getItem(itemID).then(x => setDescription(x.data[0].description));
+        setFeatured(0);
+        
     }, []);
 
-    let updateUser = () => {
-        userRepo.updateSession(userRepo.currentUser().username);
-        console.log("");
-        setRestID(userRepo.currentUser().restaurantID);
-        console.log(restID);
+    const save = () => {
+        let itemInfo = [itemID, itemName, price, itemLink, mealType, oldItem.likes, oldItem.dislikes, featured, photo, description];
+        menuRepo.updateItem(itemInfo);
     }
 
-    const addAndContinue = () => {
-        let itemInfo = [restID, itemName, price, itemLink, mealType, 0, 0, featured, photo, description];
-        menuRepo.addMenuItem(itemInfo);
-        setItemName("");
-        setPrice("");
-        setItemLink("");
-        setMealType("");
-        setDescription("");
-        setFeatured(0);
-        let inputs = document.getElementById('featuredCheck');
-        inputs.checked = false;
+    if (!oldItem) {
+        return (<div>Loading</div>)
     }
+    else {
     return <>
         <Header/>
         <br />
@@ -58,7 +58,7 @@ export const AddMenu = () => {
                             id="name"
                             name="name"
                             type="text"
-                            value={itemName}
+                            placeholder={oldItem.itemName}
                             onChange={(e) => setItemName(e.target.value)}></input>
                     </div>
                     <div className="col-md-7">
@@ -67,7 +67,7 @@ export const AddMenu = () => {
                             id="price"
                             name="price"
                             type="text"
-                            value={price}
+                            placeholder={oldItem.price}
                             onChange={(e) => setPrice(e.target.value)}></input>
                     </div>
                     <div className="col-md-7">
@@ -76,7 +76,7 @@ export const AddMenu = () => {
                             id="link"
                             name="link"
                             type="text"
-                            value={itemLink}
+                            placeholder={oldItem.itemLink}
                             onChange={(e) => setItemLink(e.target.value)}></input>
                     </div>
                     <div className="col-md-7">
@@ -85,12 +85,12 @@ export const AddMenu = () => {
                             id="mealType"
                             name="mealType"
                             type="text"
-                            value={mealType}
+                            placeholder={oldItem.mealType}
                             onChange={(e) => setMealType(e.target.value)}></input>
                     </div>
                     <div className="col-md-7">
                         <label htmlFor="description">Description:</label>
-                        <textarea value={description} id="description" name="description" onChange={(e) => setDescription(e.target.value)}></textarea>
+                        <textarea placeholder={oldItem.description} id="description" name="description" onChange={(e) => setDescription(e.target.value)}></textarea>
                     </div>
                     <div className="col-md-7">
                         <div className="form-check">
@@ -109,9 +109,8 @@ export const AddMenu = () => {
                 <br />
 
                 <div className="mx-auto d-flex justify-content-center row">
-                    <Link className="btn btn-primary mx-auto col-md-5" to='/addMenu' onClick={addAndContinue}>Save Item</Link>
+                    <Link className="btn btn-primary mx-auto col-md-5" to='/profile' onClick={save}>Save Item</Link>
                     <br />
-                    <Link className="btn btn-danger mx-auto col-md-5" to='/profile'>Exit</Link>
                 </div>
 
 
@@ -123,5 +122,6 @@ export const AddMenu = () => {
 
 
     </>
+    }
 
 }

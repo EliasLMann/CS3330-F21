@@ -72,7 +72,7 @@ router.get("/topmenuitem", (req, res) => {
 
 //GET /menuItems{restaurantID}
 //gets menuItems by restaurantID
-router.get("/menuItem", (req, res) => {
+router.get("/menuItems", (req, res) => {
   // obtain a connection from our pool of connections
   pool.getConnection(function (err, connection) {
     if (err) {
@@ -166,20 +166,20 @@ router.put("/updateitem", (req, res) => {
       res.status(400).send("Problem obtaining MySQL connection");
     } else {
       // if there is no issue obtaining a connection, execute query and release connection
-      var restaurantID = req.param("restaurantID");
-      var itemID = req.param("itemID");
-      var price = req.param("price");
-      var itemLink = req.param("itemLink");
-      var mealType = req.param("mealType");
-      var likes = req.param("likes");
-      var dislikes = req.param("dislikes");
-      var featured = req.param("featured");
-      var photo = req.param("photo");
-      var description = req.param("description");
+      var itemID = req.query["itemID"];
+      var itemName = req.query["itemName"];
+      var price = req.query["price"];
+      var itemLink = req.query["itemLink"];
+      var mealType = req.query["mealType"];
+      var likes = req.query["likes"];
+      var dislikes = req.query["dislikes"];
+      var featured = req.query["featured"];
+      var photo = req.query["photo"];
+      var description = req.query["description"];
       connection.query(
-        "UPDATE `PopStop`.`MenuItem` SET restaurantID = ?, price = ?, itemLink = ?, mealType = ?, likes = ?, dislikes = ?, featured = ?, photo = ?, description = ? WHERE itemID = ?",
+        "UPDATE `PopStop`.`MenuItem` SET itemName = ?, price = ?, itemLink = ?, mealType = ?, likes = ?, dislikes = ?, featured = ?, photo = ?, description = ? WHERE itemID = ?",
         [
-          restaurantID,
+          itemName,
           price,
           itemLink,
           mealType,
@@ -673,5 +673,39 @@ router.get("/menuitem", (req, res) => {
     }
   });
 });
+
+//GET /featItems/{restaurantID}
+  //gets featureditems by restaurantID
+  router.get("/featItems", (req, res) => {
+    // obtain a connection from our pool of connections
+    pool.getConnection(function (err, connection) {
+      if (err) {
+        // if there is an issue obtaining a connection, release the connection instance and log the error
+        logger.error("Problem obtaining MySQL connection", err);
+        res.status(400).send("Problem obtaining MySQL connection");
+      } else {
+        // if there is no issue obtaining a connection, execute query and release connection
+        var restaurantID = req.query["restaurantID"];
+        connection.query(
+          "SELECT * FROM MenuItem WHERE restaurantID = (?) AND featured = 1",
+          restaurantID,
+          function (err, rows, fields) {
+            connection.release();
+            if (err) {
+              logger.error("Error while fetching values: \n", err);
+              res.status(400).json({
+                data: [],
+                error: "Error obtaining values",
+              });
+            } else {
+              res.status(200).json({
+                data: rows,
+              });
+            }
+          }
+        );
+      }
+    });
+  });
 
 module.exports = router;

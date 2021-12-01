@@ -7,14 +7,26 @@ import { Link } from 'react-router-dom';
 import { MenuItemRepository } from '../api/menuItemRepository';
 
 
+import { ReviewList } from './ReviewList';
 
 const CustomerView = () => {
+    const userRepo = new UserRepository();
+    const [userContext, setUserContext] = useContext(UserContext);
+
+    useEffect(() => {
+        const user = userContext;
+        let userID = userRepo.currentUser().userID;
+        setUserContext(userRepo.currentUser());
+
+        
+        console.log("userID: " + userContext.userId)
+    }, []);
+
     return (
         <>
             <Header />
-            <div className="container d-flex justify-content-center">
-                <h1>My Reviews</h1>
-            </div>
+            {/* <ReviewList/> */}
+
         </>
     )
 }
@@ -56,19 +68,19 @@ const RestaurantView = () => {
                         <p className="p-2">Cuisine Type: {restaurant.cuisineType}</p>
                     </div>
 
-                    
 
-                    <div className="card">
-                        
-                        <div className="row">
-                            <h2 className="col-5">My Menu</h2>
-                            <Link to="/addMenu" className="col-2 btn btn-primary">Add More Items</Link>
+
+                    <div className="card mx-auto">
+
+                        <div className="d-flex justify-content-center">
+                            <h2>My Menu</h2>
                         </div>
                         <table className="table table-striped">
                             <thead>
                                 <tr>
                                     <th>Item</th>
                                     <th>Price</th>
+                                    <th>Description</th>
                                     <th>Meal Type</th>
                                     <th>Likes</th>
                                     <th>Dislikes</th>
@@ -82,6 +94,7 @@ const RestaurantView = () => {
                                         <tr key={i}>
                                             <th className="fw-normal">{x.itemName}</th>
                                             <th className="fw-normal">${x.price}</th>
+                                            <th className="fw-normal">{x.description}</th>
                                             <th className="fw-normal">{x.mealType}</th>
                                             <th className="fw-normal">
                                                 <button type="submit" className="btn btn-success mx-auto" > {x.likes} </button>
@@ -90,7 +103,7 @@ const RestaurantView = () => {
                                                 <button className="btn btn-danger mx-auto"> {x.dislikes} </button>
                                             </th>
                                             <th className="fw-normal">
-                                                <button className="btn btn-primary mx-auto"> Edit Item </button>
+                                                <Link className="btn btn-primary mx-auto" to={`updateMenu/${x.itemID}`}>Edit Item</Link>
                                             </th>
                                             <th className="fw-normal">
                                                 <button className="btn btn-danger mx-auto" onClick={() => itemRepo.deleteItem(x.itemID)}> Delete </button>
@@ -99,8 +112,13 @@ const RestaurantView = () => {
                                 }
                             </tbody>
                         </table>
+                        <div className="d-flex justify-content-center">
+                            <Link to="/addMenu" className="fw-bolder col-4 btn btn-primary mx-auto">Add More Items</Link>
+                        </div>
+                        <br/>
                     </div>
                 </div>
+                <ReviewList/>
             </>
         )
     }
