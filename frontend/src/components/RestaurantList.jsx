@@ -15,9 +15,9 @@ const RestaurantList = (props) => {
         return <>
             <div className="container card mt-3 opaque-back">
                 <div className="ul row justify-content-center transparent-back">
-                    <div className="d-flex justify-content-center">
+                    {/* <div className="d-flex justify-content-center">
                         <h1 className="cardHeader mt-3">Featured Restaurants</h1>
-                    </div>
+                    </div> */}
                     {
                         props.restaurants.map((x, i) => <div className="card prod col-4 mx-auto my-2" key={i}>
                             <div className="card-body mx-auto">
@@ -35,10 +35,10 @@ const RestaurantList = (props) => {
                                     </div>            
                                 </div>
                             </div>
-                            <div className="d-flex justify-content-center text-white">
-                                <Link className="btn btn-info details col-4 mx-auto my-auto col-9" 
+                            <div className="d-flex justify-content-center text-black">
+                                <Link className="btn btn-outline-secondary details col-4 mx-auto my-auto col-9" 
                                         to={`restaurants/${x.restaurantID}`}
-                                        style={{color: 'black', backgroundColor:"rgb(173, 229, 233)"}} >Restaurant Details</Link>
+                                        >Restaurant Details</Link>
                             </div>
                             <br/>
                         </div>)

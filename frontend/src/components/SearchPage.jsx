@@ -29,7 +29,7 @@ export const SearchPage = props => {
         if( searchFilter == "Show All"){
             restaurantRepo.getRestaurants().then(x => setRestaurants(x.data));
         }
-        if( searchFilter == "City"){
+        if( searchFilter == "Location"){
             restaurantRepo.getRestaurantByLocation(params).then(x => setRestaurants(x.data));
         } 
         if( searchFilter == "Cuisine Type"){
@@ -48,18 +48,20 @@ export const SearchPage = props => {
 
     return <>
         <Header />
+        <br/>
         <div className="card align-center w-75 mx-auto">
             <h2 className="card-header text-center">Search PopStop:</h2>
             
             <div className="input-group mx-auto p-3 w-100 align-middle">
                 <Dropdown>
-                    <Dropdown.Toggle variant="outline-secondary" id="dropdown-basic">
+                    <Dropdown.Toggle style={{backgroundColor:"rgb(173, 229, 233)"}} variant="outline-secondary" 
+                                    id="dropdown-basic">
                         {searchFilter}
                     </Dropdown.Toggle>
 
                     <Dropdown.Menu>
                         <Dropdown.Item onClick={(e) => setSearchFilter("Show All")}>Show All</Dropdown.Item>
-                        <Dropdown.Item onClick={(e) => setSearchFilter("City")}>Location</Dropdown.Item>
+                        <Dropdown.Item onClick={(e) => setSearchFilter("Location")}>Location</Dropdown.Item>
                         <Dropdown.Item onClick={(e) => setSearchFilter("Cuisine Type")}>Cuisine Type</Dropdown.Item>
                         <Dropdown.Item onClick={(e) => setSearchFilter("Meal Type")}>Meal Type</Dropdown.Item>
                         <Dropdown.Item onClick={(e) => setSearchFilter("Average Rating")}>Average Rating</Dropdown.Item>
@@ -71,13 +73,15 @@ export const SearchPage = props => {
                         onChange={(e) => setQuery(e.target.value)}/>
 
                 <button className="btn btn-secondary h-25"
-                        onClick={() => onSearch(query)}> Search</button>
+                        onClick={() => onSearch(query)}
+                        style={{color: "gray", backgroundColor:"rgb(173, 229, 233)"}}> Search</button>
             </div>
             {
                 searchFilter == "Average Price" && <div className="d-flex flex-row">
                     <span className="p-2 ml-3">Min Price: ${priceSlider[0]}</span>
                     <div className="w-50 mx-auto p-2">
-                    <Range min={0} max={100} defaultValue={[0,100]} onChange={(value) => setPriceSlider(value)}/>
+                    <Range min={0} max={100} defaultValue={[0,100]} 
+                            onChange={(value) => setPriceSlider(value)}/>
                     </div>
                     <span className="p-2 mr-3">Max Price: ${priceSlider[1]}</span>
                 </div>
@@ -86,7 +90,8 @@ export const SearchPage = props => {
                 searchFilter == "Average Rating" && <div className="d-flex flex-row">
                     <span className="p-2 ml-3">Min Rating: {ratingSlider[0]}</span>
                     <div className="w-50 mx-auto p-2">
-                    <Range min={0} max={5} defaultValue={[0,5]} onChange={(value) => setRatingSlider(value)}/>
+                    <Range min={0} max={5} defaultValue={[0,5]} 
+                            onChange={(value) => setRatingSlider(value)}/>
                     </div>
                     <span className="p-2 mr-3">Max Rating: {ratingSlider[1]}</span>
                 </div>

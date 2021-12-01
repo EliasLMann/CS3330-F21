@@ -9,5 +9,4 @@ import 'bootstrap/dist/js/bootstrap.js';
 import 'bootstrap-icons/font/bootstrap-icons.css';
 
 
-
 ReactDOM.render(<App />, document.getElementById('root'));
