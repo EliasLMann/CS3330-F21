@@ -111,7 +111,7 @@ router.get("/restaurants/byCuisineType", (req, res) => {
       res.status(400).send("Problem obtaining MySQL connection");
     } else {
       // if there is no issue obtaining a connection, execute query and release connection
-      var cuisineType = req.param("cuisineType");
+      var cuisineType = req.query["cuisineType"];
       connection.query(
         "SELECT * FROM Restaurant WHERE cuisineType ='" + cuisineType + "'",
         function (err, rows, fields) {

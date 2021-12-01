@@ -90,7 +90,7 @@ const RestaurantView = () => {
                                                 <button className="btn btn-danger mx-auto"> {x.dislikes} </button>
                                             </th>
                                             <th className="fw-normal">
-                                                <button className="btn btn-primary mx-auto"> Edit Item </button>
+                                                <Link className="btn btn-primary col-4 mx-auto my-auto col-9" to={`updateMenu/${x.itemID}`}>Edit Item</Link>
                                             </th>
                                             <th className="fw-normal">
                                                 <button className="btn btn-danger mx-auto" onClick={() => itemRepo.deleteItem(x.itemID)}> Delete </button>
