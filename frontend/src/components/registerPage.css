@@ -29,3 +29,12 @@ form > button{
 .openTimes{
     display: inline-block;
 }
+
+.transparent-back{
+    background-color: rgba(245, 245, 245, 1);
+    opacity: .9;
+}
+.opaque-back {
+    background-color: rgba(245, 245, 245, 1);
+    opacity: 100%;
+}
