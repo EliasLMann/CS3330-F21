@@ -58,7 +58,7 @@
 
 - [x] Delete menuItem - melanie
 - [x] Delete price from MenuItem - melanie
-- [x] Delete restaurant
+- [x] Delete restaurant - eli
 
 # Epic 1
 
@@ -87,8 +87,8 @@
 
 # Epic 4
 
-- [x] 1 POST photo(s) for restaurant page
-- [x] 2 POST a title for photo
+- [x] 1 POST photo(s) for restaurant page -Eli
+- [x] 2 POST a title for photo -Eli
 
 # Epic 5
 
@@ -98,9 +98,9 @@
 
 # Epic 6
 
-- [x] 1 POST a meal
-- [x] 1 PUT a meal
-- [x] 1 DELETE a meal
+- [x] 1 POST a meal - melanie
+- [x] 1 PUT a meal - melanie
+- [x] 1 DELETE a meal - melanie
 
 # Epic 7 N/A for some reason
 
@@ -109,9 +109,9 @@
 - [x] 1 PUT restaurant sponsored for restaurant (user story for creating a ad with paywall - modified) - Ariyan and Eli
 - [x] 1 GET sponsored restaurants - Ariyan and Eli
 - [x] 2 PUT menuItem featured - melanie
-- [x] 2 GET featured dishes for a given restaurant
-- [x] 3 PUT isSponsored for a review by reviewID
-- [x] 3 GET isSponsored reviews pertaining to a given restaurant
+- [x] 2 GET featured dishes for a given restaurant - melanie
+- [x] 3 PUT isSponsored for a review by reviewID - melanie
+- [x] 3 GET isSponsored reviews pertaining to a given restaurant - melanie, Eli
 
 # Epic 9
 
@@ -134,7 +134,7 @@
 
 # Epic 11
 
-- [x] 1 user register for an account
-- [x] 2 user sign into account
-- [x] 3 owner register for account
-- [x] 4 owner sign into account
+- [x] 1 user register for an account - Eli
+- [x] 2 user sign into account - Eli
+- [x] 3 owner register for account - Eli
+- [x] 4 owner sign into account - Eli
