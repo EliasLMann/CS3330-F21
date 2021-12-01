@@ -113,8 +113,9 @@ export class RestaurantRepository {
   }
 
   getRestaurantByCuisineType(query){
+    console.log(query);
     return new Promise((resolve, reject) => {
-      axios.get(`${this.url}/restaurants/byCuisineType`, query)
+      axios.get(`${this.url}/restaurants/byCuisineType`, {cuisineType: query})
         .then(x => resolve(x.data))
         .catch(x => {
           alert(x);
