@@ -13,6 +13,7 @@ import { Header } from './Header';
 const Welcome = () => {
     return (<>
         <Header/>
+        <img id="background" src={backgroundImg} style={{ filter: 'grayscale(40%)' }} />
         <img id="logoPic" className="card-img-top justify-content-left" src={logo} />
         <div className="d-flex flex-row justify-content-center">
             <Card id="login_box" className="p-2 mx-l" style={{ width: '30rem' }}>
