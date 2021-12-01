@@ -3,7 +3,7 @@ import axios from 'axios';
 
 
 export class MenuItemRepository {
-  url = "http://localhost:8000";
+  url = "http://ec2-3-15-138-60.us-east-2.compute.amazonaws.com:8000";
 
   incrementLikes(ID) {
     return new Promise((resolve, reject) => {
