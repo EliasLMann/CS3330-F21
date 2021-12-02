@@ -62,10 +62,15 @@ export const RestaurantDetails = () => {
                     <div className="card-title mx-auto px-auto">
                         <h1>{restaurant.restaurantName}</h1>
                     </div>
-                    <div className="d-flex justify-content-center">
-                        <p className="p-2 flex-grow">Location: {restaurant.location}</p>
-                        <p className="p-2 flex-grow"> Hours: {restaurant.hours}</p>
-                        <p className="p-2 flex-grow">Cuisine Type: {restaurant.cuisineType}</p>
+                    <div className="d-flex justify-content-center align-center">
+                        <span className="p-2 flex-grow mr-3">
+                            <span className="p-2 font-weight-bold text-danger">CITY:</span>{restaurant.location}</span>
+
+                        <span className="p-2 flex-grow mr-3">
+                            <span className="p-2 font-weight-bold text-info">CUISINE:</span>{restaurant.cuisineType}</span>
+
+                        <span className="p-2 flex-grow"> 
+                            <span className="p-2 font-weight-bold text-success">HOURS:</span> {restaurant.hours}</span>
                     </div>
 
                     <div className="d-flex flex-row-reverse align-middle">
