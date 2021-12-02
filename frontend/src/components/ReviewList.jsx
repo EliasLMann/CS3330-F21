@@ -17,10 +17,7 @@ export const UserReviewList = props => {
 
     useEffect(() => {
         let userID = userRepo.currentUser().userId;
-        let restID = userRepo.currentUser().restaurantID;
         userRepo.getUserReviews(userID).then(x => setReviews(x.data));
-        console.log("User ID: " + userID)
-        console.log("Reviews: " + reviews);
     }, []);
 
 

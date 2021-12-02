@@ -147,8 +147,9 @@ export const RestaurantDetails = () => {
                                     }
                                     {
                                         reviews.map((x, i) => <Card key={ i }>
-                                    
-                                            <ReviewHeaderUsername review = {x}  />                    
+                                            <CardHeader>
+                                            <ReviewHeaderUsername review = {x}  />
+                                            </CardHeader>                    
                                                           
                                                 <div className="row justify-content-evenly">
                                                     <div className="text-rigth text-muted col-5"><Rating value = { x.rating}/></div>

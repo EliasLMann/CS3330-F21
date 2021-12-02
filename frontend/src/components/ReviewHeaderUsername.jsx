@@ -27,7 +27,7 @@ const ReviewHeaderUsername = props => {
         return (
             <>
                 {console.log("Card " + user.userName)}
-                    <CardHeader > { user.userName }</CardHeader>          
+                    <div > { user.userName }</div>          
             </>
         );
     }
