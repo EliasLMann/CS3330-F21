@@ -5,6 +5,7 @@ import { RestaurantRepository } from '../api/restaurantRepository';
 import { UserRepository } from '../api/userRespository';
 import { UserContext } from '../context';
 import { Rating } from './Rating';
+import { ReviewSubList } from './ReviewSubList';
 
 
 export const UserReviewList = props => {
@@ -50,17 +51,15 @@ export const UserReviewList = props => {
                             !reviews.length && <Card className="p-2 bg-light mb-1"> You have not left any reviews yet  </Card>
                         }
                         {
-                            reviews.map((x, i) => <Card key={ i }>
-
-                                
-                                {console.log( restRepo.getRestaurant(x.restaurantID) )}
-                                <CardHeader > { x.restaurantID }</CardHeader>                    
-                                    <div className="row justify-content-evenly">
-                                        <div className="text-rigth text-muted col-5"><Rating value = { x.rating}/></div>
-                                        <div className="text-end text-muted col-5">{ x.date}</div>
-                                    </div> 
-                                    <div className="m-3">{ x.body }</div>
-                            </Card>)
+                            reviews.map((x, i) => <reviewSubList key={i} review = {x}  />)
+                            // <CardHeader > { x.restaurantID }</CardHeader>          
+                            //         console.log(  )
+                            //         <div className="row justify-content-evenly">
+                            //             <div className="text-rigth text-muted col-5"><Rating value = { x.rating}/></div>
+                            //             <div className="text-end text-muted col-5">{ x.date}</div>
+                            //         </div> 
+                            //         <div className="m-3">{ x.body }</div>
+                            // </Card>)
                         }
                     </ul>
                 </Card.Body>
