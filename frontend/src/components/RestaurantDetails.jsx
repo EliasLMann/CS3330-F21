@@ -115,24 +115,15 @@ export const RestaurantDetails = () => {
                                         !reviews.length && <Card className="p-2 bg-light mb-1"> This restaurant has not recieved any reviews  </Card>
                                     }
                                     {
-                                        reviews.map((x, i) => <Card key={i}>
-                                            {
-                                                !userRepo.currentUser().restaurantID ?
-                                                    <CardHeader > {x.userID}</CardHeader> :
-                                                    <CardHeader className="d-flex">
-                                                        <div className="p-2 flex-grow-1">
-                                                            {x.userID}
-                                                        </div>
-                                                    </CardHeader>
-                                            }
-                                            <div className="d-flex">
-                                                <div className="p-2 flex-grow-1">
-                                                    <Rating value={x.rating} />
-                                                </div>
-                                                <p className="p-2">{x.date}</p>
-                                            </div>
-                                            <p className="container text-muted">{x.body}</p>
-
+                                        reviews.map((x, i) => <Card key={ i }>
+                                    
+                                            <CardHeader > { x.userID }</CardHeader> 
+                                                          
+                                                <div className="row justify-content-evenly">
+                                                    <div className="text-rigth text-muted col-5"><Rating value = { x.rating}/></div>
+                                                    <div className="text-end text-muted col-5">{ x.date}</div>
+                                                </div> 
+                                                <div className="m-3">{ x.body }</div>
                                         </Card>)
                                     }
                                 </ul>

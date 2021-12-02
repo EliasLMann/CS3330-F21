@@ -48,12 +48,33 @@ export const UpdateReview = () => {
     else {
         return (
             <>
-                {
-                    console.log("Review1" + reviews[0]),
-                    console.log("reviews[1]" + reviews[1])
-                }
-                <h1 className="ms-5">{userContext.username}</h1>
-
+            <div className="container mb-5">   
+                <Card className="p-2 mx-l">
+                        <Card.Body>
+                            <Card.Title className="d-flex justify-content-center h1">Your Reviews ({!reviews.length ? 0 : reviews.length})</Card.Title>
+                            <ul className="d-grid gap-3 mb-3 p-3 mx-auto" style={{ width: '100%' }}>
+                                {
+                                    !reviews.length && <Card className="p-2 bg-light mb-1"> You have not left any reviews yet  </Card>
+                                }
+                                {
+                                    reviews.map((x, i) => <Card key={i}>
+                                        <CardHeader className="d-flex"> 
+                                            <div className="p-2 flex-grow-1">{x.userID}</div>
+                                            {
+                                                (x.sponsored == 0) ? <button className="p-2">Sponsor Review</button> : <p className="p-2">This is a sponsored review</p>
+                                            }
+                                            </CardHeader>
+                                        <div className="d-flex">
+                                            <div className="p-2 flex-grow-1 text-muted"><Rating value={x.rating} /></div>
+                                            <div className="p-2 text-muted">{x.date}</div>
+                                        </div>
+                                        <div className="m-3">{x.body}</div>
+                                    </Card>)
+                                }
+                            </ul>
+                        </Card.Body>
+                    </Card>
+                    </div>
             </>
         );
     }

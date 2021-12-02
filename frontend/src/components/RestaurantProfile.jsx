@@ -3,13 +3,11 @@ import { UserContext } from '../context';
 import { UserRepository } from '../api/userRespository';
 import { Header } from './Header';
 import { RestaurantRepository } from '../api/restaurantRepository';
-import { Link } from 'react-router-dom';
-import { MenuItemRepository } from '../api/menuItemRepository';
-
-
 import { ReviewList } from './ReviewList';
 import { UserReviewList } from './ReviewList';
 import { UpdateReview } from './UpdateReview';
+import { MenuItemRepository } from '../api/menuItemRepository';
+import { Link } from 'react-router-dom';
 
 const CustomerView = () => {
     const userRepo = new UserRepository();
@@ -20,7 +18,7 @@ const CustomerView = () => {
         let userID = userRepo.currentUser().userID;
         setUserContext(userRepo.currentUser());
 
-        
+
         console.log("userID: " + userContext.userId)
     }, []);
 
@@ -28,8 +26,9 @@ const CustomerView = () => {
         <>
             <Header />
             {/* <ReviewList/> */}
-            <UserReviewList/>
-
+            <div className="mt-5">
+                <UserReviewList />
+            </div>
         </>
     )
 }
@@ -61,19 +60,21 @@ const RestaurantView = () => {
         return (
             <>
                 <Header />
-                <div className="container">
-                    <div className="d-flex justify-content-center">
-                        <h1>{restaurant.restaurantName}</h1>
-                    </div>
-                    <div className="card d-flex flex-column">
-                        <p className="p-2">Location: {restaurant.location}</p>
-                        <p className="p-2">Hours: {restaurant.hours}</p>
-                        <p className="p-2">Cuisine Type: {restaurant.cuisineType}</p>
-                    </div>
-
-
-
-                    <div className="card mx-auto">
+                <br />
+                <div className="container mb-5">
+                    <div className="container card mx-auto">
+                        <div className="card-title mx-auto px-auto">
+                            <h1>{restaurant.restaurantName}</h1>
+                        </div>
+                        <div className="d-flex justify-content-center">
+                            <p className="p-2 flex-grow">Location: {restaurant.location}</p>
+                            <p className="p-2 flex-grow"> Hours: {restaurant.hours}</p>
+                            <p className="p-2 flex-grow">Cuisine Type: {restaurant.cuisineType}</p>
+                        </div>
+                        <div className="d-flex justify-content-center">
+                            <p className="p-2 flex-grow text-decoration-underline">{restaurant.website}</p>
+                            <p className="p-2 flex-grow">Instagram: @{restaurant.socialMediaName}</p>
+                        </div>
 
                         <div className="d-flex justify-content-center">
                             <h2>My Menu</h2>
@@ -118,11 +119,11 @@ const RestaurantView = () => {
                         <div className="d-flex justify-content-center">
                             <Link to="/addMenu" className="fw-bolder col-4 btn btn-primary mx-auto">Add More Items</Link>
                         </div>
-                        <br/>
+                        <br />
                     </div>
                 </div>
-                <UserReviewList/>
-                <UpdateReview/>
+
+                <UpdateReview />
             </>
         )
     }
