@@ -9,19 +9,23 @@ import { menuItem } from "../models/menuItem";
 import { Header } from "./Header";
 import CardHeader from "react-bootstrap/esm/CardHeader";
 
-export const AddNewReview = () => {
+export const AddNewReview = props => {
     const userRepo = new UserRepository();
     const restRepo = new RestaurantRepository();
-    const date = new Date().toDateString();
-    const { restID } = useParams();
+    const [date, setDate] = useState("");
+    const [restID, setRestID] = useState("");
     const [userID, setUserID] = useState("");
     const [body, setBody] = useState("");
-    //const [date, setDate] = useState("");
     const [rating, setRating] = useState(0)
 
-    // useEffect(() => {
-    //     updateUser();
-    // }, []);
+    useEffect(() => {
+        setUserID(userRepo.currentUser().userId)
+        setRestID(props.restID);
+        let today = new Date();
+        setDate(today);
+
+        console.log("Add UserID: " + userID)
+    }, []);
 
     // let updateUser = () => {
         
@@ -37,14 +41,13 @@ export const AddNewReview = () => {
 
     return <>
         <br />
-            <br />
-                    <div className="container">
-                        <div className="d-flex flex-row justify-content-center">
-                            <Card className="p-2 mx-l" style={{ width: '75%' }}>
-                                <CardHeader className="h4 fw-bolder">Add review</CardHeader>
-                                    <form className="container">
-                                    <div className="row">
-
+        <br />
+        <div className="container">
+                <div className="d-flex flex-row justify-content-center">
+                    <Card className="p-2 mx-l" style={{ width: '75%' }}>
+                        <CardHeader className="h4 fw-bolder">Add review</CardHeader>
+                        <form className="container">
+                                <div className="row">
                                         <div className="form-group col-md-3">
                                             <label className="col-form-label" htmlFor="ratingField">Rating</label>
                                             <select id="ratingID"
@@ -72,9 +75,8 @@ export const AddNewReview = () => {
                                                 className="form-control" />
                                         </div>
                                         
-                                        {/* {setUserID(userRepo.currentUser().userId)} */}
                                         <div className="d-grid gap-2">
-                                            <button type="button" className="btn btn-primary mx-3" onClick={Add()}>Submit</button>
+                                            <button type="button" className="btn btn-primary mx-3" onClick={Add}>Submit</button>
                                         </div>
                                     </div>
                                 </form>
