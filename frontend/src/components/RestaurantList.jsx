@@ -13,20 +13,20 @@ const RestaurantList = (props) => {
     }
     else {
         return <>
-            <div className="container card mt-3 opaque-back">
-                <div className="ul row justify-content-center transparent-back">
+            <div className="container card my-3 opaque-back">
+                <div className="ul row justify-content-start transparent-back">
                     {/* <div className="d-flex justify-content-center">
                         <h1 className="cardHeader mt-3">Featured Restaurants</h1>
                     </div> */}
                     {
-                        props.restaurants.map((x, i) => <div className="card prod col-4 mx-auto my-2" key={i}>
+                        props.restaurants.map((x, i) => <div className="card prod col-4 my-2 " key={i}>
                             <div className="card-body mx-auto">
                                 <div className="mx-4 d-flex justify-content-center">
                                     <h3>{x.restaurantName}</h3>
                                 </div>
                                 <div className="d-flex justify-content-center">
                                     <div className="p-2 mr-auto">
-                                        <i className="fas fa-map-marker-alt text-danger mr-1" style={{ fontSize: 25 }}>: </i>
+                                        <i className="fas fa-map-marker-alt text-danger mr-1" style={{ fontSize: 25 }}>:</i>
                                         <span style={{ fontSize: 20 }}>{x.location}</span>
                                     </div>
                                     <div className="p-2 ml-auto">
