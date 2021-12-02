@@ -15,13 +15,6 @@ import { Button } from 'react-bootstrap';
 import ReviewHeaderUsername from './ReviewHeaderUsername';
 import ReviewSubList from './ReviewSubList';
 
-const sharePopover = (
-    <Popover className="p-2 text-center" id="popover-positioned-down" title="Share a link!">
-        <strong>Restaurant link copied to clipboard!</strong><br />
-        {window.location.href}
-    </Popover>
-);
-
 export const RestaurantDetails = () => {
 
     const itemRepo = new MenuItemRepository();
@@ -76,7 +69,7 @@ export const RestaurantDetails = () => {
                         <div className="d-flex align-middle">
                             <div className="p-2">
                                 <OverlayTrigger trigger="click" placement="bottom" overlay={sharePopover}>
-                                    <div onClick={() => { navigator.clipboard.writeText(window.location.href) }}
+                                    <div onClick={() => setShareURL(window.location.href)}
                                         className="mx-auto btn btn-outline-secondary" >
                                         <i className="bi bi-share-fill text-info mr-1 detailsSocials" style={{ fontSize: 20 }}></i>
                                     </div>
