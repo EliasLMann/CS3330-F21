@@ -10,6 +10,8 @@ import Card from 'react-bootstrap/Card';
 import CardHeader from "react-bootstrap/esm/CardHeader";
 import { Rating } from './Rating';
 import { UserRepository } from '../api/userRespository';
+import ReviewHeaderUsername from './ReviewHeaderUsername';
+import ReviewSubList from './ReviewSubList';
 
 
 
@@ -110,7 +112,7 @@ export const RestaurantDetails = () => {
                                     {
                                         reviews.map((x, i) => <Card key={ i }>
                                     
-                                            <CardHeader > { x.userID }</CardHeader> 
+                                            <ReviewHeaderUsername review = {x}  />                    
                                                           
                                                 <div className="row justify-content-evenly">
                                                     <div className="text-rigth text-muted col-5"><Rating value = { x.rating}/></div>
@@ -154,7 +156,7 @@ export const RestaurantDetails = () => {
                                 onChange={(e) => setReviewBody(e.target.value)}
                                 className="form-control" />
                         </div>
-                        <div class="d-grid gap-2">
+                        <div className="d-grid gap-2">
                         <button type="button" className="btn btn-primary mx-3" onClick={() => this.onAddClick()}>Submit</button>
                         </div>
                     </div>

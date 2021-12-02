@@ -28,6 +28,18 @@ export class UserRepository {
     });
   }
 
+    //GET user by ID
+    getUserByID(userID){
+      return new Promise((resolve, reject) => {
+        axios.get(`${this.url}/singleUser`, { params: { userID: userID } })
+            .then(x => resolve(x.data))
+            .catch(x => {
+                alert(x);
+                reject(x);
+            })
+      });
+    }
+
   getRestaurant(id) {
     return new Promise((resolve, reject) => {
         axios.get(`${this.url}/${id}`, this.config)

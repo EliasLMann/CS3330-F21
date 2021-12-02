@@ -7,17 +7,17 @@ import { UserContext } from '../context';
 import { Rating } from './Rating';
 
 
-const ReviewSubList = props => {
-    const restRepo = new RestaurantRepository();
-    const [restaurant, setRestaurant] = useState(undefined);
+const ReviewHeaderUsername = props => {
+    const userRepo = new UserRepository();
+    const [user, setUser] = useState(undefined);
     
     useEffect(() => {
-        console.log("Hi ")
-        restRepo.getRestaurant(props.review.restaurantID).then(x => setRestaurant(x.data[0]));
+        console.log("Hi " + props.review.userID)
+        userRepo.getUserByID(props.review.userID).then(x => setUser(x.data[0]));
     }, []);
 
 
-    if (!restaurant) {
+    if (!user) {
         return <>
             {console.log("!props.review")}
             <div>Loading restarant...</div>
@@ -26,11 +26,11 @@ const ReviewSubList = props => {
     else {
         return (
             <>
-                {console.log("Card " + props.review.restaurantID)}
-                    <CardHeader > { restaurant.restaurantName }</CardHeader>          
+                {console.log("Card " + props.userID)}
+                    <CardHeader > { user.username }</CardHeader>          
             </>
         );
     }
 };
 
-export default ReviewSubList;
+export default ReviewHeaderUsername;
