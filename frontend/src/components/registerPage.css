@@ -7,6 +7,10 @@ label{
     text-align: right;
 }
 
+.labelWidthFix{
+    width: auto;
+}
+
 input{
     width: 15rem;
 }

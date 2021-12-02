@@ -48,7 +48,7 @@ export const AddNewReview = props => {
                         <form className="container">
                                 <div className="row">
                                         <div className="form-group col-md-3">
-                                            <label className="col-form-label" htmlFor="ratingField">Rating</label>
+                                            <label className="col-form-label me labelWidthFix" htmlFor="ratingField">Rating</label>
                                             <select id="ratingID"
                                                 name="ratingField"
                                                 className="form-control"
@@ -66,7 +66,7 @@ export const AddNewReview = props => {
                                         
 
                                         <div className="form-group mb-4">
-                                            <label htmlFor="comments">Comments</label>
+                                            <label htmlFor="comments" className="labelWidthFix">Comments</label>
                                             <textarea
                                                 id="comments" name="comments"
                                                 value={body}
@@ -75,7 +75,7 @@ export const AddNewReview = props => {
                                         </div>
                                         
                                         <div className="d-grid gap-2">
-                                            <button type="button" className="btn btn-primary mx-3" onClick={Add, refreshPage}>Submit</button>
+                                            <button type="button" className="btn btn-primary mx-3" onClick={Add}>Submit</button>
                                         </div>
                                     </div>
                                 </form>
