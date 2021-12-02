@@ -26,8 +26,8 @@ const ReviewHeaderUsername = props => {
     else {
         return (
             <>
-                {console.log("Card " + props.userID)}
-                    <CardHeader > { user.username }</CardHeader>          
+                {console.log("Card " + user.userName)}
+                    <CardHeader > { user.userName }</CardHeader>          
             </>
         );
     }
