@@ -65,22 +65,27 @@ export const RestaurantDetails = () => {
                         <p className="p-2 flex-grow"> Hours: {restaurant.hours}</p>
                         <p className="p-2 flex-grow">Cuisine Type: {restaurant.cuisineType}</p>
                     </div>
-                    <div className="d-flex justify-content-center">
-                        <p className="p-2 flex-grow text-decoration-underline">{restaurant.website}</p>
-                        <p className="p-2 flex-grow">Instagram: @{restaurant.socialMediaName}</p>
-                    </div>
 
                     <div className="d-flex flex-row-reverse align-middle">
                         <div className="p-2">
                             <OverlayTrigger trigger="click" placement="bottom" overlay={sharePopover}>
-                                <Button onClick={() => {navigator.clipboard.writeText(window.location.href)}} 
-                                        className="mx-auto detailsSocials" > Share </Button>
+                                <div onClick={() => {navigator.clipboard.writeText(window.location.href)}} 
+                                        className="mx-auto btn btn-outline-secondary" > 
+                                    <i class="bi bi-share-fill text-info mr-1 detailsSocials" style={{ fontSize: 20}}></i>
+                                </div>
                             </OverlayTrigger>
                         </div>
                         <div className="p-2">
-                            <Button onClick={()=> window.open(`https://www.instagram.com/${socialMediaName}/`, "_blank")}>
-                                <i class="bi bi-instagram text-light mr-1 detailsSocials" style={{ fontSize: 20}}></i>
-                            </Button>
+                            <div onClick={()=> window.open(`https://www.instagram.com/${socialMediaName}/`, "_blank")}
+                                    className="mx-auto btn btn-outline-secondary">
+                                <i class="bi bi-instagram text-info mr-1 detailsSocials" style={{ fontSize: 20}}></i>
+                            </div>
+                        </div>
+                        <div className="p-2">
+                            <div onClick={()=> window.open(`https://${restaurant.website}/`, "_blank")}
+                                    className="mx-auto btn btn-outline-secondary">
+                                <i class="bi bi-globe text-info mr-1 detailsSocials" style={{ fontSize: 20}}></i>
+                            </div>
                         </div>
                     </div>
 
