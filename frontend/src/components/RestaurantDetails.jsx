@@ -17,8 +17,7 @@ export const RestaurantDetails = () => {
     const itemRepo = new MenuItemRepository();
     const restRepo = new RestaurantRepository();
     const [userContext, setUserContext] = useContext(UserContext);
-    const userRepo = new UserRepository();                                                            //Added by Everett
-
+    const userRepo = new UserRepository();                                                            
 
     const [restaurant, setRestaurant] = useState(undefined);
     const [menu, setMenu] = useState(undefined);
@@ -46,6 +45,7 @@ export const RestaurantDetails = () => {
         return (
             <>
                 <Header />
+                <br />
                 <div className="container card">
                     <div className="card-title mx-auto px-auto">
                         <h1>{restaurant.restaurantName}</h1>
@@ -73,7 +73,9 @@ export const RestaurantDetails = () => {
                         }
                     </div>
                     <hr />
-                    <h4>Menu</h4>
+                    <div className="d-flex justify-content-center">
+                        <h2>Menu</h2>
+                    </div>
                     <div>
                         <table className="table table-striped">
                             <thead>
@@ -142,7 +144,7 @@ export const RestaurantDetails = () => {
                         <form className="card reviewForm">
                             <h5 className="card-header fw-bolder">Add review</h5>
                             <div className="card-body row">
-                                <div className="form-group col">
+                                <div className="form-group">
                                     <label htmlFor="ratingField">Rating</label>
                                     <select id="ratingField"
                                         name="ratingField"
