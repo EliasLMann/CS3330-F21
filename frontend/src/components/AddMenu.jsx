@@ -18,18 +18,20 @@ export const AddMenu = () => {
     const [description, setDescription] = useState("")
 
     useEffect(() => {
+        console.log("hello world");
         updateUser();
     }, []);
 
     let updateUser = () => {
-        userRepo.updateSession(userRepo.currentUser().username);
         console.log("");
         setRestID(userRepo.currentUser().restaurantID);
+        console.log(userRepo.currentUser());
         console.log(restID);
+
     }
 
     const addAndContinue = () => {
-        let itemInfo = [restID, itemName, price, itemLink, mealType, 0, 0, featured, photo, description];
+        let itemInfo = [userRepo.currentUser().restaurantID, itemName, price, itemLink, mealType, 0, 0, featured, photo, description];
         menuRepo.addMenuItem(itemInfo);
         setItemName("");
         setPrice("");
