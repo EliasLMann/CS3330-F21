@@ -9,7 +9,7 @@ import Card from 'react-bootstrap/Card';
 import CardHeader from "react-bootstrap/esm/CardHeader";
 import { Rating } from './Rating';
 import { UserRepository } from '../api/userRespository';
-import { OverlayTrigger } from 'react-bootstrap';
+import { OverlayTrigger, ToggleButton, ButtonGroup } from 'react-bootstrap';
 import { Popover } from 'react-bootstrap';
 import { Button } from 'react-bootstrap';
 import ReviewHeaderUsername from './ReviewHeaderUsername';
@@ -32,11 +32,12 @@ export const RestaurantDetails = () => {
     const [reviewBody, setReviewBody] = useState("");
     const [socialMediaName, setSocialMediaName] = useState("");
     const [shareURL, setShareURL] = useState("");
+    const [checked, setChecked] = useState(false);
     const { restaurantID } = useParams();
 
     const sharePopover = (
         <Popover className="p-2 text-center" id="popover-positioned-down" title="Share a link!">
-            <strong>Please share THIS LINK below!</strong><br/>
+            <strong>Please share THIS LINK below!</strong><br />
             {shareURL}
         </Popover>
     );
@@ -52,9 +53,9 @@ export const RestaurantDetails = () => {
         console.log(restaurant);
     }, []);
 
-    
 
-    if (!restaurant || !menu || !featuredItems || !reviews) {
+
+    if (!restaurant || !menu || !featuredItems || !reviews || !popularItems) {
         return (
             <div>Loading...</div>
         )
@@ -99,7 +100,7 @@ export const RestaurantDetails = () => {
                         <span className="p-2 flex-grow mr-3">
                             <span className="p-2 font-weight-bold text-info">CUISINE:</span>{restaurant.cuisineType}</span>
 
-                        <span className="p-2 flex-grow"> 
+                        <span className="p-2 flex-grow">
                             <span className="p-2 font-weight-bold text-success">HOURS:</span> {restaurant.hours}</span>
                     </div>
 
@@ -113,7 +114,7 @@ export const RestaurantDetails = () => {
                             {
                                 popularItems.map((x, i) =>
                                     <div key={i}>
-                                        <li className="list-group-item list-group-item-success">{x.itemName} (${x.price})</li>
+                                        <li className="list-group-item list-group-item-success">{x.itemName}</li>
                                     </div>)
                             }
                         </div>
@@ -126,7 +127,7 @@ export const RestaurantDetails = () => {
                             {
                                 featuredItems.map((x, i) =>
                                     <div key={i}>
-                                        <li className="list-group-item list-group-item-primary">{x.itemName} (${x.price}) -- {x.description}</li>
+                                        <li className="list-group-item list-group-item-primary">{x.itemName}</li>
                                     </div>)
                             }
                         </div>
@@ -140,6 +141,7 @@ export const RestaurantDetails = () => {
                             <thead>
                                 <tr>
                                     <th>Item</th>
+                                    <th>Description</th>
                                     <th>Price</th>
                                     <th>Meal Type</th>
                                     <th>Like</th>
@@ -151,6 +153,7 @@ export const RestaurantDetails = () => {
                                     menu.map((x, i) =>
                                         <tr key={i}>
                                             <th className="fw-normal">{x.itemName}</th>
+                                            <th className="fw-normal">{x.description}</th>
                                             <th className="fw-normal">${x.price}</th>
                                             <th className="fw-normal">{x.mealType}</th>
                                             <th className="fw-normal">
@@ -178,24 +181,24 @@ export const RestaurantDetails = () => {
                                         !reviews.length && <Card className="p-2 bg-light mb-1"> This restaurant has not recieved any reviews  </Card>
                                     }
                                     {
-                                        reviews.map((x, i) => <Card key={ i }>
+                                        reviews.map((x, i) => <Card key={i}>
                                             <CardHeader>
-                                            <ReviewHeaderUsername review = {x}  />
-                                            </CardHeader>                    
-                                                          
-                                                <div className="row justify-content-evenly">
-                                                    <div className="text-rigth text-muted col-5"><Rating value = { x.rating}/></div>
-                                                    <div className="text-end text-muted col-5">{ x.date.substring(0,9)}</div>
-                                                </div> 
-                                                <div className="m-3">"{ x.body }"</div>
+                                                <ReviewHeaderUsername review={x} />
+                                            </CardHeader>
+
+                                            <div className="row justify-content-evenly">
+                                                <div className="text-rigth text-muted col-5"><Rating value={x.rating} /></div>
+                                                <div className="text-end text-muted col-5">{x.date.substring(0, 9)}</div>
+                                            </div>
+                                            <div className="m-3">"{x.body}"</div>
                                         </Card>)
                                     }
                                 </ul>
                             </Card.Body>
                         </div>
                     </div>
-                    
-                    <AddNewReview restID = {restaurantID}/>
+
+                    <AddNewReview restID={restaurantID} />
 
                     <br /><br />
                 </div>
