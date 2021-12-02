@@ -71,9 +71,19 @@ const RestaurantView = () => {
                             <p className="p-2 flex-grow"> Hours: {restaurant.hours}</p>
                             <p className="p-2 flex-grow">Cuisine Type: {restaurant.cuisineType}</p>
                         </div>
-                        <div className="d-flex justify-content-center">
-                            <p className="p-2 flex-grow text-decoration-underline">{restaurant.website}</p>
-                            <p className="p-2 flex-grow">Instagram: @{restaurant.socialMediaName}</p>
+                        <div className="d-flex flex-row-reverse align-middle">
+                            <div className="p-2">
+                                <div onClick={() => window.open(`https://www.instagram.com/${restaurant.socialMediaName}/`, "_blank")}
+                                    className="mx-auto btn btn-outline-secondary">
+                                    <i className="bi bi-instagram text-info mr-1 detailsSocials" style={{ fontSize: 20 }}></i>
+                                </div>
+                            </div>
+                            <div className="p-2">
+                                <div onClick={() => window.open(`https://${restaurant.website}/`, "_blank")}
+                                    className="mx-auto btn btn-outline-secondary">
+                                    <i className="bi bi-globe text-info mr-1 detailsSocials" style={{ fontSize: 20 }}></i>
+                                </div>
+                            </div>
                         </div>
 
                         <div className="d-flex justify-content-center">
