@@ -186,7 +186,7 @@ export const RestaurantDetails = () => {
                         </div>
                     </div>
                     
-                    //<AddNewReview/>
+                    {/* <AddNewReview/> */}
 
                     <br /><br />
                 </div>
