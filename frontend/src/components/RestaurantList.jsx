@@ -26,11 +26,11 @@ const RestaurantList = (props) => {
                                 </div>
                                 <div className="d-flex justify-content-center">
                                     <div className="p-2 mr-auto">
-                                        <i class="fas fa-map-marker-alt text-danger mr-1" style={{ fontSize: 25 }}>: </i>
+                                        <i className="fas fa-map-marker-alt text-danger mr-1" style={{ fontSize: 25 }}>: </i>
                                         <span style={{ fontSize: 20 }}>{x.location}</span>
                                     </div>
                                     <div className="p-2 ml-auto">
-                                        <i class="fa fa-utensils mr-1" style={{ fontSize: 25, color: 'rgb(173, 229, 233)'}}>: </i>
+                                        <i className="fa fa-utensils mr-1" style={{ fontSize: 25, color: 'rgb(173, 229, 233)'}}>: </i>
                                         <span style={{ fontSize: 20 }}>{x.cuisineType}</span>
                                     </div>            
                                 </div>

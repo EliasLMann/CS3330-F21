@@ -14,10 +14,6 @@ export const UserReviewList = props => {
     const [userContext, setUserContext] = useContext(UserContext);
     const [restaurant, setRestaurant] = useState("");
 
-    // const getRestaurantName = async (restaurantID) => {
-    //     return restRepo.getRestaurant(restaurantID).then(x => setRestaurant(x.data[0].restaurantName));
-    // }
-
     useEffect(() => {
         let userID = userRepo.currentUser().userId;
         let restID = userRepo.currentUser().restaurantID;
@@ -35,11 +31,6 @@ export const UserReviewList = props => {
     else {
         return (
             <>
-                {
-                    console.log("Review1" + reviews[0]),
-                    console.log("reviews[1]" + reviews[1])
-                }
-                {/* <h1 className="ms-5">{userContext.username}</h1>  */}
                 <div className="d-flex flex-row justify-content-center">
 
                     <Card className="p-2 mx-l" style={{ width: '75%' }}>
