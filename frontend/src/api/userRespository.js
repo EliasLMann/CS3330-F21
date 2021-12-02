@@ -166,6 +166,26 @@ export class UserRepository {
     })
   }
 
+  addReview(reviewInfo) {
+    return new Promise((resolve, reject) => {
+      axios.post(`${this.url}/addReview`,
+        {
+          reviewID: reviewInfo[0],
+          restaurantID: reviewInfo[1],
+          userID: reviewInfo[2],
+          body: reviewInfo[3],
+          date: reviewInfo[4],
+          isSponsored: reviewInfo[5],
+          rating: reviewInfo[6],
+        })
+        .then(x => resolve(x.data))
+        .catch(x => {
+          alert(x);
+          reject(x);
+        })
+    })
+  }
+
   getMoreInfo(userName) {
     return new Promise((resolve, reject) => {
 
@@ -177,6 +197,8 @@ export class UserRepository {
         })
     })
   }
+
+
 
   async register(userName, password) {
     const errors = {success : false};

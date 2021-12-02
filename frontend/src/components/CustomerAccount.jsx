@@ -2,7 +2,6 @@
     import Card from 'react-bootstrap/Card';
     import { Header } from "./Header";
     import { Link } from 'react-router-dom';
-    import { ReviewList } from "./ReviewList";
     import { UserRepository } from "../api/userRespository";
     
     
@@ -25,7 +24,6 @@
                 
                 {console.log(this.state.user.userID)}
                 {/* <ReviewList reviews={userReviews => this.userRepository.getUserReviews(this.state.user.userID)}/> */}
-                <ReviewList reviews={this.state.reviews}/>
             </>
         }
     
