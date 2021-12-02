@@ -8,8 +8,6 @@ import { MenuItemRepository } from '../api/menuItemRepository';
 
 
 import { ReviewList } from './ReviewList';
-import { Link } from 'react-router-dom';
-import { MenuItemRepository } from '../api/menuItemRepository';
 import { UserReviewList } from './ReviewList';
 import { UpdateReview } from './UpdateReview';
 
@@ -123,7 +121,7 @@ const RestaurantView = () => {
                         <br/>
                     </div>
                 </div>
-                <ReviewList/>
+                <UserReviewList/>
                 <UpdateReview/>
             </>
         )

@@ -30,12 +30,12 @@ export const UpdateReview = () => {
             restRepo.getRestaurantReviews(restID).then(x => setReviews(x.data));
             console.log(reviews);
         }
-        else{
+        else {
             userRepo.getUserReviews(userID).then(x => setReviews(x.data));
         }
 
-        
-        
+
+
         console.log("Reviews: " + reviews);
     }, []);
 
@@ -46,16 +46,16 @@ export const UpdateReview = () => {
         </>
     }
     else {
-    return (
-        <>
-{
-    console.log("Review1" + reviews[0]),
-    console.log("reviews[1]" + reviews[1])
-}
-    <h1 className="ms-5">{userContext.username}</h1> 
+        return (
+            <>
+                {
+                    console.log("Review1" + reviews[0]),
+                    console.log("reviews[1]" + reviews[1])
+                }
+                <h1 className="ms-5">{userContext.username}</h1>
 
-   </>
-    );
+            </>
+        );
     }
 };
 

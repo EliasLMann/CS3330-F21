@@ -170,7 +170,6 @@ export class UserRepository {
     return new Promise((resolve, reject) => {
       axios.post(`${this.url}/addReview`,
         {
-          reviewID: reviewInfo[0],
           restaurantID: reviewInfo[1],
           userID: reviewInfo[2],
           body: reviewInfo[3],
