@@ -12,6 +12,8 @@ import { UserRepository } from '../api/userRespository';
 import { OverlayTrigger } from 'react-bootstrap';
 import { Popover } from 'react-bootstrap';
 import { Button } from 'react-bootstrap';
+import ReviewHeaderUsername from './ReviewHeaderUsername';
+import ReviewSubList from './ReviewSubList';
 
 const sharePopover = (
     <Popover className="p-2 text-center" id="popover-positioned-down" title="Share a link!">
@@ -146,7 +148,7 @@ export const RestaurantDetails = () => {
                                     {
                                         reviews.map((x, i) => <Card key={ i }>
                                     
-                                            <CardHeader > { x.userID }</CardHeader> 
+                                            <ReviewHeaderUsername review = {x}  />                    
                                                           
                                                 <div className="row justify-content-evenly">
                                                     <div className="text-rigth text-muted col-5"><Rating value = { x.rating}/></div>

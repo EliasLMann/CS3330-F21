@@ -124,6 +124,39 @@ router.get("/user", (req, res) => {
   });
 });
 
+// GET /user/{userID}
+router.get("/singleUser", (req, res) => {
+  // obtain a connection from our pool of connections
+  pool.getConnection(function (err, connection) {
+    if (err) {
+      // if there is an issue obtaining a connection, release the connection instance and log the error
+      logger.error("Problem obtaining MySQL connection", err);
+      res.status(400).send("Problem obtaining MySQL connection");
+    } else {
+      // if there is no issue obtaining a connection, execute query and release connection
+      let userID = req.query["userID"];
+      connection.query(
+        "SELECT * FROM User WHERE userID = ?",
+        userID,
+        function (err, rows, fields) {
+          connection.release();
+          if (err) {
+            logger.error("Error while fetching values: \n", err);
+            res.status(400).json({
+              data: [],
+              error: "Error obtaining values",
+            });
+          } else {
+            res.status(200).json({
+              data: rows,
+            });
+          }
+        }
+      );
+    }
+  });
+});
+
 // DELETE /user/delete{userID}
 // deleting a user from the database by userID
 router.delete("/user/delete", (req, res) => {
