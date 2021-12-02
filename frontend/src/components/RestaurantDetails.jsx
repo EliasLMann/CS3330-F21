@@ -32,7 +32,8 @@ export const RestaurantDetails = () => {
     const [featuredItems, setFeaturedItems] = useState(undefined);
     const [reviews, setReviews] = useState(undefined);
     const [rating, setRating] = useState('');
-    const [reviewBody, setReviewBody] = useState("")
+    const [reviewBody, setReviewBody] = useState("");
+    const [socialMediaName, setSocialMediaName] = useState("");
     const { restaurantID } = useParams();
 
     useEffect(() => {
@@ -41,7 +42,8 @@ export const RestaurantDetails = () => {
         restRepo.getMenuItems(restaurantID).then(x => setMenu(x.data));
         restRepo.getFeatItems(restaurantID).then(x => setFeaturedItems(x.data));
         restRepo.getRestaurantReviews(restaurantID).then(x => setReviews(x.data));
-        console.log(reviews);
+        restRepo.getSocialMediaName(restaurantID).then(x => setSocialMediaName(x.data[0].socialMediaName));
+        console.log(restaurant);
     }, []);
 
     if (!restaurant || !menu || !featuredItems || !reviews) {
@@ -67,14 +69,21 @@ export const RestaurantDetails = () => {
                         <p className="p-2 flex-grow text-decoration-underline">{restaurant.website}</p>
                         <p className="p-2 flex-grow">Instagram: @{restaurant.socialMediaName}</p>
                     </div>
-                    <div className="d-flex flex-row-reverse">
+
+                    <div className="d-flex flex-row-reverse align-middle">
                         <div className="p-2">
                             <OverlayTrigger trigger="click" placement="bottom" overlay={sharePopover}>
                                 <Button onClick={() => {navigator.clipboard.writeText(window.location.href)}} 
-                                        className="mx-auto" > Share </Button>
+                                        className="mx-auto detailsSocials" > Share </Button>
                             </OverlayTrigger>
                         </div>
+                        <div className="p-2">
+                            <Button onClick={()=> window.open(`https://www.instagram.com/${socialMediaName}/`, "_blank")}>
+                                <i class="bi bi-instagram text-light mr-1 detailsSocials" style={{ fontSize: 20}}></i>
+                            </Button>
+                        </div>
                     </div>
+
                     <hr />
                     <div className="d-flex justify-content-center">
                         <h2>Featured Items</h2>
