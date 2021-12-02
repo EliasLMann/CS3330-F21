@@ -44,8 +44,7 @@ export const AddNewReview = props => {
                         <form className="container">
                                 <div className="row">
                                         <div className="form-group col-md-3">
-
-                                            <label className="col-form-label align-left" htmlFor="ratingField">Rating</label>
+                                            <label className="col-form-label me labelWidthFix" htmlFor="ratingField">Rating</label>
                                             <select id="ratingID"
                                                 name="ratingField"
                                                 className="form-control"
@@ -63,7 +62,7 @@ export const AddNewReview = props => {
                                         
 
                                         <div className="form-group mb-4">
-                                            <label htmlFor="comments">Comments</label>
+                                            <label htmlFor="comments" className="labelWidthFix">Comments</label>
                                             <textarea
                                                 id="comments" name="comments"
                                                 value={body}
