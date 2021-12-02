@@ -61,9 +61,9 @@ export const UpdateReview = () => {
                                     reviews.map((x, i) => <Card key={i}>
                                         <CardHeader className="d-flex"> 
                                             <ReviewHeaderUsername className="p-2 flex-grow-1" review = {x}/>
-                                            {
+                                            {/* {
                                                 (x.sponsored == 0) ? <button className="p-2">Sponsor Review</button> : <p className="p-2">This is a sponsored review</p>
-                                            }
+                                            } */}
                                             </CardHeader>
                                         <div className="d-flex">
                                             <div className="p-2 flex-grow-1 text-muted"><Rating value={x.rating} /></div>

@@ -14,6 +14,7 @@ import { Popover } from 'react-bootstrap';
 import { Button } from 'react-bootstrap';
 import ReviewHeaderUsername from './ReviewHeaderUsername';
 import ReviewSubList from './ReviewSubList';
+import { AddNewReview } from './AddNewReview';
 
 export const RestaurantDetails = () => {
 
@@ -50,6 +51,8 @@ export const RestaurantDetails = () => {
         restRepo.getSocialMediaName(restaurantID).then(x => setSocialMediaName(x.data[0].socialMediaName));
         console.log(restaurant);
     }, []);
+
+    
 
     if (!restaurant || !menu || !featuredItems || !reviews) {
         return (
@@ -182,41 +185,9 @@ export const RestaurantDetails = () => {
                             </Card.Body>
                         </div>
                     </div>
+                    
+                    {/* <AddNewReview/> */}
 
-                    <div className="container">
-                        <form className="card reviewForm">
-                            <h5 className="card-header fw-bolder">Add review</h5>
-                            <div className="card-body row">
-                                <div className="form-group">
-                                    <label htmlFor="ratingField">Rating</label>
-                                    <select id="ratingField"
-                                        name="ratingField"
-                                        className="form-control"
-                                        value={rating}
-                                        onChange={(e) => setRating(e.target.value)}
-                                    >
-                                        <option value={0} defaultValue></option>
-                                        <option value={1}>1 star</option>
-                                        <option value={2}>2 stars</option>
-                                        <option value={3}>3 stars</option>
-                                        <option value={4}>4 stars</option>
-                                        <option value={5}>5 stars</option>
-                                    </select>
-                                </div>
-                                <div className="form-group mb-4">
-                                    <label htmlFor="comments">Comments</label>
-                                    <textarea
-                                        id="comments" name="comments"
-                                        value={reviewBody}
-                                        onChange={(e) => setReviewBody(e.target.value)}
-                                        className="form-control" />
-                                </div>
-                                <div className="d-grid gap-2">
-                                    <button type="button" className="btn btn-primary mx-3" onClick={() => this.onAddClick()}>Submit</button>
-                                </div>
-                            </div>
-                        </form>
-                    </div>
                     <br /><br />
                 </div>
             </>
