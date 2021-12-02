@@ -5,6 +5,7 @@ import { RestaurantRepository } from '../api/restaurantRepository';
 import { UserRepository } from '../api/userRespository';
 import { UserContext } from '../context';
 import { Rating } from './Rating';
+import ReviewSubList from './ReviewSubList';
 
 
 export const UserReviewList = props => {
@@ -14,16 +15,9 @@ export const UserReviewList = props => {
     const [userContext, setUserContext] = useContext(UserContext);
     const [restaurant, setRestaurant] = useState("");
 
-    // const getRestaurantName = async (restaurantID) => {
-    //     return restRepo.getRestaurant(restaurantID).then(x => setRestaurant(x.data[0].restaurantName));
-    // }
-
     useEffect(() => {
         let userID = userRepo.currentUser().userId;
-        let restID = userRepo.currentUser().restaurantID;
         userRepo.getUserReviews(userID).then(x => setReviews(x.data));
-        console.log("User ID: " + userID)
-        console.log("Reviews: " + reviews);
     }, []);
 
 
@@ -51,15 +45,13 @@ export const UserReviewList = props => {
                         }
                         {
                             reviews.map((x, i) => <Card key={ i }>
-
-                                
-                                {console.log( restRepo.getRestaurant(x.restaurantID) )}
-                                <CardHeader > { x.restaurantID }</CardHeader>                    
+                                    <ReviewSubList review = {x}  />                    
                                     <div className="row justify-content-evenly">
                                         <div className="text-rigth text-muted col-5"><Rating value = { x.rating}/></div>
-                                        <div className="text-end text-muted col-5">{ x.date}</div>
+                                        {console.log(x.date.substring(0,9))}
+                                        <div className="text-end text-muted col-5">{ x.date.substring(0,9)}</div>
                                     </div> 
-                                    <div className="m-3">{ x.body }</div>
+                                    <div className="m-4">"{ x.body }"</div>
                             </Card>)
                         }
                     </ul>

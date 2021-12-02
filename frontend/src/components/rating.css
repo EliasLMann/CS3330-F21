@@ -9,7 +9,8 @@
 }
 
 .full-star:after {
-    content: "\2605"
+    content: "\2605";
+    color: gold
 }
 
 .empty-star:after {

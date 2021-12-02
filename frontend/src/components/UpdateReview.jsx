@@ -5,6 +5,7 @@ import { RestaurantRepository } from '../api/restaurantRepository';
 import { UserRepository } from '../api/userRespository';
 import { UserContext } from '../context';
 import { Rating } from './Rating';
+import ReviewHeaderUsername from './ReviewHeaderUsername';
 
 
 export const UpdateReview = () => {
@@ -30,12 +31,12 @@ export const UpdateReview = () => {
             restRepo.getRestaurantReviews(restID).then(x => setReviews(x.data));
             console.log(reviews);
         }
-        else{
+        else {
             userRepo.getUserReviews(userID).then(x => setReviews(x.data));
         }
 
-        
-        
+
+
         console.log("Reviews: " + reviews);
     }, []);
 
@@ -46,53 +47,37 @@ export const UpdateReview = () => {
         </>
     }
     else {
-    return (
-        <>
-{
-    console.log("Review1" + reviews[0]),
-    console.log("reviews[1]" + reviews[1])
-}
-    <h1 className="ms-5">{userContext.username}</h1> 
-    <div className="d-flex flex-row justify-content-center">
-        
-        <Card className="p-2 mx-l" style={{ width: '75%' }}>
-            <Card.Body>
-                <Card.Title className="text-rigth h1">Your Reviews ({!reviews.length ? 0 : reviews.length})</Card.Title>
-                    <ul className="d-grid gap-3 mb-3 p-3 mx-auto" style={{ width: '100%' }}>
-                        {
-                            !reviews.length && <Card className="p-2 bg-light mb-1"> You have not left any reviews yet  </Card>
-                        }
-                        {
-                            reviews.map((x, i) => <Card key={ i }>
-                        {    
-                            !userRepo.currentUser().restaurantID ? 
-                                <CardHeader > { x.restaurantID }</CardHeader> : 
-                                <CardHeader className="position-relative"> <div>{ x.userID }</div> 
-                                    <form>
-                                        <div className="position-absolute top-0 end-0 me-4">
-                                            <label className="form-check-label" for="sponsered">Sponsor Review</label>
-                                            <input type="checkbox" className="form-check-input" id="sponsered"/>
+        return (
+            <>
+            <div className="container mb-5">   
+                <Card className="p-2 mx-l">
+                        <Card.Body>
+                            <Card.Title className="d-flex justify-content-center h1">Your Reviews ({!reviews.length ? 0 : reviews.length})</Card.Title>
+                            <ul className="d-grid gap-3 mb-3 p-3 mx-auto" style={{ width: '100%' }}>
+                                {
+                                    !reviews.length && <Card className="p-2 bg-light mb-1"> You have not left any reviews yet  </Card>
+                                }
+                                {
+                                    reviews.map((x, i) => <Card key={i}>
+                                        <CardHeader className="d-flex"> 
+                                            <ReviewHeaderUsername className="p-2 flex-grow-1" review = {x}/>
+                                            {/* {
+                                                (x.sponsored == 0) ? <button className="p-2">Sponsor Review</button> : <p className="p-2">This is a sponsored review</p>
+                                            } */}
+                                            </CardHeader>
+                                        <div className="d-flex">
+                                            <div className="p-2 flex-grow-1 text-muted"><Rating value={x.rating} /></div>
+                                            <div className="p-2 text-muted">{x.date.substring(0,9)}</div>
                                         </div>
-                                        
-                                    </form>
-                                    {/* <div className="position-absolute top-0 end-0 me-4">{ x.restaurantID }</div>   */}
-                                </CardHeader>
-                            // !userRepo.currentUser().restaurantID ? <CardHeader className="position-relative"> <div>{ x.restaurantID }</div> <div className="position-absolute top-0 end-0 me-4"> restaurant </div>  </CardHeader> : <CardHeader> <div className="position-absolute top-0 end-0">{ x.restaurantID }</div> <div>{ x.userID }</div></CardHeader>   
-   
-                        }                        
-                                    <div className="row justify-content-evenly">
-                                        <div className="text-rigth text-muted col-5"><Rating value = { x.rating}/></div>
-                                        <div className="text-end text-muted col-5">{ x.date}</div>
-                                    </div> 
-                                    <div className="m-3">{ x.body }</div>
-                            </Card>)
-                        }
-                    </ul>
-                </Card.Body>
-            </Card>
-        </div>
-   </>
-    );
+                                        <div className="m-3">"{x.body}"</div>
+                                    </Card>)
+                                }
+                            </ul>
+                        </Card.Body>
+                    </Card>
+                    </div>
+            </>
+        );
     }
 };
 

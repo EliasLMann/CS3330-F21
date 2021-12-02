@@ -13,7 +13,7 @@ import 'rc-slider/assets/index.css';
 export const SearchPage = props => {
 
     const [ restaurants, setRestaurants ] = useState(undefined);
-    const [ searchFilter, setSearchFilter] = useState("Show All");
+    const [ searchFilter, setSearchFilter] = useState("Featured");
     const [ query, setQuery] = useState(undefined);
 
     const [ priceSlider, setPriceSlider] = useState([0, 100]);
@@ -26,10 +26,13 @@ export const SearchPage = props => {
     }, []);
 
     let onSearch = params => {
+        if( searchFilter == "Featured"){
+            restaurantRepo.getSponsoredRestaurants().then(x => setRestaurants(x.data));
+        }
         if( searchFilter == "Show All"){
             restaurantRepo.getRestaurants().then(x => setRestaurants(x.data));
         }
-        if( searchFilter == "Location"){
+        if( searchFilter == "City"){
             restaurantRepo.getRestaurantByLocation(params).then(x => setRestaurants(x.data));
         } 
         if( searchFilter == "Cuisine Type"){
@@ -60,12 +63,12 @@ export const SearchPage = props => {
                     </Dropdown.Toggle>
 
                     <Dropdown.Menu>
-                        <Dropdown.Item onClick={(e) => setSearchFilter("Show All")}>Show All</Dropdown.Item>
-                        <Dropdown.Item onClick={(e) => setSearchFilter("Location")}>Location</Dropdown.Item>
+                        <Dropdown.Item onClick={(e) => setSearchFilter("City")}>City</Dropdown.Item>
                         <Dropdown.Item onClick={(e) => setSearchFilter("Cuisine Type")}>Cuisine Type</Dropdown.Item>
                         <Dropdown.Item onClick={(e) => setSearchFilter("Meal Type")}>Meal Type</Dropdown.Item>
                         <Dropdown.Item onClick={(e) => setSearchFilter("Average Rating")}>Average Rating</Dropdown.Item>
                         <Dropdown.Item onClick={(e) => setSearchFilter("Average Price")}>Average Price</Dropdown.Item>
+                        <Dropdown.Item onClick={(e) => setSearchFilter("Show All")}>Show All</Dropdown.Item>
                     </Dropdown.Menu>
                 </Dropdown>
 

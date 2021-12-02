@@ -4,10 +4,10 @@ import { UserRepository } from '../api/userRespository';
 import { Header } from './Header';
 import { RestaurantRepository } from '../api/restaurantRepository';
 import { ReviewList } from './ReviewList';
-import { Link } from 'react-router-dom';
-import { MenuItemRepository } from '../api/menuItemRepository';
 import { UserReviewList } from './ReviewList';
 import { UpdateReview } from './UpdateReview';
+import { MenuItemRepository } from '../api/menuItemRepository';
+import { Link } from 'react-router-dom';
 
 const CustomerView = () => {
     const userRepo = new UserRepository();
@@ -18,16 +18,19 @@ const CustomerView = () => {
         let userID = userRepo.currentUser().userID;
         setUserContext(userRepo.currentUser());
 
-        
+
         console.log("userID: " + userContext.userId)
     }, []);
+
+    
 
     return (
         <>
             <Header />
             {/* <ReviewList/> */}
-            <UserReviewList/>
-
+            <div className="mt-5">
+                <UserReviewList />
+            </div>
         </>
     )
 }
@@ -39,9 +42,7 @@ const RestaurantView = () => {
     const [restaurant, setRestaurant] = useState(undefined);
     const [menu, setMenu] = useState(undefined);
 
-    const deleteItem = async (itemID) => {
-        console.log(itemID);
-    }
+    
 
     useEffect(() => {
         let restID = userRepo.currentUser().restaurantID;
@@ -59,19 +60,28 @@ const RestaurantView = () => {
         return (
             <>
                 <Header />
-                <div className="container">
-                    <div className="d-flex justify-content-center">
-                        <h1>{restaurant.restaurantName}</h1>
+                <br />
+                <div className="container mb-5">
+                    <div className="container card mx-auto">
+                       <div className="card-title d-flex mx-auto px-auto mt-3">
+                        <div className="p-2 flex-grow-1">
+                            <h1>{restaurant.restaurantName}</h1>
+                        </div>
+                        <div className="d-flex align-middle">
+                            <div className="p-2">
+                                <div onClick={() => window.open(`https://www.instagram.com/${restaurant.socialMediaName}/`, "_blank")}
+                                    className="mx-auto btn btn-outline-secondary">
+                                    <i className="bi bi-instagram text-info mr-1 detailsSocials" style={{ fontSize: 20 }}></i>
+                                </div>
+                            </div>
+                            <div className="p-2">
+                                <div onClick={() => window.open(`https://${restaurant.website}/`, "_blank")}
+                                    className="mx-auto btn btn-outline-secondary">
+                                    <i className="bi bi-globe text-info mr-1 detailsSocials" style={{ fontSize: 20 }}></i>
+                                </div>
+                            </div>
+                        </div>
                     </div>
-                    <div className="card d-flex flex-column">
-                        <p className="p-2">Location: {restaurant.location}</p>
-                        <p className="p-2">Hours: {restaurant.hours}</p>
-                        <p className="p-2">Cuisine Type: {restaurant.cuisineType}</p>
-                    </div>
-
-
-
-                    <div className="card mx-auto">
 
                         <div className="d-flex justify-content-center">
                             <h2>My Menu</h2>
@@ -116,11 +126,11 @@ const RestaurantView = () => {
                         <div className="d-flex justify-content-center">
                             <Link to="/addMenu" className="fw-bolder col-4 btn btn-primary mx-auto">Add More Items</Link>
                         </div>
-                        <br/>
+                        <br />
                     </div>
                 </div>
-                            
-                <UpdateReview/>
+
+                <UpdateReview />
             </>
         )
     }

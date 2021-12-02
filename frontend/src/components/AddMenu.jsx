@@ -18,18 +18,20 @@ export const AddMenu = () => {
     const [description, setDescription] = useState("")
 
     useEffect(() => {
+        console.log("hello world");
         updateUser();
     }, []);
 
     let updateUser = () => {
-        userRepo.updateSession(userRepo.currentUser().username);
         console.log("");
         setRestID(userRepo.currentUser().restaurantID);
+        console.log(userRepo.currentUser());
         console.log(restID);
+
     }
 
     const addAndContinue = () => {
-        let itemInfo = [restID, itemName, price, itemLink, mealType, 0, 0, featured, photo, description];
+        let itemInfo = [userRepo.currentUser().restaurantID, itemName, price, itemLink, mealType, 0, 0, featured, photo, description];
         menuRepo.addMenuItem(itemInfo);
         setItemName("");
         setPrice("");
@@ -69,15 +71,6 @@ export const AddMenu = () => {
                             type="text"
                             value={price}
                             onChange={(e) => setPrice(e.target.value)}></input>
-                    </div>
-                    <div className="col-md-7">
-                        <label htmlFor="link">Item Link:</label>
-                        <input
-                            id="link"
-                            name="link"
-                            type="text"
-                            value={itemLink}
-                            onChange={(e) => setItemLink(e.target.value)}></input>
                     </div>
                     <div className="col-md-7">
                         <label htmlFor="mealType">Meal Type:</label>

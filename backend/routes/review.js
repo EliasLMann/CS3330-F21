@@ -45,12 +45,12 @@ router.post("/addReview", (req, res) => {
       logger.error("Problem obtaining MySQL connection", err);
       res.status(400).send("Problem obtaining MySQL connection");
     } else {
-      let restaurantID = req.body["restaurantID"];
-      let userID = req.body["userID"];
-      let body = req.body["body"];
-      let date = req.body["date"];
-      let isSponsored = req.body["isSponsored"] == "true";
-      let rating = req.body["rating"];
+      let restaurantID = req.body.restaurantID;
+      let userID = req.body.userID;
+      let body = req.body.body;
+      let date = req.body.date;
+      let isSponsored = req.body.isSponsored;
+      let rating = req.body.rating;
       // if there is no issue obtaining a connection, execute query and release connection
       connection.query(
         "INSERT INTO Review (restaurantID, userID, body, date, isSponsored, rating) VALUES (?,?,?,?,?,?);",
@@ -140,6 +140,8 @@ router.get("/userReviews", (req, res) => {
   });
 });
 
+
+
 // DELETE /review/delete{reviewID}
 // deleting a review from the database by reviewID
 router.delete("/review/delete", (req, res) => {
@@ -170,5 +172,7 @@ router.delete("/review/delete", (req, res) => {
     }
   });
 });
+
+
 
 module.exports = router;

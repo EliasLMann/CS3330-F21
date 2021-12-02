@@ -1,13 +1,13 @@
 import React, { useContext, useState, useEffect } from 'react';
 import { Link, useHistory, Redirect } from "react-router-dom";
-import { Button, Container } from 'react-bootstrap';
+import { Button, Card, Container } from 'react-bootstrap';
 import { UserRepository } from '../api/userRespository';
-import { UserContext } from '../context';
-import { RestaurantOwnerForm } from './RestaurantOwnerForm';
 import { Header } from './Header';
-import { Landing } from './Landing';
 import { Popover, OverlayTrigger } from 'react-bootstrap';
 import { RestaurantRepository } from '../api/restaurantRepository';
+import CardHeader from 'react-bootstrap/esm/CardHeader';
+
+
 
 
 const OwnerInfo = () => {
@@ -20,14 +20,10 @@ const OwnerInfo = () => {
     const [websiteURL, setWebsiteURL] = useState("");
     const [instagramUser, setInstagramUser] = useState("");
     const [socialMediaURL, setSocialMediaURL] = useState("");
-    const [postInfo, setPostInfo] = useState(undefined);
 
 
     const [restID, setRestID] = useState(undefined);
 
-    const [errors, setErrors] = useState({});
-    const [isLoading, setIsLoading] = useState(false);
-    const [userContext, setUserContext] = useContext(UserContext);
     const history = useHistory();
     const userRepository = new UserRepository();
     const restRepo = new RestaurantRepository();
@@ -46,12 +42,15 @@ const OwnerInfo = () => {
         let restInfo = [restaurantName, location, openTimes, restaurantDescription, cuisineType, websiteURL, sponsored, instagramUser, socialMediaURL];
         restRepo.addRestaurant(restInfo);
         restRepo.getRestID().then(x => setRestID(x.data.id));
-        userRepository.linkUserRestaurant(userRepository.currentUser().userID, restID);
-        // console.log(userRepository.currentUser().restaurantID);
-        if(userRepository.currentUser().restaurantID === null) {
-            userRepository.updateSession(userRepository.currentUser().username);
-        }
-        document.getElementById("restForm").visiblity="none";
+        userRepository.linkUserRestaurant(userRepository.currentUser().userId, restID);
+        sessionStorage.setItem(
+            'user',
+            JSON.stringify({
+                ...userRepository.currentUser(),
+                restaurantID: restID
+            })
+        );
+        history.push('/addMenu');
     }
 
 
@@ -72,7 +71,7 @@ const OwnerInfo = () => {
         <form id="restForm" className=" row g-3 " >
             <br/>
             <div className="d-flex justify-content-center">
-                <h2 className="title mx-auto">About your restaurant</h2>
+                
             </div>
             <br />
             
@@ -84,6 +83,7 @@ const OwnerInfo = () => {
                     className="formControl w-25"
                     onChange={(e) => setRestaurantName(e.target.value)}                >
                 </input>
+            </div>
 
             
             <div>
@@ -108,7 +108,7 @@ const OwnerInfo = () => {
                 >
                 </input>
             </div>
-
+        
             <br />
             <div className="w-100 mx-auto text-center ">
                 <div className="">
@@ -160,15 +160,6 @@ const OwnerInfo = () => {
                     </div>
                     <input type="text" className="form-control" aria-describedby="basic-addon3"
                         onChange={(e) => setInstagramUser(e.target.value)} />
-                </div>
-            </div>
-            <div className="w-75 mx-auto">
-                <div className="input-group mb-3">
-                    <div className="input-group-prepend">
-                        <span className="input-group-text" id="basic-addon3">Social Media Link:</span>
-                    </div>
-                    <input type="text" className="form-control" aria-describedby="basic-addon3"
-                        onChange={(e) => setSocialMediaURL(e.target.value)} />
                 </div>
             </div>
             <br />
