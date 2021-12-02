@@ -43,3 +43,7 @@ form > button{
     height: 2.75rem;
     width: 5rem;
 }
+
+.detailsLabels{
+    font-weight: bold !important;
+}
