@@ -48,8 +48,8 @@ export const UserReviewList = props => {
                                     <ReviewSubList review = {x}  />                    
                                     <div className="row justify-content-evenly">
                                         <div className="text-rigth text-muted col-5"><Rating value = { x.rating}/></div>
-                                        {/* const newDate = x.date.slice(0, x.date.length - 14)  */}
-                                        <div className="text-end text-muted col-5">{ x.date}</div>
+                                        {console.log(x.date.substring(0,9))}
+                                        <div className="text-end text-muted col-5">{ x.date.substring(0,9)}</div>
                                     </div> 
                                     <div className="m-4">"{ x.body }"</div>
                             </Card>)
