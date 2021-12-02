@@ -65,8 +65,8 @@ const OwnerInfo = () => {
 
     return <>
         <Header />
-        <div className="d-flex flex-row justify-content-center">
-        <Card className=" mt-2 mx-l w-75">
+        <div className="">
+        <Card className=" mt-2 mx-l w-75 mx-auto">
         <CardHeader className="h2 mx-auto text-center w-100"> About your restaurant</CardHeader>
         <form id="restForm" className=" row g-3 " >
             <br/>
@@ -164,10 +164,10 @@ const OwnerInfo = () => {
             </div>
             <br />
         
-            <button type="button" className="btn btn-primary mx-auto" onClick={addRest}>Submit</button>
+            <button type="button" className="btn btn-primary mx-auto w-50" onClick={addRest}>Submit</button>
         </form>
+        </Card>
         <div className="container">
-        <Link className="btn btn-success" to='/addMenu'>Continue</Link>
         </div>
         </div>
     </>
