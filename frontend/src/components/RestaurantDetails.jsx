@@ -178,7 +178,7 @@ export const RestaurantDetails = () => {
                                                     <div className="text-rigth text-muted col-5"><Rating value = { x.rating}/></div>
                                                     <div className="text-end text-muted col-5">{ x.date}</div>
                                                 </div> 
-                                                <div className="m-3">{ x.body }</div>
+                                                <div className="m-3">"{ x.body }"</div>
                                         </Card>)
                                     }
                                 </ul>
