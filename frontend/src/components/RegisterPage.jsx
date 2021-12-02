@@ -40,7 +40,7 @@ export class RegisterPage extends React.Component {
 
         }
     }
-
+3
     getRestaurantData = (newRestaurantData) => {
         this.setState({restaurantData: newRestaurantData})
     }

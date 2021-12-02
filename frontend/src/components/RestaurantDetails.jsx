@@ -188,7 +188,7 @@ export const RestaurantDetails = () => {
 
                                             <div className="row justify-content-evenly">
                                                 <div className="text-rigth text-muted col-5"><Rating value={x.rating} /></div>
-                                                <div className="text-end text-muted col-5">{x.date.substring(0, 9)}</div>
+                                                <div className="text-end text-muted col-5">{x.date.substring(0, 10)}</div>
                                             </div>
                                             <div className="m-3">"{x.body}"</div>
                                         </Card>)

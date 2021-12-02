@@ -67,7 +67,7 @@ export const UpdateReview = () => {
                                             </CardHeader>
                                         <div className="d-flex">
                                             <div className="p-2 flex-grow-1 text-muted"><Rating value={x.rating} /></div>
-                                            <div className="p-2 text-muted">{x.date.substring(0,9)}</div>
+                                            <div className="p-2 text-muted">{x.date.substring(0,10)}</div>
                                         </div>
                                         <div className="m-3">"{x.body}"</div>
                                     </Card>)

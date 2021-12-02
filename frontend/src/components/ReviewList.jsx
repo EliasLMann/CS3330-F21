@@ -49,7 +49,7 @@ export const UserReviewList = props => {
                                     <div className="row justify-content-evenly">
                                         <div className="text-rigth text-muted col-5"><Rating value = { x.rating}/></div>
                                         {console.log(x.date.substring(0,9))}
-                                        <div className="text-end text-muted col-5">{ x.date.substring(0,9)}</div>
+                                        <div className="text-end text-muted col-5">{ x.date.substring(0,10)}</div>
                                     </div> 
                                     <div className="m-4">"{ x.body }"</div>
                             </Card>)
