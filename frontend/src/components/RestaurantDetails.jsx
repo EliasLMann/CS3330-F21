@@ -89,7 +89,7 @@ export const RestaurantDetails = () => {
                         </div>
                     </div>
                     <div className="d-flex justify-content-center">
-                        <p className="p-2 flex-grow">Location: {restaurant.location}</p>
+                        <p className="p-2 flex-grow">City: {restaurant.location}</p>
                         <p className="p-2 flex-grow"> Hours: {restaurant.hours}</p>
                         <p className="p-2 flex-grow">Cuisine Type: {restaurant.cuisineType}</p>
                     </div>
@@ -123,7 +123,6 @@ export const RestaurantDetails = () => {
                             }
                         </div>
                     </div>
-
                     <hr />
                     <div className="d-flex justify-content-center">
                         <h2>Menu</h2>
@@ -167,16 +166,16 @@ export const RestaurantDetails = () => {
                                         !reviews.length && <Card className="p-2 bg-light mb-1"> This restaurant has not recieved any reviews  </Card>
                                     }
                                     {
-                                        reviews.map((x, i) => <Card key={i}>
+                                        reviews.map((x, i) => <Card key={ i }>
                                             <CardHeader>
-                                                <ReviewHeaderUsername review={x} />
-                                            </CardHeader>
-
-                                            <div className="row justify-content-evenly">
-                                                <div className="text-rigth text-muted col-5"><Rating value={x.rating} /></div>
-                                                <div className="text-end text-muted col-5">{x.date}</div>
-                                            </div>
-                                            <div className="m-3">{x.body}</div>
+                                            <ReviewHeaderUsername review = {x}  />
+                                            </CardHeader>                    
+                                                          
+                                                <div className="row justify-content-evenly">
+                                                    <div className="text-rigth text-muted col-5"><Rating value = { x.rating}/></div>
+                                                    <div className="text-end text-muted col-5">{ x.date}</div>
+                                                </div> 
+                                                <div className="m-3">{ x.body }</div>
                                         </Card>)
                                     }
                                 </ul>

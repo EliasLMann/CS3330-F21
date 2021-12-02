@@ -67,7 +67,7 @@ const RestaurantView = () => {
                             <h1>{restaurant.restaurantName}</h1>
                         </div>
                         <div className="d-flex justify-content-center">
-                            <p className="p-2 flex-grow">Location: {restaurant.location}</p>
+                            <p className="p-2 flex-grow">City: {restaurant.location}</p>
                             <p className="p-2 flex-grow"> Hours: {restaurant.hours}</p>
                             <p className="p-2 flex-grow">Cuisine Type: {restaurant.cuisineType}</p>
                         </div>
