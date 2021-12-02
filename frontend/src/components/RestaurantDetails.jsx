@@ -34,7 +34,8 @@ export const RestaurantDetails = () => {
     const [featuredItems, setFeaturedItems] = useState(undefined);
     const [reviews, setReviews] = useState(undefined);
     const [rating, setRating] = useState('');
-    const [reviewBody, setReviewBody] = useState("")
+    const [reviewBody, setReviewBody] = useState("");
+    const [socialMediaName, setSocialMediaName] = useState("");
     const { restaurantID } = useParams();
 
     useEffect(() => {
@@ -43,7 +44,8 @@ export const RestaurantDetails = () => {
         restRepo.getMenuItems(restaurantID).then(x => setMenu(x.data));
         restRepo.getFeatItems(restaurantID).then(x => setFeaturedItems(x.data));
         restRepo.getRestaurantReviews(restaurantID).then(x => setReviews(x.data));
-        console.log(reviews);
+        restRepo.getSocialMediaName(restaurantID).then(x => setSocialMediaName(x.data[0].socialMediaName));
+        console.log(restaurant);
     }, []);
 
     if (!restaurant || !menu || !featuredItems || !reviews) {
@@ -64,14 +66,21 @@ export const RestaurantDetails = () => {
                         <p>Hours: {restaurant.hours}</p>
                         <p>Cuisine Type: {restaurant.cuisineType}</p>
                     </div>
-                    <div className="d-flex flex-row-reverse">
+
+                    <div className="d-flex flex-row-reverse align-middle">
                         <div className="p-2">
                             <OverlayTrigger trigger="click" placement="bottom" overlay={sharePopover}>
                                 <Button onClick={() => {navigator.clipboard.writeText(window.location.href)}} 
-                                        className="mx-auto" > Share </Button>
+                                        className="mx-auto detailsSocials" > Share </Button>
                             </OverlayTrigger>
                         </div>
+                        <div className="p-2">
+                            <Button onClick={()=> window.open(`https://www.instagram.com/${socialMediaName}/`, "_blank")}>
+                                <i class="bi bi-instagram text-light mr-1 detailsSocials" style={{ fontSize: 20}}></i>
+                            </Button>
+                        </div>
                     </div>
+
                     <hr />
                     <h2 className="d-flex justify-content-center">Featured Items</h2>
                     <ul className="mx-auto">
@@ -170,7 +179,7 @@ export const RestaurantDetails = () => {
                                 onChange={(e) => setReviewBody(e.target.value)}
                                 className="form-control" />
                         </div>
-                        <div class="d-grid gap-2">
+                        <div className="d-grid gap-2">
                         <button type="button" className="btn btn-primary mx-3" onClick={() => this.onAddClick()}>Submit</button>
                         </div>
                     </div>

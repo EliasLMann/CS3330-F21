@@ -38,3 +38,8 @@ form > button{
     background-color: rgba(245, 245, 245, 1);
     opacity: 100%;
 }
+
+.detailsSocials {
+    height: 2.75rem;
+    width: 5rem;
+}

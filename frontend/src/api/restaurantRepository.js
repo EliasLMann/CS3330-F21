@@ -49,6 +49,17 @@ export class RestaurantRepository {
     });
   }
 
+  getSocialMediaName(restaurantID) {
+    return new Promise((resolve, reject) => {
+      axios.get(`${this.url}/restaurant/socialMediaName/byID`, { params: { restaurantID: restaurantID } })
+        .then(x => resolve(x.data))
+        .catch(x => {
+          alert(x);
+          reject(x);
+        })
+    });
+  }
+
   getRestID() {
     return new Promise((resolve, reject) => {
       axios.get(`${this.url}/restaurantId`)
