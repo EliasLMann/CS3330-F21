@@ -39,6 +39,10 @@ export const AddNewReview = props => {
         setRating(0)
     }
 
+    function refreshPage() {
+        window.location.reload(false);
+      }
+
     return <>
         <br />
         <br />
@@ -76,7 +80,7 @@ export const AddNewReview = props => {
                                         </div>
                                         
                                         <div className="d-grid gap-2">
-                                            <button type="button" className="btn btn-primary mx-3" onClick={Add}>Submit</button>
+                                            <button type="button" className="btn btn-primary mx-3" onClick={Add, refreshPage}>Submit</button>
                                         </div>
                                     </div>
                                 </form>
