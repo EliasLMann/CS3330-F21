@@ -14,13 +14,6 @@ import { OverlayTrigger } from 'react-bootstrap';
 import { Popover } from 'react-bootstrap';
 import { Button } from 'react-bootstrap';
 
-const sharePopover = (
-    <Popover className="p-2 text-center" id="popover-positioned-down" title="Share a link!">
-        <strong>Restaurant link copied to clipboard!</strong><br/>
-        {window.location.href}
-    </Popover>
-);
-
 export const RestaurantDetails = () => {
 
     const itemRepo = new MenuItemRepository();
@@ -36,7 +29,15 @@ export const RestaurantDetails = () => {
     const [rating, setRating] = useState('');
     const [reviewBody, setReviewBody] = useState("");
     const [socialMediaName, setSocialMediaName] = useState("");
+    const [shareURL, setShareURL] = useState("");
     const { restaurantID } = useParams();
+
+    const sharePopover = (
+        <Popover className="p-2 text-center" id="popover-positioned-down" title="Share a link!">
+            <strong>Please share THIS LINK below!</strong><br/>
+            {shareURL}
+        </Popover>
+    );
 
     useEffect(() => {
         console.log("ID: " + restaurantID);
@@ -70,7 +71,7 @@ export const RestaurantDetails = () => {
                     <div className="d-flex flex-row-reverse align-middle">
                         <div className="p-2">
                             <OverlayTrigger trigger="click" placement="bottom" overlay={sharePopover}>
-                                <div onClick={() => {navigator.clipboard.writeText(window.location.href)}} 
+                                <div onClick={() => setShareURL(window.location.href)} 
                                         className="mx-auto btn btn-outline-secondary" > 
                                     <i class="bi bi-share-fill text-info mr-1 detailsSocials" style={{ fontSize: 20}}></i>
                                 </div>
