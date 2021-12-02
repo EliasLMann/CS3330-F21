@@ -149,10 +149,14 @@ export const RestaurantDetails = () => {
                                             <th className="fw-normal">${x.price}</th>
                                             <th className="fw-normal">{x.mealType}</th>
                                             <th className="fw-normal">
-                                                <button type="submit" className="btn btn-outline-success mx-auto" onClick={() => itemRepo.incrementLikes(x.itemID)} > Upvote </button>
+                                                <button type="submit" className="btn btn-outline-success mx-auto" onClick={() => itemRepo.incrementLikes(x.itemID)} >
+                                                    <i class="bi bi-hand-thumbs-up-fill"></i>
+                                                </button>
                                             </th>
                                             <th className="fw-normal">
-                                                <button className="btn btn-outline-danger mx-auto" onClick={() => itemRepo.incrementDislikes(x.itemID)}> Downvote </button>
+                                                <button className="btn btn-outline-danger mx-auto" onClick={() => itemRepo.incrementDislikes(x.itemID)}>
+                                                    <i class="bi bi-hand-thumbs-down-fill"></i>
+                                                </button>
                                             </th>
                                         </tr>)
                                 }
