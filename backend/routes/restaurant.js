@@ -215,7 +215,7 @@ router.get("/restaurants/avgPrice", (req, res) => {
       var lowPrice = req.query["lowPrice"];
       var highPrice = req.query["highPrice"];
       connection.query(
-        "SELECT r.*, AVG(price) FROM Restaurant r JOIN MenuItem m GROUP BY m.restaurantID HAVING AVG(price) BETWEEN (?) AND (?);",
+        "SELECT r.*, AVG(price) FROM Restaurant r JOIN MenuItem m ON r.restaurantID = m.restaurantID GROUP BY m.restaurantID HAVING AVG(price) BETWEEN (?) AND (?)",
         [lowPrice, highPrice],
         function (err, rows, fields) {
           connection.release();

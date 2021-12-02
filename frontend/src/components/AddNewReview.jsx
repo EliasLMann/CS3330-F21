@@ -27,11 +27,6 @@ export const AddNewReview = props => {
         console.log("Add UserID: " + userID)
     }, []);
 
-    // let updateUser = () => {
-        
-    //     console.log("Add UserID: " + userID)
-    // }
-
     const Add = () => {
         let reviewInfo = [restID, userID, body, date, 0, rating];
         userRepo.addReview(reviewInfo);

@@ -22,6 +22,8 @@ const CustomerView = () => {
         console.log("userID: " + userContext.userId)
     }, []);
 
+    
+
     return (
         <>
             <Header />
@@ -40,9 +42,7 @@ const RestaurantView = () => {
     const [restaurant, setRestaurant] = useState(undefined);
     const [menu, setMenu] = useState(undefined);
 
-    const deleteItem = async (itemID) => {
-        console.log(itemID);
-    }
+    
 
     useEffect(() => {
         let restID = userRepo.currentUser().restaurantID;
