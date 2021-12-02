@@ -4,6 +4,10 @@ import { UserRepository } from '../api/userRespository';
 import { Header } from './Header';
 import { RestaurantRepository } from '../api/restaurantRepository';
 import { ReviewList } from './ReviewList';
+import { Link } from 'react-router-dom';
+import { MenuItemRepository } from '../api/menuItemRepository';
+import { UserReviewList } from './ReviewList';
+import { UpdateReview } from './UpdateReview';
 
 const CustomerView = () => {
     const userRepo = new UserRepository();
@@ -21,7 +25,7 @@ const CustomerView = () => {
     return (
         <>
             <Header />
-            <ReviewList/>
+            <UserReviewList/>
 
         </>
     )
@@ -57,6 +61,7 @@ const RestaurantView = () => {
                         <p>Cuisine Type: {restaurant.cuisineType}</p>
                     </div>
                 <ReviewList/>
+                <UpdateReview/>
             </>
         )
     }
