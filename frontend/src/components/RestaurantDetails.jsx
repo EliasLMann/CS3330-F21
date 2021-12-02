@@ -16,34 +16,37 @@ import ReviewHeaderUsername from './ReviewHeaderUsername';
 import ReviewSubList from './ReviewSubList';
 import { AddNewReview } from './AddNewReview';
 
-const sharePopover = (
-    <Popover className="p-2 text-center" id="popover-positioned-down" title="Share a link!">
-        <strong>Restaurant link copied to clipboard!</strong><br/>
-        {window.location.href}
-    </Popover>
-);
-
 export const RestaurantDetails = () => {
 
     const itemRepo = new MenuItemRepository();
     const restRepo = new RestaurantRepository();
     const [userContext, setUserContext] = useContext(UserContext);
-    const userRepo = new UserRepository();                                                            
+    const userRepo = new UserRepository();
 
     const [restaurant, setRestaurant] = useState(undefined);
     const [menu, setMenu] = useState(undefined);
     const [featuredItems, setFeaturedItems] = useState(undefined);
+    const [popularItems, setPopularItems] = useState(undefined);
     const [reviews, setReviews] = useState(undefined);
     const [rating, setRating] = useState('');
     const [reviewBody, setReviewBody] = useState("");
     const [socialMediaName, setSocialMediaName] = useState("");
+    const [shareURL, setShareURL] = useState("");
     const { restaurantID } = useParams();
+
+    const sharePopover = (
+        <Popover className="p-2 text-center" id="popover-positioned-down" title="Share a link!">
+            <strong>Please share THIS LINK below!</strong><br/>
+            {shareURL}
+        </Popover>
+    );
 
     useEffect(() => {
         console.log("ID: " + restaurantID);
         restRepo.getRestaurant(restaurantID).then(x => setRestaurant(x.data[0]));
         restRepo.getMenuItems(restaurantID).then(x => setMenu(x.data));
         restRepo.getFeatItems(restaurantID).then(x => setFeaturedItems(x.data));
+        restRepo.getPopItems(restaurantID).then(x => setPopularItems(x.data));
         restRepo.getRestaurantReviews(restaurantID).then(x => setReviews(x.data));
         restRepo.getSocialMediaName(restaurantID).then(x => setSocialMediaName(x.data[0].socialMediaName));
         console.log(restaurant);
@@ -62,49 +65,66 @@ export const RestaurantDetails = () => {
                 <Header />
                 <br />
                 <div className="container card">
-                    <div className="card-title mx-auto px-auto">
-                        <h1>{restaurant.restaurantName}</h1>
+                    <div className="card-title d-flex mx-auto px-auto mt-3">
+                        <div className="p-2 flex-grow-1">
+                            <h1>{restaurant.restaurantName}</h1>
+                        </div>
+                        <div className="d-flex align-middle">
+                            <div className="p-2">
+                                <OverlayTrigger trigger="click" placement="bottom" overlay={sharePopover}>
+                                    <div onClick={() => setShareURL(window.location.href)}
+                                        className="mx-auto btn btn-outline-secondary" >
+                                        <i className="bi bi-share-fill text-info mr-1 detailsSocials" style={{ fontSize: 20 }}></i>
+                                    </div>
+                                </OverlayTrigger>
+                            </div>
+                            <div className="p-2">
+                                <div onClick={() => window.open(`https://www.instagram.com/${socialMediaName}/`, "_blank")}
+                                    className="mx-auto btn btn-outline-secondary">
+                                    <i className="bi bi-instagram text-info mr-1 detailsSocials" style={{ fontSize: 20 }}></i>
+                                </div>
+                            </div>
+                            <div className="p-2">
+                                <div onClick={() => window.open(`https://${restaurant.website}/`, "_blank")}
+                                    className="mx-auto btn btn-outline-secondary">
+                                    <i className="bi bi-globe text-info mr-1 detailsSocials" style={{ fontSize: 20 }}></i>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                     <div className="d-flex justify-content-center">
-                        <p className="p-2 flex-grow">Location: {restaurant.location}</p>
+                        <p className="p-2 flex-grow">City: {restaurant.location}</p>
                         <p className="p-2 flex-grow"> Hours: {restaurant.hours}</p>
                         <p className="p-2 flex-grow">Cuisine Type: {restaurant.cuisineType}</p>
                     </div>
 
-                    <div className="d-flex flex-row-reverse align-middle">
-                        <div className="p-2">
-                            <OverlayTrigger trigger="click" placement="bottom" overlay={sharePopover}>
-                                <div onClick={() => {navigator.clipboard.writeText(window.location.href)}} 
-                                        className="mx-auto btn btn-outline-secondary" > 
-                                    <i class="bi bi-share-fill text-info mr-1 detailsSocials" style={{ fontSize: 20}}></i>
-                                </div>
-                            </OverlayTrigger>
-                        </div>
-                        <div className="p-2">
-                            <div onClick={()=> window.open(`https://www.instagram.com/${socialMediaName}/`, "_blank")}
-                                    className="mx-auto btn btn-outline-secondary">
-                                <i class="bi bi-instagram text-info mr-1 detailsSocials" style={{ fontSize: 20}}></i>
-                            </div>
-                        </div>
-                        <div className="p-2">
-                            <div onClick={()=> window.open(`https://${restaurant.website}/`, "_blank")}
-                                    className="mx-auto btn btn-outline-secondary">
-                                <i class="bi bi-globe text-info mr-1 detailsSocials" style={{ fontSize: 20}}></i>
-                            </div>
-                        </div>
-                    </div>
 
                     <hr />
-                    <div className="d-flex justify-content-center">
-                        <h2>Featured Items</h2>
+                    <div className="popItems my-2">
+                        <div className="d-flex justify-content-center">
+                            <h2>Most Popular Items</h2>
+                        </div>
+                        <div className="d-flex justify-content-center">
+                            {
+                                popularItems.map((x, i) =>
+                                    <div key={i}>
+                                        <li className="list-group-item list-group-item-success">{x.itemName} (${x.price})</li>
+                                    </div>)
+                            }
+                        </div>
                     </div>
-                    <div className="d-flex justify-content-center">
-                        {
-                            featuredItems.map((x, i) =>
-                                <div key={i}>
-                                    <li className="list-group-item list-group-item-primary">{x.itemName} (${x.price}) -- {x.description}</li>
-                                </div>)
-                        }
+                    <div className="popItems my-2">
+                        <div className="d-flex justify-content-center my-3">
+                            <h2>Featured Items</h2>
+                        </div>
+                        <div className="d-flex justify-content-center">
+                            {
+                                featuredItems.map((x, i) =>
+                                    <div key={i}>
+                                        <li className="list-group-item list-group-item-primary">{x.itemName} (${x.price}) -- {x.description}</li>
+                                    </div>)
+                            }
+                        </div>
                     </div>
                     <hr />
                     <div className="d-flex justify-content-center">
