@@ -182,12 +182,12 @@ export class UserRepository {
     return new Promise((resolve, reject) => {
       axios.post(`${this.url}/addReview`,
         {
-          restaurantID: reviewInfo[1],
-          userID: reviewInfo[2],
-          body: reviewInfo[3],
-          date: reviewInfo[4],
-          isSponsored: reviewInfo[5],
-          rating: reviewInfo[6],
+          restaurantID: reviewInfo[0],
+          userID: reviewInfo[1],
+          body: reviewInfo[2],
+          date: reviewInfo[3],
+          isSponsored: reviewInfo[4],
+          rating: reviewInfo[5],
         })
         .then(x => resolve(x.data))
         .catch(x => {

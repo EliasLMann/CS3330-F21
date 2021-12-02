@@ -1,6 +1,6 @@
 import React, { useContext, useState, useEffect } from 'react';
 import { Link, useHistory, Redirect } from "react-router-dom";
-import { Button, Container } from 'react-bootstrap';
+import { Button, Card, Container } from 'react-bootstrap';
 import { UserRepository } from '../api/userRespository';
 import { UserContext } from '../context';
 import { RestaurantOwnerForm } from './RestaurantOwnerForm';
@@ -8,6 +8,9 @@ import { Header } from './Header';
 import { Landing } from './Landing';
 import { Popover, OverlayTrigger } from 'react-bootstrap';
 import { RestaurantRepository } from '../api/restaurantRepository';
+import CardHeader from 'react-bootstrap/esm/CardHeader';
+
+
 
 
 const OwnerInfo = () => {
@@ -66,22 +69,29 @@ const OwnerInfo = () => {
 
     return <>
         <Header />
-        <form id="restForm" className="container card form-group">
+        <div className="d-flex flex-row justify-content-center">
+        <Card className="p-2 mx-l" style={{ width: '50%' }}>
+        <CardHeader className=" h2 title mx-auto"> About your restaurant</CardHeader>
+        <form id="restForm" className=" row g-3 " >
             <br/>
             <div className="d-flex justify-content-center">
-                <h2 className="title mx-auto">About your restaurant</h2>
+                
             </div>
             <br />
-            <div className="d-flex flex-row justify-content-center align-middle">
-                <label className="align-middle" htmlFor="restaurantName">Restaurant Name: </label>
+            
+            <div >
+                <label className="col-sm-2 col-form-label" htmlFor="restaurantName">Restaurant Name: </label>
                 <input
                     type="text" id="restaurantName" name="restaurantName"
                     value={restaurantName}
                     className="formControl"
                     onChange={(e) => setRestaurantName(e.target.value)}                >
                 </input>
+            </div>
 
-                <label className="align-middle" htmlFor="cuisineType">Cuisine Type: </label>
+            
+            <div>
+                <label className="col-sm-2 col-form-label" htmlFor="cuisineType">Cuisine Type: </label>
                 <input
                     type="text" id="cuisineType" name="cuisineType"
                     value={cuisineType}
@@ -89,7 +99,11 @@ const OwnerInfo = () => {
                     onChange={(e) => setCuisineType(e.target.value)}
                 >
                 </input>
-                <label className="align-middle" htmlFor="location">City: </label>
+            </div>
+
+
+            <div>
+                <label className="col-sm-2 col-form-label" htmlFor="location">City: </label>
                 <input
                     type="text" id="location" name="location"
                     value={location}
@@ -98,9 +112,9 @@ const OwnerInfo = () => {
                 >
                 </input>
             </div>
-
+        
             <br />
-            <div className="d-flex justify-content-center">
+            <div className="">
                 <span className="mb-2">Open Times:</span>
                 <div>
                     <textarea className="mx-auto w-25 h-100"
@@ -111,7 +125,7 @@ const OwnerInfo = () => {
                 </div>
             </div>
             <br />
-            <div className="d-flex justify-content-center">
+            <div className="">
                 <span className="mb-2">Restaurant Description</span>
                 <div>
                     <textarea className="mx-auto w-50 h-100 formControl"
@@ -119,12 +133,13 @@ const OwnerInfo = () => {
                 </div>
             </div>
             <br />
-            <div className="d-flex justify-content-center">
+            
+            <div className="col-12">
                 <div className="form-check">
-                    <input className="form-check-input" type="checkbox" value='1' id="flexCheckDefault" onChange={(e) => setSponsored(e.target.value)}/>
                     <label className="form-check-label" htmlFor="flexCheckDefault">
                         Sponsored
                     </label>
+                    <input className="form-check-input" type="checkbox" value='1' id="flexCheckDefault" onChange={(e) => setSponsored(e.target.value)}/>
                 </div>
             </div>
 
@@ -157,11 +172,13 @@ const OwnerInfo = () => {
                 </div>
             </div>
             <br />
-
-            <button type="button" className="btn btn-primary" onClick={addRest}>Submit</button>
+        
+            <button type="button" className="btn btn-primary " onClick={addRest}>Submit</button>
         </form>
+        </Card>
+        </div> 
         <div className="container">
-        <Link className="btn btn-success" to='/addMenu'>Continue</Link>
+        <Link className="btn btn-success m-end" to='/addMenu'>Continue</Link>
         </div>
     </>
 }
