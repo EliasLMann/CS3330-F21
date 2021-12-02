@@ -86,7 +86,7 @@ export const RestaurantDetails = () => {
                                 </div>
                             </div>
                             <div className="p-2">
-                                <div onClick={() => window.open(`https://${restaurant.website}/`, "_blank")}
+                                <div onClick={() => window.open(`https://${restaurant.website}`, "_blank")}
                                     className="mx-auto btn btn-outline-secondary">
                                     <i className="bi bi-globe text-info mr-1 detailsSocials" style={{ fontSize: 20 }}></i>
                                 </div>
