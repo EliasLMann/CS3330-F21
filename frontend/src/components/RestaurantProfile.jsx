@@ -63,15 +63,11 @@ const RestaurantView = () => {
                 <br />
                 <div className="container mb-5">
                     <div className="container card mx-auto">
-                        <div className="card-title mx-auto px-auto">
+                       <div className="card-title d-flex mx-auto px-auto mt-3">
+                        <div className="p-2 flex-grow-1">
                             <h1>{restaurant.restaurantName}</h1>
                         </div>
-                        <div className="d-flex justify-content-center">
-                            <p className="p-2 flex-grow">City: {restaurant.location}</p>
-                            <p className="p-2 flex-grow"> Hours: {restaurant.hours}</p>
-                            <p className="p-2 flex-grow">Cuisine Type: {restaurant.cuisineType}</p>
-                        </div>
-                        <div className="d-flex flex-row-reverse align-middle">
+                        <div className="d-flex align-middle">
                             <div className="p-2">
                                 <div onClick={() => window.open(`https://www.instagram.com/${restaurant.socialMediaName}/`, "_blank")}
                                     className="mx-auto btn btn-outline-secondary">
@@ -85,6 +81,7 @@ const RestaurantView = () => {
                                 </div>
                             </div>
                         </div>
+                    </div>
 
                         <div className="d-flex justify-content-center">
                             <h2>My Menu</h2>

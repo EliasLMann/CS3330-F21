@@ -111,6 +111,7 @@ export class UserRepository {
   }
 
   async updateSession(userName) {
+    console.log("updating");
     const errors = { success: false };
     const { data, status } = await axios.get(url + '/user', {
       params: { userName: userName }
@@ -122,7 +123,7 @@ export class UserRepository {
         'user',
         JSON.stringify({
           ...this.currentUser(),
-          userID: data.data[0].userID,
+          userId: data.data[0].userID,
           restaurantID: data.data[0].restaurantID
         })
       );
@@ -226,7 +227,7 @@ export class UserRepository {
         JSON.stringify({
           username: userName,
           password: password,
-          userID: data.userID,
+          userId: data.userID,
           restaurantID: data.restaurantID,
           status: 0
         })

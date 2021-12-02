@@ -9,7 +9,6 @@ import { useParams } from 'react-router';
 export const UpdateMenu = () => {
     const userRepo = new UserRepository();
     const menuRepo = new MenuItemRepository();
-    const [restID, setRestID] = useState(undefined);
     const [itemName, setItemName] = useState("");
     const [price, setPrice] = useState(undefined);
     const [itemLink, setItemLink] = useState("");
@@ -45,7 +44,7 @@ export const UpdateMenu = () => {
         <br />
         <br />
         <div className="container d-flex justify-content-center">
-            <h1>Add to your menu!</h1>
+            <h1>Menu Editor</h1>
         </div>
 
         <div className="card mx-auto">
@@ -69,15 +68,6 @@ export const UpdateMenu = () => {
                             type="text"
                             placeholder={oldItem.price}
                             onChange={(e) => setPrice(e.target.value)}></input>
-                    </div>
-                    <div className="col-md-7">
-                        <label htmlFor="link">Item Link:</label>
-                        <input
-                            id="link"
-                            name="link"
-                            type="text"
-                            placeholder={oldItem.itemLink}
-                            onChange={(e) => setItemLink(e.target.value)}></input>
                     </div>
                     <div className="col-md-7">
                         <label htmlFor="mealType">Meal Type:</label>

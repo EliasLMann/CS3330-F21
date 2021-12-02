@@ -2,10 +2,7 @@ import React, { useContext, useState, useEffect } from 'react';
 import { Link, useHistory, Redirect } from "react-router-dom";
 import { Button, Card, Container } from 'react-bootstrap';
 import { UserRepository } from '../api/userRespository';
-import { UserContext } from '../context';
-import { RestaurantOwnerForm } from './RestaurantOwnerForm';
 import { Header } from './Header';
-import { Landing } from './Landing';
 import { Popover, OverlayTrigger } from 'react-bootstrap';
 import { RestaurantRepository } from '../api/restaurantRepository';
 import CardHeader from 'react-bootstrap/esm/CardHeader';
@@ -23,14 +20,10 @@ const OwnerInfo = () => {
     const [websiteURL, setWebsiteURL] = useState("");
     const [instagramUser, setInstagramUser] = useState("");
     const [socialMediaURL, setSocialMediaURL] = useState("");
-    const [postInfo, setPostInfo] = useState(undefined);
 
 
     const [restID, setRestID] = useState(undefined);
 
-    const [errors, setErrors] = useState({});
-    const [isLoading, setIsLoading] = useState(false);
-    const [userContext, setUserContext] = useContext(UserContext);
     const history = useHistory();
     const userRepository = new UserRepository();
     const restRepo = new RestaurantRepository();
@@ -49,12 +42,15 @@ const OwnerInfo = () => {
         let restInfo = [restaurantName, location, openTimes, restaurantDescription, cuisineType, websiteURL, sponsored, instagramUser, socialMediaURL];
         restRepo.addRestaurant(restInfo);
         restRepo.getRestID().then(x => setRestID(x.data.id));
-        userRepository.linkUserRestaurant(userRepository.currentUser().userID, restID);
-        // console.log(userRepository.currentUser().restaurantID);
-        if(userRepository.currentUser().restaurantID === null) {
-            userRepository.updateSession(userRepository.currentUser().username);
-        }
-        document.getElementById("restForm").visiblity="none";
+        userRepository.linkUserRestaurant(userRepository.currentUser().userId, restID);
+        sessionStorage.setItem(
+            'user',
+            JSON.stringify({
+                ...userRepository.currentUser(),
+                restaurantID: restID
+            })
+        );
+        history.push('/addMenu');
     }
 
 
@@ -136,6 +132,7 @@ const OwnerInfo = () => {
             
             <div className="col-12">
                 <div className="form-check">
+                    <input className="form-check-input" type="checkbox" value='1' id="flexCheckDefault" onChange={(e) => setSponsored(e.target.value)} />
                     <label className="form-check-label" htmlFor="flexCheckDefault">
                         Sponsored
                     </label>
@@ -168,9 +165,6 @@ const OwnerInfo = () => {
         </form>
         </Card>
         </div> 
-        <div className="container">
-        <Link className="btn btn-success m-end" to='/addMenu'>Continue</Link>
-        </div>
     </>
 }
 

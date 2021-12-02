@@ -32,15 +32,19 @@ const Welcome = () => {
 }
 
 export const Landing = () => {
-
+    const userRepo = new UserRepository();
     const [loggedIn, setLoggedIn] = useState(false);
     const [userContext, setUserContext] = useContext(UserContext);
+    
 
     useEffect( () => {
         const user = userContext;
         if (user.username) {
             console.log(user);
             setLoggedIn(true);
+            if(!user.userId) {
+                userRepo.updateSession(userRepo.currentUser().username);
+            }
         }
     }, []);
 
