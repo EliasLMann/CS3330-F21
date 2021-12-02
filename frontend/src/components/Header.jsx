@@ -2,15 +2,17 @@ import { Navbar, Nav } from 'react-bootstrap';
 import React, { useContext, useEffect, useState } from 'react';
 import { UserContext } from '../context';
 import { UserRepository } from '../api/userRespository';
-
-
+import smallLogo from './SmallerPopStopLogo.png';
+import logo from './simpleLogo.png';
 
 const LoggedInHeader = () => {
     const userRepo = new UserRepository(); 
     return (
         <Navbar className="d-flex flex-row p-2 shadow-sm">
             <span>&nbsp;</span>
-            <a className="navbar-brand" href="/">PopStop</a>
+            <a href="/" className="navbar-brand">
+                <img src={logo} height="50"/>
+            </a>
             <Nav className="">
                 <div className="d-flex flex-row">
                     <Nav.Link href="/"
@@ -28,8 +30,10 @@ const LoggedInHeader = () => {
 const LoggedOutHeader = () => {
 
     return (
-        <Navbar className="d-flex flex-row p-2">
-            <a className="navbar-brand" href="/">PopStop</a>
+        <Navbar className="headNavBar d-flex flex-row p-2 shadow-sm">
+            <a href="/" className="navbar-brand">
+                <img src={smallLogo} height="50"/>
+            </a>
             <Nav className="">
                 <div className="d-flex flex-row">
                     <Nav.Link href="/login"
