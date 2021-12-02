@@ -102,15 +102,6 @@ export const RestaurantDetails = () => {
                         <p className="p-2 flex-grow">Cuisine Type: {restaurant.cuisineType}</p>
                     </div>
 
-                    <div className="d-flex flex-row-reverse align-middle">
-                        <div className="p-2">
-                            <OverlayTrigger trigger="click" placement="bottom" overlay={sharePopover}>
-                                <div onClick={() => setShareURL(window.location.href)} 
-                                        className="mx-auto btn btn-outline-secondary" > 
-                                    <i class="bi bi-share-fill text-info mr-1 detailsSocials" style={{ fontSize: 20}}></i>
-                                </div>
-                            </OverlayTrigger>
-
 
                     <hr />
                     <div className="popItems my-2">
