@@ -147,15 +147,6 @@ const OwnerInfo = () => {
                         onChange={(e) => setInstagramUser(e.target.value)} />
                 </div>
             </div>
-            <div className="w-75 mx-auto">
-                <div className="input-group mb-3">
-                    <div className="input-group-prepend">
-                        <span className="input-group-text" id="basic-addon3">Social Media Link:</span>
-                    </div>
-                    <input type="text" className="form-control" aria-describedby="basic-addon3"
-                        onChange={(e) => setSocialMediaURL(e.target.value)} />
-                </div>
-            </div>
             <br />
 
             <button type="button" className="btn btn-primary" onClick={addRest}>Submit</button>
