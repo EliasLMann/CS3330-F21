@@ -9,8 +9,16 @@ import Card from 'react-bootstrap/Card';
 import CardHeader from "react-bootstrap/esm/CardHeader";
 import { Rating } from './Rating';
 import { UserRepository } from '../api/userRespository';
+import { OverlayTrigger } from 'react-bootstrap';
+import { Popover } from 'react-bootstrap';
+import { Button } from 'react-bootstrap';
 
-
+const sharePopover = (
+    <Popover className="p-2 text-center" id="popover-positioned-down" title="Share a link!">
+        <strong>Restaurant link copied to clipboard!</strong><br/>
+        {window.location.href}
+    </Popover>
+);
 
 export const RestaurantDetails = () => {
 
@@ -59,7 +67,14 @@ export const RestaurantDetails = () => {
                         <p className="p-2 flex-grow text-decoration-underline">{restaurant.website}</p>
                         <p className="p-2 flex-grow">Instagram: @{restaurant.socialMediaName}</p>
                     </div>
-
+                    <div className="d-flex flex-row-reverse">
+                        <div className="p-2">
+                            <OverlayTrigger trigger="click" placement="bottom" overlay={sharePopover}>
+                                <Button onClick={() => {navigator.clipboard.writeText(window.location.href)}} 
+                                        className="mx-auto" > Share </Button>
+                            </OverlayTrigger>
+                        </div>
+                    </div>
                     <hr />
                     <div className="d-flex justify-content-center">
                         <h2>Featured Items</h2>
