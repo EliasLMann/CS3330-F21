@@ -10,8 +10,16 @@ import Card from 'react-bootstrap/Card';
 import CardHeader from "react-bootstrap/esm/CardHeader";
 import { Rating } from './Rating';
 import { UserRepository } from '../api/userRespository';
+import { OverlayTrigger } from 'react-bootstrap';
+import { Popover } from 'react-bootstrap';
+import { Button } from 'react-bootstrap';
 
-
+const sharePopover = (
+    <Popover className="p-2 text-center" id="popover-positioned-down" title="Share a link!">
+        <strong>Restaurant link copied to clipboard!</strong><br/>
+        {window.location.href}
+    </Popover>
+);
 
 export const RestaurantDetails = () => {
 
@@ -55,6 +63,14 @@ export const RestaurantDetails = () => {
                         <p>Location: {restaurant.location}</p>
                         <p>Hours: {restaurant.hours}</p>
                         <p>Cuisine Type: {restaurant.cuisineType}</p>
+                    </div>
+                    <div className="d-flex flex-row-reverse">
+                        <div className="p-2">
+                            <OverlayTrigger trigger="click" placement="bottom" overlay={sharePopover}>
+                                <Button onClick={() => {navigator.clipboard.writeText(window.location.href)}} 
+                                        className="mx-auto" > Share </Button>
+                            </OverlayTrigger>
+                        </div>
                     </div>
                     <hr />
                     <h2 className="d-flex justify-content-center">Featured Items</h2>
