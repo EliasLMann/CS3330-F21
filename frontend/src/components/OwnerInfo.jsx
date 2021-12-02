@@ -66,65 +66,80 @@ const OwnerInfo = () => {
 
     return <>
         <Header />
-        <form id="restForm" className="container card form-group">
+        <div className="d-flex flex-row justify-content-center">
+        <Card className=" mt-2 mx-l w-75">
+        <CardHeader className="h2 mx-auto text-center w-100"> About your restaurant</CardHeader>
+        <form id="restForm" className=" row g-3 " >
             <br/>
             <div className="d-flex justify-content-center">
                 <h2 className="title mx-auto">About your restaurant</h2>
             </div>
             <br />
-            <div className="d-flex flex-row justify-content-center align-middle">
-                <label className="align-middle" htmlFor="restaurantName">Restaurant Name: </label>
+            
+            <div >
+                <label className="col-sm-2 col-form-label w-50" htmlFor="restaurantName">Restaurant Name: </label>
                 <input
                     type="text" id="restaurantName" name="restaurantName"
                     value={restaurantName}
-                    className="formControl"
+                    className="formControl w-25"
                     onChange={(e) => setRestaurantName(e.target.value)}                >
                 </input>
 
-                <label className="align-middle" htmlFor="cuisineType">Cuisine Type: </label>
+            
+            <div>
+                <label className="col-sm-2 col-form-label w-50" htmlFor="cuisineType">Cuisine Type: </label>
                 <input
                     type="text" id="cuisineType" name="cuisineType"
                     value={cuisineType}
-                    className="formControl"
+                    className="formControl w-25"
                     onChange={(e) => setCuisineType(e.target.value)}
                 >
                 </input>
-                <label className="align-middle" htmlFor="location">City: </label>
+            </div>
+
+
+            <div>
+                <label className="col-sm-2 col-form-label w-50" htmlFor="location">City: </label>
                 <input
                     type="text" id="location" name="location"
                     value={location}
-                    className="formControl"
+                    className="formControl w-25"
                     onChange={(e) => setLocation(e.target.value)}
                 >
                 </input>
             </div>
 
             <br />
-            <div className="d-flex justify-content-center">
-                <span className="mb-2">Open Times:</span>
-                <div>
-                    <textarea className="mx-auto w-25 h-100"
-                        onChange={(e) => setOpenTimes(e.target.value)}></textarea>
-                    <OverlayTrigger trigger="click" placement="right" overlay={popoverRight}>
-                        <Button className="mx-auto rounded-circle" > ? </Button>
-                    </OverlayTrigger>
+            <div className="w-100 mx-auto text-center ">
+                <div className="">
+                    <span className="mb-2">Open Times:</span>
+                    <div>
+                        <textarea className="mx-auto w-25 h-100"
+                            onChange={(e) => setOpenTimes(e.target.value)}></textarea>
+                        <OverlayTrigger trigger="click" placement="right" overlay={popoverRight}>
+                            <Button className="mx-auto rounded-circle" > ? </Button>
+                        </OverlayTrigger>
+                    </div>
+                </div>
+                <br />
+                <div className="mx-auto">
+                    <span className="mb-2">Restaurant Description</span>
+                    <div>
+                        <textarea className="mx-auto w-50 h-100 formControl"
+                            onChange={(e) => setRestaurantDescription(e.target.value)}></textarea>
+                    </div>
                 </div>
             </div>
             <br />
-            <div className="d-flex justify-content-center">
-                <span className="mb-2">Restaurant Description</span>
-                <div>
-                    <textarea className="mx-auto w-50 h-100 formControl"
-                        onChange={(e) => setRestaurantDescription(e.target.value)}></textarea>
-                </div>
-            </div>
-            <br />
-            <div className="d-flex justify-content-center">
-                <div className="form-check">
-                    <input className="form-check-input" type="checkbox" value='1' id="flexCheckDefault" onChange={(e) => setSponsored(e.target.value)}/>
-                    <label className="form-check-label" htmlFor="flexCheckDefault">
-                        Sponsored
-                    </label>
+            
+            <div className="mx-auto align-center text-center">
+            <div className="col-12">
+                    <div className="">
+                        <input className="form-check-input float-none" type="checkbox" value='1' id="flexCheckDefault" onChange={(e) => setSponsored(e.target.value)} />
+                        <label className="form-check-label float-none" htmlFor="flexCheckDefault">
+                            Sponsored
+                        </label>
+                    </div>
                 </div>
             </div>
 
@@ -157,11 +172,12 @@ const OwnerInfo = () => {
                 </div>
             </div>
             <br />
-
-            <button type="button" className="btn btn-primary" onClick={addRest}>Submit</button>
+        
+            <button type="button" className="btn btn-primary mx-auto" onClick={addRest}>Submit</button>
         </form>
         <div className="container">
         <Link className="btn btn-success" to='/addMenu'>Continue</Link>
+        </div>
         </div>
     </>
 }
