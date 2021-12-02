@@ -4,7 +4,8 @@ import { RestaurantRepository } from '../api/restaurantRepository';
 import { UserContext } from '../context';
 import { Header } from "./Header";
 import { MenuItemRepository } from '../api/menuItemRepository';
-import { RestaurantReviewList, ReviewList } from './ReviewList';
+import { ReviewList } from './ReviewList';
+import { RestaurantReviewList } from './ReviewList';
 import Card from 'react-bootstrap/Card';
 import CardHeader from "react-bootstrap/esm/CardHeader";
 import { Rating } from './Rating';
@@ -15,27 +16,29 @@ import { UserRepository } from '../api/userRespository';
 export const RestaurantDetails = () => {
 
     const itemRepo = new MenuItemRepository();
-    const [userContext, setUserContext] = useContext(UserContext);
     const restRepo = new RestaurantRepository();
+    const [userContext, setUserContext] = useContext(UserContext);
     const userRepo = new UserRepository();                                                            //Added by Everett
 
 
     const [restaurant, setRestaurant] = useState(undefined);
     const [menu, setMenu] = useState(undefined);
-    const [featuredItems, setFeaturedItems] = useState(undefined)
-    const restRepo = new RestaurantRepository();
+    const [featuredItems, setFeaturedItems] = useState(undefined);
+    const [reviews, setReviews] = useState(undefined);
+    const [rating, setRating] = useState('');
+    const [reviewBody, setReviewBody] = useState("")
     const { restaurantID } = useParams();
-    //let restID = params.restaurantID
 
     useEffect(() => {
         console.log("ID: " + restaurantID);
         restRepo.getRestaurant(restaurantID).then(x => setRestaurant(x.data[0]));
         restRepo.getMenuItems(restaurantID).then(x => setMenu(x.data));
         restRepo.getFeatItems(restaurantID).then(x => setFeaturedItems(x.data));
-        console.log(featuredItems);
+        restRepo.getRestaurantReviews(restaurantID).then(x => setReviews(x.data));
+        console.log(reviews);
     }, []);
 
-    if (!restaurant || !menu || !featuredItems) {
+    if (!restaurant || !menu || !featuredItems || !reviews) {
         return (
             <div>Loading...</div>
         )
@@ -59,7 +62,7 @@ export const RestaurantDetails = () => {
                         {
                             featuredItems.map((x, i) =>
                                 <div key={i}>
-                                    <li class="list-group-item list-group-item-primary">{x.itemName} (${x.price}) -- {x.description}</li>
+                                    <li className="list-group-item list-group-item-primary">{x.itemName} (${x.price}) -- {x.description}</li>
                                 </div>)
                         }
                     </ul>
@@ -84,10 +87,10 @@ export const RestaurantDetails = () => {
                                             <th className="fw-normal">${x.price}</th>
                                             <th className="fw-normal">{x.mealType}</th>
                                             <th className="fw-normal">
-                                                <button type="submit" className="btn btn-success mx-auto" onClick={() => itemRepo.incrementLikes(x.itemID)} > {x.likes} </button>
+                                                <button type="submit" className="btn btn-outline-success mx-auto" onClick={() => itemRepo.incrementLikes(x.itemID)} > Upvote </button>
                                             </th>
                                             <th className="fw-normal">
-                                                <button className="btn btn-danger mx-auto" onClick={() => itemRepo.incrementDislikes(x.itemID)}> {x.dislikes} </button>
+                                                <button className="btn btn-outline-danger mx-auto" onClick={() => itemRepo.incrementDislikes(x.itemID)}> Downvote </button>
                                             </th>
                                         </tr>)
                                 }
@@ -165,8 +168,9 @@ export const RestaurantDetails = () => {
                                 onChange={(e) => setReviewBody(e.target.value)}
                                 className="form-control" />
                         </div>
-
-                        <button type="button" className="btn btn-primary col-1 mx-3" onClick={() => this.onAddClick()}>Submit</button>
+                        <div class="d-grid gap-2">
+                        <button type="button" className="btn btn-primary mx-3" onClick={() => this.onAddClick()}>Submit</button>
+                        </div>
                     </div>
                 </form>
             </div>

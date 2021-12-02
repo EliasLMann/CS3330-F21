@@ -60,7 +60,7 @@ const RestaurantView = () => {
                         <p>Hours: {restaurant.hours}</p>
                         <p>Cuisine Type: {restaurant.cuisineType}</p>
                     </div>
-                <ReviewList/>
+                
                 <UpdateReview/>
             </>
         )
