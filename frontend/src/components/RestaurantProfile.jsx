@@ -3,10 +3,6 @@ import { UserContext } from '../context';
 import { UserRepository } from '../api/userRespository';
 import { Header } from './Header';
 import { RestaurantRepository } from '../api/restaurantRepository';
-import { Link } from 'react-router-dom';
-import { MenuItemRepository } from '../api/menuItemRepository';
-
-
 import { ReviewList } from './ReviewList';
 import { Link } from 'react-router-dom';
 import { MenuItemRepository } from '../api/menuItemRepository';
@@ -123,7 +119,7 @@ const RestaurantView = () => {
                         <br/>
                     </div>
                 </div>
-                <ReviewList/>
+                            
                 <UpdateReview/>
             </>
         )

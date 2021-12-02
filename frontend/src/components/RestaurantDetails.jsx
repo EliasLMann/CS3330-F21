@@ -5,7 +5,7 @@ import { UserContext } from '../context';
 import { Header } from "./Header";
 import { MenuItemRepository } from '../api/menuItemRepository';
 import { ReviewList } from './ReviewList';
-import { RestaurantReviewList, ReviewList } from './ReviewList';
+import { RestaurantReviewList } from './ReviewList';
 import Card from 'react-bootstrap/Card';
 import CardHeader from "react-bootstrap/esm/CardHeader";
 import { Rating } from './Rating';
@@ -18,7 +18,6 @@ export const RestaurantDetails = () => {
     const itemRepo = new MenuItemRepository();
     const restRepo = new RestaurantRepository();
     const [userContext, setUserContext] = useContext(UserContext);
-    const restRepo = new RestaurantRepository();
     const userRepo = new UserRepository();                                                            //Added by Everett
 
 
@@ -110,22 +109,9 @@ export const RestaurantDetails = () => {
                                     }
                                     {
                                         reviews.map((x, i) => <Card key={ i }>
-                                    {    
-                                        !userRepo.currentUser().restaurantID ? 
-                                            <CardHeader > { x.userID }</CardHeader> : 
-                                            <CardHeader className="position-relative"> <div>{ x.userID }</div> 
-                                                <form>
-                                                    <div className="position-absolute top-0 end-0 me-4">
-                                                        <label className="form-check-label" for="sponsered">Sponsor Review</label>
-                                                        <input type="checkbox" className="form-check-input" id="sponsered"/>
-                                                    </div>
-                                                    
-                                                </form>
-                                                {/* <div className="position-absolute top-0 end-0 me-4">{ x.restaurantID }</div>   */}
-                                            </CardHeader>
-                                        // !userRepo.currentUser().restaurantID ? <CardHeader className="position-relative"> <div>{ x.restaurantID }</div> <div className="position-absolute top-0 end-0 me-4"> restaurant </div>  </CardHeader> : <CardHeader> <div className="position-absolute top-0 end-0">{ x.restaurantID }</div> <div>{ x.userID }</div></CardHeader>   
-            
-                                    }                        
+                                    
+                                            <CardHeader > { x.userID }</CardHeader> 
+                                                          
                                                 <div className="row justify-content-evenly">
                                                     <div className="text-rigth text-muted col-5"><Rating value = { x.rating}/></div>
                                                     <div className="text-end text-muted col-5">{ x.date}</div>
@@ -171,7 +157,6 @@ export const RestaurantDetails = () => {
                         <div class="d-grid gap-2">
                         <button type="button" className="btn btn-primary mx-3" onClick={() => this.onAddClick()}>Submit</button>
                         </div>
-                        <button type="button" className="btn btn-primary col-1 mx-3" onClick={() => this.onAddClick()}>Submit</button>
                     </div>
                 </form>
             </div>
