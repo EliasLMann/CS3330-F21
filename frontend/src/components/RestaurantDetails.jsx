@@ -211,7 +211,7 @@ export const RestaurantDetails = () => {
                                         onChange={(e) => setReviewBody(e.target.value)}
                                         className="form-control" />
                                 </div>
-                                <div class="d-grid gap-2">
+                                <div className="d-grid gap-2">
                                     <button type="button" className="btn btn-primary mx-3" onClick={() => this.onAddClick()}>Submit</button>
                                 </div>
                             </div>
