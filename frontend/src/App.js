@@ -11,8 +11,6 @@ import {
 
 import Login, { LoginPage } from './components/LoginPage';
 import { Profile } from './components/RestaurantProfile';
-import { Header } from './components/Header';
-import { CustomerAccount } from './components/CustomerAccount';
 import { AddMenu } from './components/AddMenu';
 import { Landing } from './components/Landing'
 import { UserContext } from './context';
